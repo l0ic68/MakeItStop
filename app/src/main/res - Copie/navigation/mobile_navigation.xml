@@ -1,0 +1,10 @@
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:android="http://schemas.android.com/apk/res/android"
+app:startDestination="@id/mainActivity">
+<activity xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainActivity"
+    android:name="com.nesta.makeitstop.MainActivity"
+    android:label="Home" />
+</navigation>

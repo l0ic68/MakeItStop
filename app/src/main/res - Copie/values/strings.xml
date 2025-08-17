@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MakeItStop</string>
+    <string name="placeholder_search">Search</string>
+    <string name="ab1_inversions">Inversion</string>
+</resources>
