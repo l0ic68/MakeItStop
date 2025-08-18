@@ -7,7 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -34,69 +39,74 @@ import com.nesta.makeitstop.tutorial.WellnessScreen
 import com.nesta.makeitstop.ui.theme.AppBackground
 import com.nesta.makeitstop.ui.theme.MakeItStopTheme
 import com.nesta.makeitstop.ui.theme.PrimaryDark
+import com.nesta.makeitstop.ui.theme.poppinFont
+import com.nesta.makeitstop.ui.theme.titleColor
 
 @Composable
 fun CravingScreen(modifier: Modifier = Modifier) {
-    Surface(modifier = Modifier.padding(top = 40.dp)) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            topBarTitle()
-            var isDisplayed by remember { mutableStateOf(true) }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        topBarTitle()
+        var isDisplayed by remember { mutableStateOf(true) }
 
-            if (!isDisplayed) {
-                Button(
-                    onClick = { isDisplayed = false }
-                ) {
-                    Text("J'en ai envie")
-                }
+        if (!isDisplayed) {
+            Button(
+                onClick = { isDisplayed = false }
+            ) {
+                Text("J'en ai envie")
             }
-            val firstAnswer = ""
-            val secondAnswer = ""
-            val thirdAnswer = ""
-            if (isDisplayed) {
-                GuiltItem(
-                    question = stringResource(R.string.craving_first_sentence),
-                    text = firstAnswer,
-                    onValueChange = {},)
-                GuiltItem(
-                    question = stringResource(R.string.craving_second_sentence),
-                    text = secondAnswer,
-                    onValueChange = {})
-                GuiltItem(
-                    question = stringResource(R.string.craving_third_sentence),
-                    text = thirdAnswer,
-                    onValueChange = {})
-            }
+        }
+        var firstAnswer by remember { mutableStateOf("")}
+        var secondAnswer by remember { mutableStateOf("")}
+        var thirdAnswer by remember { mutableStateOf("")}
+
+        if (isDisplayed) {
+            GuiltItem(
+                question = stringResource(R.string.craving_first_sentence),
+                text = firstAnswer,
+                onValueChange = { firstAnswer = it }
+                )
+            GuiltItem(
+                question = stringResource(R.string.craving_second_sentence),
+                text = secondAnswer,
+                onValueChange = { secondAnswer = it }
+            )
+            GuiltItem(
+                question = stringResource(R.string.craving_third_sentence),
+                text = thirdAnswer,
+                onValueChange = { thirdAnswer = it }
+            )
         }
     }
 }
 
+
 @Composable
 fun topBarTitle(modifier: Modifier = Modifier) {
-
-    val interFont = FontFamily(
-        Font(R.font.inter_font, FontWeight.Normal),
-        Font(R.font.inter_bold, FontWeight.Bold),
-        Font(R.font.inter_italic_font, FontWeight.Normal, FontStyle.Italic)
-    )
-
     Text(
         text = "Pause Réflexion",
-        fontFamily = interFont,
+        fontFamily = poppinFont,
         fontWeight = FontWeight.Bold,
         fontStyle = FontStyle.Normal,
         textAlign = TextAlign.Center,
-        color = PrimaryDark,
-        modifier = Modifier.paddingFromBaseline(bottom = 16.dp),
+        color = titleColor,
+        modifier = Modifier
+            .paddingFromBaseline(bottom = 16.dp),
         fontSize = 22.sp,
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun CravinScreenPreview() {
     MakeItStopTheme {
-        CravingScreen()
+        Surface()
+        {
+            CravingScreen()
+        }
     }
 }
