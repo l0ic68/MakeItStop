@@ -12,6 +12,7 @@
   the License.
   -->
 <resources>
+    <!-- Tutorial -->
     <string name="app_name">MySoothe</string>
     <string name="favorite_collections">Favorite Collections</string>
     <string name="align_your_body">Align your Body</string>
@@ -31,4 +32,8 @@
     <string name="bottom_navigation_home">Home</string>
     <string name="bottom_navigation_profile">Profile</string>
     <string name="placeholder_search">Search</string>
+    <!-- Tutorial -->
+    <string name="craving_first_sentence">Est-ce que j\'en ai vraiment envie</string>
+    <string name="craving_second_sentence">Est-ce que ça va me faire du bien</string>
+    <string name="craving_third_sentence">Est-ce que je suis prêt à me sentir encore plus mal après</string>
 </resources>
