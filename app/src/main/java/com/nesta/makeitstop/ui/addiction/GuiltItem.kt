@@ -1,4 +1,4 @@
-package com.nesta.makeitstop
+package com.nesta.makeitstop.ui.addiction
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
