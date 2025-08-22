@@ -16,6 +16,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +41,8 @@ import com.nesta.makeitstop.ui.theme.titleColor
 @Composable
 fun CravingScreen(
     onClick: () -> Unit,
+    dailyRecordUiState: AddictionDailyRecordUiState,
+    onDailyRecordValueChange: (AddictionDailyRecordDetails) -> Unit,
     modifier: Modifier = Modifier) {
     Column( modifier = Modifier
         .fillMaxWidth()
@@ -56,6 +59,12 @@ fun CravingScreen(
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         ) {
+            //Temporary
+            LaunchedEffect(Unit) {
+                onDailyRecordValueChange(
+                    dailyRecordUiState.addictionDailyRecordDetails.copy(addiction = "fumer")
+                )
+            }
             var firstAnswer by remember { mutableStateOf("")}
             var secondAnswer by remember { mutableStateOf("")}
             var thirdAnswer by remember { mutableStateOf("")}
@@ -69,7 +78,7 @@ fun CravingScreen(
             ) {
 
                 Text(
-                    text = "Avant de fumer, arrête toi deux minutes et pose toi ces questions",
+                    text = "Avant de boire ton monster, arrête toi deux minutes et pose toi ces questions",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Justify,
@@ -78,24 +87,32 @@ fun CravingScreen(
                 )
                 GuiltItem(
                     question = stringResource(R.string.craving_first_sentence),
-                    text = firstAnswer,
-                    onValueChange = { firstAnswer = it }
+                    text = dailyRecordUiState.addictionDailyRecordDetails.firstAnswer,
+                    onValueChange = {
+                        onDailyRecordValueChange(
+                            dailyRecordUiState.addictionDailyRecordDetails.copy(firstAnswer = it)
+                        )
+                    }
                 )
                 GuiltItem(
                     question = stringResource(R.string.craving_second_sentence),
-                    text = secondAnswer,
-                    onValueChange = { secondAnswer = it }
+                    text = dailyRecordUiState.addictionDailyRecordDetails.secondAnswer,
+                    onValueChange = {
+                        onDailyRecordValueChange(
+                            dailyRecordUiState.addictionDailyRecordDetails.copy(secondAnswer = it)
+                        )
+                    }
                 )
                 GuiltItem(
                     question = stringResource(R.string.craving_third_sentence),
-                    text = thirdAnswer,
-                    onValueChange = { thirdAnswer = it }
+                    text = dailyRecordUiState.addictionDailyRecordDetails.thirdAnswer,
+                    onValueChange = {
+                        onDailyRecordValueChange(
+                            dailyRecordUiState.addictionDailyRecordDetails.copy(thirdAnswer = it)
+                        )
+                    }
                 )
 
-                var isButtonEnabled = false
-                if (!firstAnswer.isEmpty() && !secondAnswer.isEmpty() && !thirdAnswer.isEmpty()) {
-                    isButtonEnabled = true
-                }
 
                 Button(
                     onClick = onClick,
@@ -103,7 +120,7 @@ fun CravingScreen(
                         .fillMaxWidth()
                         .height(56.dp),
                     shape = RoundedCornerShape(4.dp),
-                    enabled = isButtonEnabled,
+                    enabled = dailyRecordUiState.isFirstEntryValid,
                     colors = ButtonDefaults.buttonColors(
                         contentColor = PrimaryWhite,
                         containerColor = Color(0xFF4CA77D),
@@ -152,7 +169,7 @@ fun CravinScreenPreview() {
     MakeItStopTheme {
         Surface()
         {
-            CravingScreen(onClick = {})
+           // CravingScreen(onClick = {})
         }
     }
 }

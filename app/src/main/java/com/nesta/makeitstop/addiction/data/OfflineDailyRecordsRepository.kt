@@ -1,0 +1,28 @@
+package com.nesta.makeitstop.addiction.data
+
+import kotlinx.coroutines.flow.Flow
+
+class OfflineDailyRecordsRepository(
+    private val dailyRecordDao: DailyRecordDao
+) : DailyRecordRepository
+{
+    override fun getAllAddictionDailyRecord(): Flow<List<DailyRecord>> {
+       return dailyRecordDao.getAllDailyRecords()
+    }
+
+    override fun getAddictionDailyRecord(id: Int): Flow<DailyRecord?> {
+        return dailyRecordDao.getAddictionDailyRecord(id)
+    }
+
+    override suspend fun insertAddictionDailyRecord(item: DailyRecord) {
+        dailyRecordDao.insert(item)
+    }
+
+    override suspend fun deleteAddictionDailyRecord(item: DailyRecord) {
+       dailyRecordDao.delete(item)
+    }
+
+    override suspend fun updateAddictionDailyRecord(item: DailyRecord) {
+       dailyRecordDao.update(item)
+    }
+}

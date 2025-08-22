@@ -26,10 +26,10 @@ import com.nesta.makeitstop.ui.theme.poppinFont
 
 @Composable
 fun GuiltItem(
-    question: String ,
-    text: String ,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    question: String,
+    text: String,
+    onValueChange: (String) -> Unit = {},
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -92,5 +92,5 @@ fun GuiltItem(
 @Preview(showBackground = true)
 @Composable
 fun GuiltItemPreview() {
-    GuiltItem(question = "Est-ce que j’en ai vraiment envie ?", text = "" , onValueChange = {}, modifier = Modifier.padding(16.dp))
+    //GuiltItem(question = "Est-ce que j’en ai vraiment envie ?", text = "" , onValueChange = {}, modifier = Modifier.padding(16.dp))
 }

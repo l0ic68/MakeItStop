@@ -39,7 +39,9 @@ import com.nesta.makeitstop.ui.theme.poppinFont
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeelingScreen(
-    onClick: () -> Unit,
+    dailyRecordUiState: AddictionDailyRecordUiState,
+    onDailyRecordValueChange: (AddictionDailyRecordDetails) -> Unit = {},
+    onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column( modifier = Modifier
@@ -50,17 +52,14 @@ fun FeelingScreen(
     ) {
 
         topBarTitle("Mon ressenti", 36.sp)
-        var sliderPosition by remember { mutableStateOf(5F) }
-        var forthAnswer by remember { mutableStateOf("")}
-        var fifthAnswer by remember { mutableStateOf("")}
 
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             colors = CardDefaults.cardColors(containerColor = Color(0xFFFFFFFF)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         ) {
             Column(
                 modifier = Modifier
@@ -76,25 +75,30 @@ fun FeelingScreen(
                         .fillMaxWidth()
                 )
 
-                CustomSlider(sliderPosition, onValueChange = { sliderPosition = it })
+                CustomSlider(dailyRecordUiState.addictionDailyRecordDetails.feelingScore,
+                    onValueChange = {
+                        onDailyRecordValueChange(dailyRecordUiState.addictionDailyRecordDetails.copy(feelingScore = it))
+                    }
+                )
 
                 GuiltItem(
-                    "Dans quel contexte étais-je ?",
-                    text = forthAnswer,
-                    onValueChange = { forthAnswer = it })
+                    question = "Dans quel contexte étais-je ?",
+                    text = dailyRecordUiState.addictionDailyRecordDetails.fourthAnswer,
+                    onValueChange = { onDailyRecordValueChange(dailyRecordUiState.addictionDailyRecordDetails.copy(fourthAnswer = it)) })
                 GuiltItem(
-                    "Comment je me sens maintenant",
-                    text = fifthAnswer,
-                    onValueChange = { fifthAnswer = it })
+                    question = "Comment je me sens maintenant",
+                    text = dailyRecordUiState.addictionDailyRecordDetails.fifthAnswer,
+                    onValueChange = { onDailyRecordValueChange(dailyRecordUiState.addictionDailyRecordDetails.copy(fifthAnswer = it)) })
+
 
                 Button(
-                    onClick = onClick,
+                    onClick = onSaveClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)
                         .height(56.dp),
                     shape = RoundedCornerShape(12.dp),
-                    enabled = true,
+                    enabled = dailyRecordUiState.isSecondEntryValid,
                     colors = ButtonDefaults.buttonColors(
                         contentColor = PrimaryWhite,
                         containerColor = Color(0xFF5468e8),
@@ -191,5 +195,5 @@ fun CustomSlider(
 @Preview(showBackground = true)
 @Composable
 fun FeelingScreenPreview() {
-    FeelingScreen(onClick = {})
+
 }

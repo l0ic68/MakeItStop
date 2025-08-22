@@ -1,18 +1,18 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
-    id("org.jetbrains.kotlin.plugin.compose")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.nesta.makeitstop"
-    compileSdk = 36
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.nesta.makeitstop"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -35,6 +35,7 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
     buildFeatures {
         compose = true
     }
@@ -59,14 +60,14 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:{latest_version}")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    // Exemple : Room avec KSP
-    implementation("androidx.room:room-common-jvm:2.7.2")
-    implementation("androidx.room:room-ktx:2.7.2")
+    implementation(libs.androidx.room.runtime) // ⚠ à la place de common.jvm
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // Debug
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.ui.test.manifest)
 
 }

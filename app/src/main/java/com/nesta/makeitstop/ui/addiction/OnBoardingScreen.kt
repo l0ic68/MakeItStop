@@ -62,5 +62,5 @@ fun OnBoardingScreen(
 @Composable
 @Preview(showBackground = true)
 fun OnBoardingScreenPreview(){
-    OnBoardingScreen("J'ai envie de fumer", onClick = {})
+    OnBoardingScreen("J'ai envie de boire une monster", onClick = {})
 }

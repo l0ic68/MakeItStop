@@ -9,20 +9,20 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AddictionDailyRecordDao {
+interface DailyRecordDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(item: AddictionDailyRecord)
+    suspend fun insert(item: DailyRecord)
 
     @Update
-    suspend fun update(item: AddictionDailyRecord)
+    suspend fun update(item: DailyRecord)
 
     @Delete
-    suspend fun delete(item: AddictionDailyRecord)
+    suspend fun delete(item: DailyRecord)
 
     @Query("SELECT * from addiction_daily_record where id = :id")
-    fun getAddictionDailyRecord(id:Int): Flow<AddictionDailyRecord>
+    fun getAddictionDailyRecord(id:Int): Flow<DailyRecord>
 
     @Query("SELECT * FROM addiction_daily_record ORDER BY addiction ASC")
-    fun getAllDailyRecords(): Flow<List<AddictionDailyRecord>>
+    fun getAllDailyRecords(): Flow<List<DailyRecord>>
 }
