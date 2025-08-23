@@ -1,6 +1,5 @@
 package com.nesta.makeitstop.ui.addiction
 
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -29,17 +30,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.addiction.data.Addiction
+import com.nesta.makeitstop.tutorial.WellnessTaskItem
 import com.nesta.makeitstop.ui.theme.PrimaryWhite
 import com.nesta.makeitstop.ui.theme.poppinFont
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun OnBoardingScreen(
-    text:String,
+    modifier: Modifier,
     addictionUiState : AddictionUiState,
     onClick: () -> Unit,
     onAddAddiction: (AddictionDetails) -> Unit,
-
+    addictionList: List<Addiction>,
     ) {
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,26 +55,34 @@ fun OnBoardingScreen(
     ) {
         topBarTitle("Pause Refléxion", 36.sp)
         Spacer(Modifier.size(40.dp))
-        Button(
-            onClick = onClick,
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(4.dp),
-            colors = ButtonDefaults.buttonColors(
-                contentColor = PrimaryWhite,
-                containerColor = Color(0xFF4CA77D)
-            )
-        ) {
-            Text(
-                text = text,
-                fontSize = 20.sp,
-                fontFamily = poppinFont,
-                fontWeight = FontWeight.Normal,
-                fontStyle = FontStyle.Normal,
-            )
+        LazyColumn(modifier = modifier) {
+            items(
+                items = addictionList,
+                key = { task: Addiction -> task.id}
+            ) { task ->
+                Button(
+                    onClick = onClick,
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = RoundedCornerShape(4.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = PrimaryWhite,
+                        containerColor = Color(0xFF4CA77D)
+                    )
+                ) {
+                    Text(
+                        text = task.name,
+                        fontSize = 20.sp,
+                        fontFamily = poppinFont,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Normal,
+                    )
+                }
+            }
         }
+
         var showDialog by remember { mutableStateOf(false)}
 
         Button(

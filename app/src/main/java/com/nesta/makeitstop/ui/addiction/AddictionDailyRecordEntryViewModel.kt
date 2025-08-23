@@ -4,10 +4,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.nesta.makeitstop.addiction.data.Addiction
 import com.nesta.makeitstop.addiction.data.AddictionRepository
 import com.nesta.makeitstop.addiction.data.DailyRecord
 import com.nesta.makeitstop.addiction.data.DailyRecordRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.WhileSubscribed
+import kotlinx.coroutines.flow.stateIn
 import kotlin.String
 
 data class AddictionDailyRecordUiState(
@@ -52,7 +58,7 @@ fun AddictionDailyRecordDetails.toAddictionDailyRecord(): DailyRecord =
 
 fun AddictionDetails.toAddiction(): Addiction =
     Addiction(
-        iD = id,
+        id = id,
         name = addiction
     )
 
@@ -65,6 +71,14 @@ class AddictionDailyRecordEntryViewModel(
         if (validateFirstInput() && validateSecondInput())
             dailyRecordRepository.insertAddictionDailyRecord(addictionDailyRecordUiState.addictionDailyRecordDetails.toAddictionDailyRecord())
     }
+
+    val addictionList: StateFlow<List<Addiction>> =
+        addictionRepository.getAllAddiction()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(50000),
+                initialValue = emptyList()
+            )
 
     suspend fun saveAddiction() {
         addictionRepository.insertAddiction(addictionUiState.addictionDetails.toAddiction())
@@ -86,7 +100,7 @@ class AddictionDailyRecordEntryViewModel(
 
     private fun validateFirstInput(uiState: AddictionDailyRecordDetails = addictionDailyRecordUiState.addictionDailyRecordDetails): Boolean {
         return with(uiState) {
-           // addictionId > 0 &&
+           addictionId > 0 &&
                     firstAnswer.isNotBlank() &&
                     secondAnswer.isNotBlank() &&
                     thirdAnswer.isNotBlank()
@@ -95,7 +109,7 @@ class AddictionDailyRecordEntryViewModel(
 
     private fun validateSecondInput(uiState: AddictionDailyRecordDetails = addictionDailyRecordUiState.addictionDailyRecordDetails): Boolean {
         return with(uiState) {
-            //addictionId > 0 &&
+            addictionId > 0 &&
                     fourthAnswer.isNotBlank() &&
                     fifthAnswer.isNotBlank()
         }

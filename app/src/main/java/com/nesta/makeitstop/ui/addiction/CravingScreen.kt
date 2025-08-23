@@ -50,7 +50,7 @@ fun CravingScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        topBarTitle("Pause Refléxion", 36.sp)
+        topBarTitle("Pause Réflexion", 36.sp)
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -65,9 +65,7 @@ fun CravingScreen(
                     dailyRecordUiState.addictionDailyRecordDetails.copy(addiction = "fumer")
                 )
             }
-            var firstAnswer by remember { mutableStateOf("")}
-            var secondAnswer by remember { mutableStateOf("")}
-            var thirdAnswer by remember { mutableStateOf("")}
+
 
             Column(
                 modifier = Modifier
@@ -140,15 +138,6 @@ fun CravingScreen(
 }
 
 @Composable
-fun OnBoardingScreen() {
-    var isDisplayed by remember { mutableStateOf(true) }
-
-    if (!isDisplayed) {
-
-    }
-}
-
-@Composable
 fun topBarTitle(title:String, size:TextUnit, modifier: Modifier = Modifier) {
     Text(
         text = title,
@@ -161,15 +150,4 @@ fun topBarTitle(title:String, size:TextUnit, modifier: Modifier = Modifier) {
             .paddingFromBaseline(bottom = 16.dp),
         fontSize = size,
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CravinScreenPreview() {
-    MakeItStopTheme {
-        Surface()
-        {
-           // CravingScreen(onClick = {})
-        }
-    }
 }
