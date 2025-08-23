@@ -11,7 +11,10 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
            // val application = this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as MakeItStopApplication
-            AddictionDailyRecordEntryViewModel(makeItStopApplication().container.dailyRecordRepository)
+            AddictionDailyRecordEntryViewModel(
+                makeItStopApplication().container.dailyRecordRepository,
+                makeItStopApplication().container.addictionRepository
+            )
         }
     }
 }

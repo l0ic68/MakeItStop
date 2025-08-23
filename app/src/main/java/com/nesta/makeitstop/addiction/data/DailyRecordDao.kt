@@ -23,6 +23,10 @@ interface DailyRecordDao {
     @Query("SELECT * from addiction_daily_record where id = :id")
     fun getAddictionDailyRecord(id:Int): Flow<DailyRecord>
 
-    @Query("SELECT * FROM addiction_daily_record ORDER BY addiction ASC")
+    // Récupérer tous les DailyRecords pour une addiction donnée
+    @Query("SELECT * FROM addiction_daily_record WHERE addictionId = :addictionId")
+    fun getRecordsForAddiction(addictionId: Int):Flow<List<DailyRecord>>
+
+    @Query("SELECT * FROM addiction_daily_record")
     fun getAllDailyRecords(): Flow<List<DailyRecord>>
 }

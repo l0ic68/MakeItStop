@@ -10,9 +10,15 @@ class OfflineDailyRecordsRepository(
        return dailyRecordDao.getAllDailyRecords()
     }
 
+
+    override fun getRecordsForAddiction(id: Int): Flow<List<DailyRecord?>> {
+        return dailyRecordDao.getRecordsForAddiction(id)
+    }
+
     override fun getAddictionDailyRecord(id: Int): Flow<DailyRecord?> {
         return dailyRecordDao.getAddictionDailyRecord(id)
     }
+
 
     override suspend fun insertAddictionDailyRecord(item: DailyRecord) {
         dailyRecordDao.insert(item)

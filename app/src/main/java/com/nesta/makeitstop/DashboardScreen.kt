@@ -31,14 +31,22 @@ fun DashboardScreen(
         Screen.CravingScreen -> CravingScreen(
             onClick = { currentScreen = Screen.FeelingScreen },
             dailyRecordUiState = viewModel.addictionDailyRecordUiState,
-            onDailyRecordValueChange = viewModel::updateUiState,
+            onDailyRecordValueChange = viewModel::updateAddictionDailyRecordUiState,
         )
         Screen.OnBoardingScreen -> OnBoardingScreen(
             "J'ai envie de boire un monster",
-            onClick = { currentScreen = Screen.CravingScreen })
+            onClick = {
+                coroutineScope.launch {
+                    viewModel.saveAddiction()
+                }
+                currentScreen = Screen.CravingScreen
+            },
+            addictionUiState = viewModel.addictionUiState,
+            onAddAddiction = viewModel::updateAddictionUiState
+        )
         Screen.FeelingScreen -> FeelingScreen(
             dailyRecordUiState = viewModel.addictionDailyRecordUiState,
-            onDailyRecordValueChange = viewModel::updateUiState,
+            onDailyRecordValueChange = viewModel::updateAddictionDailyRecordUiState,
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.saveDailyRecord()

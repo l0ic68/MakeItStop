@@ -4,6 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.nesta.makeitstop.addiction.data.Addiction
+import com.nesta.makeitstop.addiction.data.AddictionRepository
 import com.nesta.makeitstop.addiction.data.DailyRecord
 import com.nesta.makeitstop.addiction.data.DailyRecordRepository
 import kotlin.String
@@ -14,9 +16,14 @@ data class AddictionDailyRecordUiState(
     val isSecondEntryValid: Boolean = false
 )
 
+data class AddictionUiState(
+    val addictionDetails: AddictionDetails = AddictionDetails(),
+)
+
 data class AddictionDailyRecordDetails(
     val id: Int = 0,
     val addiction : String = "",
+    val addictionId : Int = 0 ,
     val firstAnswer: String = "",
     val secondAnswer: String = "",
     val thirdAnswer: String = "",
@@ -25,10 +32,15 @@ data class AddictionDailyRecordDetails(
     val feelingScore: Float = 5f,
 )
 
+data class AddictionDetails(
+    val id: Int = 0,
+    val addiction : String = "",
+)
+
 fun AddictionDailyRecordDetails.toAddictionDailyRecord(): DailyRecord =
     DailyRecord(
         id = id,
-        addiction = addiction,
+        addictionId = addictionId,
         firstAnswer = firstAnswer,
         secondAnswer= secondAnswer,
         thirdAnswer = thirdAnswer,
@@ -38,33 +50,52 @@ fun AddictionDailyRecordDetails.toAddictionDailyRecord(): DailyRecord =
     )
 
 
+fun AddictionDetails.toAddiction(): Addiction =
+    Addiction(
+        iD = id,
+        name = addiction
+    )
 
-class AddictionDailyRecordEntryViewModel(private val dailyRecordRepository: DailyRecordRepository): ViewModel() {
+class AddictionDailyRecordEntryViewModel(
+    private val dailyRecordRepository: DailyRecordRepository,
+    private val addictionRepository: AddictionRepository
+): ViewModel() {
 
     suspend fun saveDailyRecord() {
         if (validateFirstInput() && validateSecondInput())
             dailyRecordRepository.insertAddictionDailyRecord(addictionDailyRecordUiState.addictionDailyRecordDetails.toAddictionDailyRecord())
     }
 
-    var addictionDailyRecordUiState by mutableStateOf(AddictionDailyRecordUiState())
+    suspend fun saveAddiction() {
+        addictionRepository.insertAddiction(addictionUiState.addictionDetails.toAddiction())
+    }
 
-    fun updateUiState(addictionDailyRecordDetails: AddictionDailyRecordDetails){
+    var addictionDailyRecordUiState by mutableStateOf(AddictionDailyRecordUiState())
+    var addictionUiState by mutableStateOf(AddictionUiState())
+
+    fun updateAddictionDailyRecordUiState(addictionDailyRecordDetails: AddictionDailyRecordDetails){
         addictionDailyRecordUiState =
             AddictionDailyRecordUiState(addictionDailyRecordDetails = addictionDailyRecordDetails, isFirstEntryValid = validateFirstInput(addictionDailyRecordDetails), isSecondEntryValid = validateSecondInput(addictionDailyRecordDetails))
+    }
+
+    fun updateAddictionUiState(addictionDetails: AddictionDetails){
+        addictionUiState =
+            AddictionUiState(addictionDetails = addictionDetails)
     }
 
 
     private fun validateFirstInput(uiState: AddictionDailyRecordDetails = addictionDailyRecordUiState.addictionDailyRecordDetails): Boolean {
         return with(uiState) {
-            addiction.isNotBlank() &&
+           // addictionId > 0 &&
                     firstAnswer.isNotBlank() &&
-                    secondAnswer.isNotBlank()
+                    secondAnswer.isNotBlank() &&
+                    thirdAnswer.isNotBlank()
         }
     }
 
     private fun validateSecondInput(uiState: AddictionDailyRecordDetails = addictionDailyRecordUiState.addictionDailyRecordDetails): Boolean {
         return with(uiState) {
-            addiction.isNotBlank() &&
+            //addictionId > 0 &&
                     fourthAnswer.isNotBlank() &&
                     fifthAnswer.isNotBlank()
         }

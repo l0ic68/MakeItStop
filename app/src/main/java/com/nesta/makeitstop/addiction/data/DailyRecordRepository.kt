@@ -7,6 +7,8 @@ interface DailyRecordRepository {
 
     fun getAddictionDailyRecord(id: Int): Flow<DailyRecord?>
 
+    fun getRecordsForAddiction(id: Int): Flow<List<DailyRecord?>>
+
     suspend fun insertAddictionDailyRecord(item: DailyRecord)
 
     suspend fun deleteAddictionDailyRecord(item: DailyRecord)
