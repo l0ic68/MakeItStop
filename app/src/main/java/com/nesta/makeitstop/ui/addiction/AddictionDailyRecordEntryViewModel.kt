@@ -22,10 +22,6 @@ data class AddictionDailyRecordUiState(
     val isSecondEntryValid: Boolean = false
 )
 
-data class AddictionUiState(
-    val addictionDetails: AddictionDetails = AddictionDetails(),
-)
-
 data class AddictionDailyRecordDetails(
     val id: Int = 0,
     val addiction : String = "",
@@ -36,11 +32,6 @@ data class AddictionDailyRecordDetails(
     val fourthAnswer: String = "",
     val fifthAnswer: String = "",
     val feelingScore: Float = 5f,
-)
-
-data class AddictionDetails(
-    val id: Int = 0,
-    val addiction : String = "",
 )
 
 fun AddictionDailyRecordDetails.toAddictionDailyRecord(): DailyRecord =
@@ -64,7 +55,6 @@ fun AddictionDetails.toAddiction(): Addiction =
 
 class AddictionDailyRecordEntryViewModel(
     private val dailyRecordRepository: DailyRecordRepository,
-    private val addictionRepository: AddictionRepository
 ): ViewModel() {
 
     suspend fun saveDailyRecord() {
@@ -72,35 +62,20 @@ class AddictionDailyRecordEntryViewModel(
             dailyRecordRepository.insertAddictionDailyRecord(addictionDailyRecordUiState.addictionDailyRecordDetails.toAddictionDailyRecord())
     }
 
-    val addictionList: StateFlow<List<Addiction>> =
-        addictionRepository.getAllAddiction()
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(50000),
-                initialValue = emptyList()
-            )
-
-    suspend fun saveAddiction() {
-        addictionRepository.insertAddiction(addictionUiState.addictionDetails.toAddiction())
-    }
 
     var addictionDailyRecordUiState by mutableStateOf(AddictionDailyRecordUiState())
-    var addictionUiState by mutableStateOf(AddictionUiState())
 
     fun updateAddictionDailyRecordUiState(addictionDailyRecordDetails: AddictionDailyRecordDetails){
         addictionDailyRecordUiState =
             AddictionDailyRecordUiState(addictionDailyRecordDetails = addictionDailyRecordDetails, isFirstEntryValid = validateFirstInput(addictionDailyRecordDetails), isSecondEntryValid = validateSecondInput(addictionDailyRecordDetails))
     }
 
-    fun updateAddictionUiState(addictionDetails: AddictionDetails){
-        addictionUiState =
-            AddictionUiState(addictionDetails = addictionDetails)
-    }
+
 
 
     private fun validateFirstInput(uiState: AddictionDailyRecordDetails = addictionDailyRecordUiState.addictionDailyRecordDetails): Boolean {
         return with(uiState) {
-           addictionId > 0 &&
+          // addictionId > 0 &&
                     firstAnswer.isNotBlank() &&
                     secondAnswer.isNotBlank() &&
                     thirdAnswer.isNotBlank()
@@ -109,7 +84,7 @@ class AddictionDailyRecordEntryViewModel(
 
     private fun validateSecondInput(uiState: AddictionDailyRecordDetails = addictionDailyRecordUiState.addictionDailyRecordDetails): Boolean {
         return with(uiState) {
-            addictionId > 0 &&
+          //  addictionId > 0 &&
                     fourthAnswer.isNotBlank() &&
                     fifthAnswer.isNotBlank()
         }

@@ -17,10 +17,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,16 +28,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.addiction.data.Addiction
-import com.nesta.makeitstop.tutorial.WellnessTaskItem
 import com.nesta.makeitstop.ui.theme.PrimaryWhite
 import com.nesta.makeitstop.ui.theme.poppinFont
-import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun OnBoardingScreen(
+fun AddictionsScreen(
     modifier: Modifier,
-    addictionUiState : AddictionUiState,
+    addictionUiState: State<AddictionUiState>,
     onClick: () -> Unit,
+    onAddAddictionClick: () -> Unit,
     onAddAddiction: (AddictionDetails) -> Unit,
     addictionList: List<Addiction>,
     ) {
@@ -83,10 +79,9 @@ fun OnBoardingScreen(
             }
         }
 
-        var showDialog by remember { mutableStateOf(false)}
 
         Button(
-            onClick = { showDialog = true },
+            onClick = onAddAddictionClick,
             modifier = Modifier
                 .padding(20.dp)
                 .fillMaxWidth()
@@ -106,14 +101,14 @@ fun OnBoardingScreen(
                 textAlign = TextAlign.Center
             )
         }
-        if (showDialog) {
+        if (addictionUiState.value.showDialog) {
             AlertDialog(
-                onDismissRequest = { showDialog = false },
+                onDismissRequest = { },
                 title = { Text(text = "Nouvelle Addiction") },
                 text = {
                     TextField(
-                        value = addictionUiState.addictionDetails.addiction,
-                        onValueChange = { onAddAddiction(addictionUiState.addictionDetails.copy(addiction = it)) },
+                        value = addictionUiState.value.addictionDetails.addiction,
+                        onValueChange = { onAddAddiction(addictionUiState.value.addictionDetails.copy(addiction = it)) },
                         label = { Text("Nom de l'addiction") }
                     )
                 },
@@ -123,7 +118,7 @@ fun OnBoardingScreen(
                     }
                 },
                 dismissButton = {
-                    Button(onClick = { showDialog = false }) {
+                    Button(onClick = { /*showDialog = false*/ }) {
                         Text("Annuler")
                     }
                 }

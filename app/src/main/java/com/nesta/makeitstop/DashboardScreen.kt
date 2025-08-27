@@ -12,9 +12,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nesta.makeitstop.ui.AppViewModelProvider
 import com.nesta.makeitstop.ui.addiction.AddictionDailyRecordEntryViewModel
+import com.nesta.makeitstop.ui.addiction.AddictionViewModel
 import com.nesta.makeitstop.ui.addiction.CravingScreen
 import com.nesta.makeitstop.ui.addiction.FeelingScreen
-import com.nesta.makeitstop.ui.addiction.OnBoardingScreen
+import com.nesta.makeitstop.ui.addiction.AddictionsScreen
 import kotlinx.coroutines.launch
 
 enum class Screen {
@@ -24,31 +25,33 @@ enum class Screen {
 }
 @Composable
 fun DashboardScreen(
-    viewModel: AddictionDailyRecordEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: AddictionDailyRecordEntryViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    addictionViewModel: AddictionViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     var currentScreen by remember { mutableStateOf(Screen.OnBoardingScreen) }
     val coroutineScope = rememberCoroutineScope()
-    val addictionUiState by viewModel.addictionList.collectAsState()
+    val addictionList by addictionViewModel.addictionList.collectAsState()
     when (currentScreen) {
         Screen.CravingScreen -> CravingScreen(
             onClick = { currentScreen = Screen.FeelingScreen },
             dailyRecordUiState = viewModel.addictionDailyRecordUiState,
             onDailyRecordValueChange = viewModel::updateAddictionDailyRecordUiState,
         )
-        Screen.OnBoardingScreen -> OnBoardingScreen(
+        Screen.OnBoardingScreen -> AddictionsScreen(
             modifier = Modifier,
             onClick = {
                 coroutineScope.launch {
-                    viewModel.saveAddiction()
-                    viewModel.addictionDailyRecordUiState.addictionDailyRecordDetails.copy(addiction = viewModel.addictionUiState.addictionDetails.addiction)
-                    viewModel.addictionDailyRecordUiState.addictionDailyRecordDetails.copy(addictionId = viewModel.addictionUiState.addictionDetails.id)
+                    addictionViewModel.saveAddiction()
+                    viewModel.addictionDailyRecordUiState.addictionDailyRecordDetails.copy(addiction = addictionViewModel.uiState.value.addictionDetails.addiction)
+                    viewModel.addictionDailyRecordUiState.addictionDailyRecordDetails.copy(addictionId = addictionViewModel.uiState.value.addictionDetails.id)
                 }
 
                 currentScreen = Screen.CravingScreen
             },
-            addictionUiState = viewModel.addictionUiState,
-            onAddAddiction = viewModel::updateAddictionUiState,
-            addictionList = addictionUiState
+            addictionUiState = addictionViewModel.uiState.collectAsState(),
+            onAddAddiction = addictionViewModel::updateAddictionUiState,
+            onAddAddictionClick = addictionViewModel::addAddictionClick,
+            addictionList = addictionList
         )
         Screen.FeelingScreen -> FeelingScreen(
             dailyRecordUiState = viewModel.addictionDailyRecordUiState,
