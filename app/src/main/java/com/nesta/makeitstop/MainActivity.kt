@@ -6,30 +6,41 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.rememberNavController
+import com.nesta.makeitstop.navigation.AppNavHost
 import com.nesta.makeitstop.ui.theme.MakeItStopTheme
 
 private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate Called")
         enableEdgeToEdge()
         setContent {
             MakeItStopTheme {
-              /*  Scaffold(
-                    bottomBar = { BottomAppBar() }
-                ) { padding ->
-                    HomeScreen(Modifier.padding(padding))
-                }*/
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color(0XFFFAFAFA)
-                ) {
-                   // CravingScreen()
-                    DashboardScreen()
+            val navController = rememberNavController()
+                Scaffold(
+                    topBar = {
+                        CenterAlignedTopAppBar(
+                            title = { Text("MakeItStop") }
+                        )
+                    }
+
+                ){ innerPadding ->
+                    AppNavHost(
+                        navController = navController,
+                        modifier = Modifier.padding(innerPadding)
+                    )
+
                 }
             }
         }

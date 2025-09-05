@@ -5,8 +5,8 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.nesta.makeitstop.MakeItStopApplication
-import com.nesta.makeitstop.ui.addiction.AddictionDailyRecordEntryViewModel
-import com.nesta.makeitstop.ui.addiction.AddictionViewModel
+import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordEntryViewModel
+import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {

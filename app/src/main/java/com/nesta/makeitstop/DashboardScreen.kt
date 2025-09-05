@@ -11,11 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nesta.makeitstop.ui.AppViewModelProvider
-import com.nesta.makeitstop.ui.addiction.AddictionDailyRecordEntryViewModel
-import com.nesta.makeitstop.ui.addiction.AddictionViewModel
-import com.nesta.makeitstop.ui.addiction.CravingScreen
-import com.nesta.makeitstop.ui.addiction.FeelingScreen
-import com.nesta.makeitstop.ui.addiction.AddictionsScreen
+import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordEntryViewModel
+import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionViewModel
+import com.nesta.makeitstop.features.feature_addiction.ui.CravingScreen
+import com.nesta.makeitstop.features.feature_addiction.ui.FeelingScreen
+import com.nesta.makeitstop.features.feature_addiction.ui.AddictionsScreen
 import kotlinx.coroutines.launch
 
 enum class Screen {
@@ -40,11 +40,7 @@ fun DashboardScreen(
         Screen.OnBoardingScreen -> AddictionsScreen(
             modifier = Modifier,
             onClick = {
-                coroutineScope.launch {
-                    addictionViewModel.saveAddiction()
-                    viewModel.addictionDailyRecordUiState.addictionDailyRecordDetails.copy(addiction = addictionViewModel.uiState.value.addictionDetails.addiction)
-                    viewModel.addictionDailyRecordUiState.addictionDailyRecordDetails.copy(addictionId = addictionViewModel.uiState.value.addictionDetails.id)
-                }
+
 
                 currentScreen = Screen.CravingScreen
             },
