@@ -1,4 +1,4 @@
-package com.nesta.makeitstop.features.feature_addiction.ui
+package com.nesta.makeitstop.core.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +25,7 @@ import com.nesta.makeitstop.ui.theme.interFont
 import com.nesta.makeitstop.ui.theme.poppinFont
 
 @Composable
-fun GuiltItem(
+fun QuestionItem(
     modifier: Modifier = Modifier,
     question: String,
     text: String,
@@ -92,5 +92,5 @@ fun GuiltItem(
 @Preview(showBackground = true)
 @Composable
 fun GuiltItemPreview() {
-    //GuiltItem(question = "Est-ce que j’en ai vraiment envie ?", text = "" , onValueChange = {}, modifier = Modifier.padding(16.dp))
+    QuestionItem(question = "Est-ce que j’en ai vraiment envie ?", text = "" , onValueChange = {}, modifier = Modifier.padding(16.dp))
 }

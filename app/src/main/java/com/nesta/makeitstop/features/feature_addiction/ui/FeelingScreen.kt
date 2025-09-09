@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordUiState
 import com.nesta.makeitstop.ui.theme.PrimaryWhite
@@ -79,11 +80,11 @@ fun FeelingScreen(
                     }
                 )
 
-                GuiltItem(
+                QuestionItem(
                     question = "Dans quel contexte étais-je ?",
                     text = dailyRecordUiState.addictionDailyRecordDetails.fourthAnswer,
                     onValueChange = { onDailyRecordValueChange(dailyRecordUiState.addictionDailyRecordDetails.copy(fourthAnswer = it)) })
-                GuiltItem(
+                QuestionItem(
                     question = "Comment je me sens maintenant",
                     text = dailyRecordUiState.addictionDailyRecordDetails.fifthAnswer,
                     onValueChange = { onDailyRecordValueChange(dailyRecordUiState.addictionDailyRecordDetails.copy(fifthAnswer = it)) })

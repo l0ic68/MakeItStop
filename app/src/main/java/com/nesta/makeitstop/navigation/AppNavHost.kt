@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.nesta.makeitstop.DashboardScreen
 import com.nesta.makeitstop.MakeItStopApp
 import com.nesta.makeitstop.features.feature_addiction.addictionGraph
+import com.nesta.makeitstop.features.feature_sleeping_journal.sleepingJournalGraph
 
 enum class Module {
     Addiction,
@@ -32,14 +33,14 @@ fun AppNavHost(
                 onModuleClick = { module ->
                     when (module) {
                         Module.Addiction -> navController.navigate(Routes.Addiction.DashBoard)
-                        Module.Sleep -> TODO()
+                        Module.Sleep -> navController.navigate(Routes.SleepingJournaling.DashBoard)
                         Module.Breathing -> TODO()
                     }
                 }
             )
         }
 
-        // Sous-graphe Addiction
         addictionGraph(navController)
+        sleepingJournalGraph(navController)
     }
 }

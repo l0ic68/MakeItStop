@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MakeItStopTheme {
-                /*
+
                 val navController = rememberNavController()
                 Scaffold(
                     topBar = {
@@ -43,13 +43,14 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )
 
-                }*/
-                Surface(
+                }
+                /*Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     SleepingJournalScreen()
-                }            }
+                }*/
+            }
         }
     }
 

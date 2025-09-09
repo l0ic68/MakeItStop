@@ -1,38 +1,48 @@
 package com.nesta.makeitstop.features.feature_sleeping_journal.ui
 
-import androidx.compose.foundation.gestures.snapping.SnapPosition
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nesta.makeitstop.ModuleCard
-import com.nesta.makeitstop.ui.theme.interFont
+import com.nesta.makeitstop.core.ui.QuestionItem
+import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournal
+import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournalUiState
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SleepingJournalScreen() {
+fun SleepingJournalScreen(
+    onClick:() -> Unit,
+    sleepingJournalUiState: SleepingJournalUiState,
+    onSleepingJournalValueChange: (SleepingJournal) -> Unit = {},
+    modifier: Modifier
+) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                ),
+                title =
                 {
                     Text("Journaling du soir")
                 }
@@ -61,67 +71,48 @@ fun SleepingJournalScreen() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth()
                 ) {
+                    val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+                    val currentDate = LocalDateTime.now().format(formatter)
                     Text(
-                        "Gratitude du jour",
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    TextField(
-                        label =  {
-                            Text(
-                                text = "Une gratidute",
-                                color = Color(0xFF999999),
-                                style = TextStyle(
-                                    fontFamily = interFont,
-                                    fontStyle = FontStyle.Italic,
-                                    fontSize = 14.sp,
-                                )
+                        text = currentDate.toString(),
+                        fontSize = 20.sp,
+                        modifier = Modifier
+                            .padding(20.dp)
+                            .fillMaxWidth())
+                    QuestionItem(
+                            question = "Une gratitude",
+                            text = sleepingJournalUiState.journal.firstQuestion,
+                            onValueChange = { onSleepingJournalValueChange(sleepingJournalUiState.journal.copy(firstQuestion = it)) })
+                    QuestionItem(
+                        question = "Une décharge :",
+                        text = sleepingJournalUiState.journal.secondQuestion,
+                        onValueChange = {
+                            onSleepingJournalValueChange(
+                                sleepingJournalUiState.journal.copy(secondQuestion = it)
                             )
                         },
-                        value = "",
-                        onValueChange = {}
                     )
-                    TextField(
-                        label =  {
-                            Text(
-                                text = "Une décharge",
-                                color = Color(0xFF999999),
-                                style = TextStyle(
-                                    fontFamily = interFont,
-                                    fontStyle = FontStyle.Italic,
-                                    fontSize = 14.sp,
-                                )
+                    QuestionItem(
+                        question = "Une intention douce pour demain :",
+                        text = sleepingJournalUiState.journal.thirdQuestion,
+                        onValueChange = {
+                            onSleepingJournalValueChange(
+                                sleepingJournalUiState.journal.copy(thirdQuestion = it)
                             )
                         },
-                        value = "",
-                        onValueChange = {}
                     )
-                    TextField(
-                        label =  {
-                            Text(
-                                text = "Une intention douce pour demain",
-                                color = Color(0xFF999999),
-                                style = TextStyle(
-                                    fontFamily = interFont,
-                                    fontStyle = FontStyle.Italic,
-                                    fontSize = 14.sp,
-                                )
-                            )
-                        },
-                        value = "",
-                        onValueChange = {}
-                    )
-                    Text("Suite du text", modifier = Modifier.padding(innerPadding))
 
+                    Button(
+                        onClick = onClick,
+                        modifier = Modifier.padding(vertical = 10.dp),
+                        enabled = sleepingJournalUiState.isEntryValid,
+                        content = {
+                            Text("Submit")
+                        }
+                    )
                 }
             }
 
         }
     }
-}
-
-
-@Composable
-@Preview(showBackground = true)
-fun Preview(){
-    SleepingJournalScreen()
 }

@@ -1,6 +1,7 @@
 package com.nesta.makeitstop
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -50,7 +52,9 @@ enum class MakeItStopScreen() {
 fun MakeItStopApp(
     onModuleClick: (Module) -> Unit
 ) {
-    Column {
+    Column(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background)
+    ) {
         MakeItStopScreenContent(
             onModuleClick = onModuleClick,
             Modifier
@@ -84,18 +88,21 @@ fun MakeItStopScreenContent(
         item {
             ModuleCard(
                 modifier = Modifier,
+                text = "Addiction",
                 onClick = { onModuleClick(Module.Addiction)}
             )
         }
         item {
             ModuleCard(
                 modifier = Modifier,
-                onClick = { onModuleClick(Module.Addiction)}
+                text = "Sleeping",
+                onClick = { onModuleClick(Module.Sleep)}
             )
         }
         item {
             ModuleCard(
                 modifier = Modifier,
+                text = "",
                 onClick = { onModuleClick(Module.Addiction)}
             )
         }
@@ -130,6 +137,7 @@ fun MakeItStopScreenPreview() {
 @Composable
 fun ModuleCard(
     onClick: () -> Unit,
+    text: String,
     modifier: Modifier
 ) {
     Card(
@@ -164,7 +172,7 @@ fun ModuleCard(
                 contentDescription = ""
             )
             Text(
-                text = "Addiction",
+                text = text,
             )
 
         }

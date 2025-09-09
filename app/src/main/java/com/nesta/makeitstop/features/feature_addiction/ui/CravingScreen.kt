@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordUiState
 import com.nesta.makeitstop.ui.theme.PrimaryWhite
@@ -70,7 +71,7 @@ fun CravingScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-                GuiltItem(
+                QuestionItem(
                     question = stringResource(R.string.craving_first_sentence),
                     text = dailyRecordUiState.addictionDailyRecordDetails.firstAnswer,
                     onValueChange = {
@@ -79,7 +80,7 @@ fun CravingScreen(
                         )
                     }
                 )
-                GuiltItem(
+                QuestionItem(
                     question = stringResource(R.string.craving_second_sentence),
                     text = dailyRecordUiState.addictionDailyRecordDetails.secondAnswer,
                     onValueChange = {
@@ -88,7 +89,7 @@ fun CravingScreen(
                         )
                     }
                 )
-                GuiltItem(
+                QuestionItem(
                     question = stringResource(R.string.craving_third_sentence),
                     text = dailyRecordUiState.addictionDailyRecordDetails.thirdAnswer,
                     onValueChange = {

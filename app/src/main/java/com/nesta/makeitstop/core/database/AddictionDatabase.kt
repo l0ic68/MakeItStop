@@ -8,11 +8,19 @@ import com.nesta.makeitstop.features.feature_addiction.data.model.Addiction
 import com.nesta.makeitstop.features.feature_addiction.data.dao.AddictionDao
 import com.nesta.makeitstop.features.feature_addiction.data.model.DailyRecord
 import com.nesta.makeitstop.features.feature_addiction.data.dao.DailyRecordDao
+import com.nesta.makeitstop.features.feature_sleeping_journal.data.dao.SleepingJournalRecordDao
+import com.nesta.makeitstop.features.feature_sleeping_journal.data.model.SleepingJournalRecord
+import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournal
 
-@Database(entities = [DailyRecord::class, Addiction::class], version = 4, exportSchema = false)
+@Database(entities = [
+    DailyRecord::class,
+    Addiction::class,
+    SleepingJournalRecord::class], version = 6, exportSchema = true)
 abstract class AddictionDatabase : RoomDatabase() {
     abstract fun addictionDailyRecordDao(): DailyRecordDao
     abstract fun addictionDao(): AddictionDao
+
+    abstract fun sleepingJournalRecordDao(): SleepingJournalRecordDao
     companion object {
         @Volatile
         private var Instance: AddictionDatabase? = null
