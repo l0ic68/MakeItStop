@@ -5,7 +5,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -18,12 +17,18 @@ import com.nesta.makeitstop.navigation.Routes
 import com.nesta.makeitstop.ui.AppViewModelProvider
 import kotlinx.coroutines.launch
 
+
+enum class Tab {
+    Sleeping,
+    Dashboard
+}
 fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
     navigation(
         route = Routes.SleepingJournaling.Graph,
-        startDestination = Routes.SleepingJournaling.DashBoard
+        startDestination = Routes.SleepingJournaling.Sleeping
     ) {
-        composable(Routes.SleepingJournaling.DashBoard) { backStackEntry ->
+        var currentTab = Tab.Sleeping
+        composable(Routes.SleepingJournaling.Sleeping) { backStackEntry ->
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Routes.SleepingJournaling.Graph)
             }
@@ -40,19 +45,44 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
                 },
                 sleepingJournalUiState = viewModel.sleepingJournalUiState,
                 onSleepingJournalValueChange = viewModel::updateSleepingRecordUiState,
-                onBottomBarValueChange = {
-                    navController.navigate(Routes.SleepingJournaling.Sleeping)
+                onTabSelected = { tab ->
+                    if (currentTab != tab) {
+                        currentTab = tab
+
+                        when(tab) {
+                            Tab.Sleeping ->
+                                navController.navigate(Routes.SleepingJournaling.Sleeping)
+                            Tab.Dashboard -> navController.navigate(Routes.SleepingJournaling.DashBoard)
+                        }
+
+                    }
                 },
+                currentTab = Tab.Sleeping,
                 modifier = Modifier.padding(20.dp)
             )
         }
 
-        composable(Routes.SleepingJournaling.Sleeping) { backStackEntry ->
+        composable(Routes.SleepingJournaling.DashBoard) { backStackEntry ->
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Routes.SleepingJournaling.Graph)
             }
 
-            SleepingJournalsScreen()
+            SleepingJournalsScreen(
+                onTabSelected = { tab ->
+                    if (currentTab != tab) {
+                        currentTab = tab
+
+                        when(tab) {
+                            Tab.Sleeping ->
+                                navController.navigate(Routes.SleepingJournaling.Sleeping)
+                            Tab.Dashboard -> navController.navigate(Routes.SleepingJournaling.DashBoard)
+                        }
+
+                    }
+                },
+                currentTab = Tab.Dashboard,
+                modifier = Modifier.padding(20.dp)
+            )
         }
     }
 }

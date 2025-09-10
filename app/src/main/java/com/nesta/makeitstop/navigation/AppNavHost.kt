@@ -32,7 +32,7 @@ fun AppNavHost(
                 onModuleClick = { module ->
                     when (module) {
                         Module.Addiction -> navController.navigate(Routes.Addiction.DashBoard)
-                        Module.Sleep -> navController.navigate(Routes.SleepingJournaling.DashBoard)
+                        Module.Sleep -> navController.navigate(Routes.SleepingJournaling.Sleeping)
                         Module.Breathing -> TODO()
                     }
                 }

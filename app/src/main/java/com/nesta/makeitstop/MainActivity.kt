@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.nesta.makeitstop.features.feature_sleeping_journal.ui.SleepingJournalScreen
 import com.nesta.makeitstop.navigation.AppNavHost
@@ -30,28 +31,19 @@ class MainActivity : ComponentActivity() {
             MakeItStopTheme {
 
                 val navController = rememberNavController()
-                Scaffold(
-                    topBar = {
-                        CenterAlignedTopAppBar(
-                            title = { Text("MakeItStop") }
-                        )
-                    }
 
-                ){ innerPadding ->
-                    AppNavHost(
-                        navController = navController,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                AppNavHost(
+                    navController = navController,
+                    modifier = Modifier.padding(20.dp)
+                )
 
-                }
-                /*Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    SleepingJournalScreen()
-                }*/
             }
+            /*Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                SleepingJournalScreen()
+            }*/
         }
     }
-
 }

@@ -17,10 +17,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,26 +51,36 @@ enum class MakeItStopScreen() {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MakeItStopApp(
     onModuleClick: (Module) -> Unit
 ) {
-    Column(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background)
-    ) {
-        MakeItStopScreenContent(
-            onModuleClick = onModuleClick,
-            Modifier
-                .padding()
-                .fillMaxWidth()
-                .fillMaxHeight()
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                { Text("MakeItStop") }
+            )
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .padding(innerPadding)
+        ) {
+            MakeItStopScreenContent(
+                onModuleClick = onModuleClick,
+                Modifier
+                    .padding()
+                    .fillMaxWidth()
+                    .fillMaxHeight()
 
-        )
+            )
+        }
+
+
     }
-
-
 }
-
 @Composable
 fun MakeItStopScreenContent(
     onModuleClick: (Module) -> Unit,
@@ -108,30 +121,6 @@ fun MakeItStopScreenContent(
         }
 
     }
-}
-
-@Composable
-fun TopBar(
-    modifier: Modifier = Modifier
-
-) {
-    Surface(
-        modifier = modifier,
-        shape = RoundedCornerShape(12.dp),
-        color = Color.Green
-    ) {
-        Text(
-            text = "MakeItStop",
-            textAlign = TextAlign.Center,
-            fontSize = 40.sp,
-        )
-    }
-
-}
-
-@Composable
-@Preview(showBackground = true)
-fun MakeItStopScreenPreview() {
 }
 
 @Composable

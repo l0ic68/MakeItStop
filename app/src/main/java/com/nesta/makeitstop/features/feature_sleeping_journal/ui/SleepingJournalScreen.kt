@@ -1,7 +1,5 @@
 package com.nesta.makeitstop.features.feature_sleeping_journal.ui
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,11 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.nesta.makeitstop.core.ui.QuestionItem
+import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournal
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournalUiState
 import java.time.LocalDateTime
@@ -40,7 +37,8 @@ fun SleepingJournalScreen(
     onClick:() -> Unit,
     sleepingJournalUiState: SleepingJournalUiState,
     onSleepingJournalValueChange: (SleepingJournal) -> Unit = {},
-    onBottomBarValueChange:() -> Unit,
+    onTabSelected:(Tab) -> Unit,
+    currentTab: Tab,
     modifier: Modifier
 ) {
     Scaffold(
@@ -52,13 +50,17 @@ fun SleepingJournalScreen(
                 ),
                 title =
                 {
-                    Text("Journaling du soir")
+                    Text(
+                        text = "Journaling du soir",
+                        fontSize = 30.sp
+                    )
                 }
             )
         },
         bottomBar = {
-            BottomJournalRecordAppBar(
-                onBottomBarValueChange,
+            BottomSleepingJournalingNavigation(
+                onTabSelected,
+                currentTab,
                 modifier)
         }
     ) { innerPadding ->
@@ -89,9 +91,11 @@ fun SleepingJournalScreen(
                     Text(
                         text = currentDate.toString(),
                         fontSize = 20.sp,
+                        color = Color.Black,
                         modifier = Modifier
                             .padding(20.dp)
                             .fillMaxWidth())
+
                     QuestionItem(
                             question = "Une gratitude",
                             text = sleepingJournalUiState.journal.firstQuestion,
@@ -99,20 +103,12 @@ fun SleepingJournalScreen(
                     QuestionItem(
                         question = "Une décharge :",
                         text = sleepingJournalUiState.journal.secondQuestion,
-                        onValueChange = {
-                            onSleepingJournalValueChange(
-                                sleepingJournalUiState.journal.copy(secondQuestion = it)
-                            )
-                        },
+                        onValueChange = { onSleepingJournalValueChange(sleepingJournalUiState.journal.copy(secondQuestion = it)) },
                     )
                     QuestionItem(
                         question = "Une intention douce pour demain :",
                         text = sleepingJournalUiState.journal.thirdQuestion,
-                        onValueChange = {
-                            onSleepingJournalValueChange(
-                                sleepingJournalUiState.journal.copy(thirdQuestion = it)
-                            )
-                        },
+                        onValueChange = { onSleepingJournalValueChange(sleepingJournalUiState.journal.copy(thirdQuestion = it)) },
                     )
 
                     Button(
@@ -127,37 +123,5 @@ fun SleepingJournalScreen(
             }
 
         }
-    }
-}
-
-@Composable
-fun BottomJournalRecordAppBar(
-    onBottomBarValueChange: () -> Unit,
-    modifier: Modifier
-) {
-    NavigationBar(
-        containerColor = Color.White,
-        modifier = modifier
-    ) {
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.Home,
-                    contentDescription = null
-                )
-            },
-            selected = true,
-            onClick = onBottomBarValueChange
-        )
-        NavigationBarItem(
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = null
-                )
-            },
-            selected = true,
-            onClick = {}
-        )
     }
 }
