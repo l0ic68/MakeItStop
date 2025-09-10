@@ -5,12 +5,18 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -21,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournal
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournalUiState
@@ -33,6 +40,7 @@ fun SleepingJournalScreen(
     onClick:() -> Unit,
     sleepingJournalUiState: SleepingJournalUiState,
     onSleepingJournalValueChange: (SleepingJournal) -> Unit = {},
+    onBottomBarValueChange:() -> Unit,
     modifier: Modifier
 ) {
     Scaffold(
@@ -47,6 +55,11 @@ fun SleepingJournalScreen(
                     Text("Journaling du soir")
                 }
             )
+        },
+        bottomBar = {
+            BottomJournalRecordAppBar(
+                onBottomBarValueChange,
+                modifier)
         }
     ) { innerPadding ->
         Column(
@@ -114,5 +127,37 @@ fun SleepingJournalScreen(
             }
 
         }
+    }
+}
+
+@Composable
+fun BottomJournalRecordAppBar(
+    onBottomBarValueChange: () -> Unit,
+    modifier: Modifier
+) {
+    NavigationBar(
+        containerColor = Color.White,
+        modifier = modifier
+    ) {
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = null
+                )
+            },
+            selected = true,
+            onClick = onBottomBarValueChange
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Menu,
+                    contentDescription = null
+                )
+            },
+            selected = true,
+            onClick = {}
+        )
     }
 }
