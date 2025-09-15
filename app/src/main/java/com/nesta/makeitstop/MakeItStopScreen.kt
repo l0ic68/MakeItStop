@@ -71,8 +71,7 @@ fun MakeItStopApp(
             MakeItStopScreenContent(
                 onModuleClick = onModuleClick,
                 Modifier
-                    .padding()
-                    .fillMaxWidth()
+                     .fillMaxWidth()
                     .fillMaxHeight()
 
             )
