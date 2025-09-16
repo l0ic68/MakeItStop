@@ -1,8 +1,11 @@
 package com.nesta.makeitstop.features.feature_sleeping_journal.ui
 
+import android.util.MutableBoolean
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -10,20 +13,34 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -66,7 +83,8 @@ fun SleepingJournalsScreen(
             BottomSleepingJournalingNavigation(
                 onTabSelected,
                 currentTab,
-                modifier)
+                modifier
+            )
         }
     ) { innerPadding ->
         LazyColumn(
@@ -74,7 +92,7 @@ fun SleepingJournalsScreen(
         ) {
             items(
                 items = recordList,
-                key = { task: SleepingJournalRecord -> task.id}
+                key = { task: SleepingJournalRecord -> task.id }
             ) { task ->
                 SleepingCard(task)
             }
@@ -83,7 +101,9 @@ fun SleepingJournalsScreen(
 }
 
 @Composable
-fun SleepingCard(task:SleepingJournalRecord) {
+fun SleepingCard(task: SleepingJournalRecord) {
+
+    var isCardOpen by remember{ mutableStateOf(false) }
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFF9F9FB)
@@ -101,77 +121,109 @@ fun SleepingCard(task:SleepingJournalRecord) {
             modifier = Modifier
                 .padding(vertical = 16.dp, horizontal = 14.dp)
         ) {
-            Text(
-                text = task.date,
-                fontFamily = nunitoFont,
-                fontWeight = FontWeight.SemiBold,
-                fontStyle = FontStyle.Normal,
-                fontSize = 16.sp,
-                color =  Color(0xFF444654),
-                modifier = Modifier.fillMaxWidth()
-            )
-            HorizontalDivider(
-                Modifier
-                    .padding(10.dp)
-            )
-            Text(
-                text = "\uD83C\uDF1E Gratitude",
-                fontFamily = nunitoFont,
-                fontWeight = FontWeight.Medium,
-                fontStyle = FontStyle.Normal,
-                fontSize = 14.sp,
-                color =  Color(0xFF1B1C42),
-                modifier = Modifier.fillMaxWidth()
-            )
-            Text(
-                text = task.firstQuestion,
-                fontFamily = nunitoFont,
-                fontWeight = FontWeight.Normal,
-                fontStyle = FontStyle.Normal,
-                color =  Color(0xFF444654),
-                fontSize = 14.sp,
-                modifier = Modifier.padding(horizontal = 20.dp)
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = task.date,
+                    fontFamily = nunitoFont,
+                    fontWeight = FontWeight.SemiBold,
+                    fontStyle = FontStyle.Normal,
+                    fontSize = 16.sp,
+                    color = Color(0xFF444654),
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .fillMaxHeight()
+                )
 
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "\uD83C\uDF19 Décharge",
-                fontFamily = nunitoFont,
-                fontWeight = FontWeight.Medium,
-                fontStyle = FontStyle.Normal,
-                fontSize = 14.sp,
-                color =  Color(0xFF1B1C42),
-                modifier = Modifier.fillMaxWidth()
-            )
-            Text(
-                text = task.secondQuestion,
-                fontFamily = nunitoFont,
-                fontWeight = FontWeight.Normal,
-                fontStyle = FontStyle.Normal,
-                color =  Color(0xFF444654),
-                fontSize = 14.sp,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+                Button(
+                    onClick = {
+                        isCardOpen = !isCardOpen
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.Black
+                    )
+                )
+                {
+                    if (isCardOpen) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowUp,
+                            contentDescription = null
+                        )
+                    }
+                    else {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowDown,
+                            contentDescription = null
+                        )
+                    }
+                }
+            }
+            if (isCardOpen) {
+                HorizontalDivider(
+                    Modifier
+                        .padding(10.dp)
+                )
+                Text(
+                    text = "\uD83C\uDF1E Gratitude",
+                    fontFamily = nunitoFont,
+                    fontWeight = FontWeight.Medium,
+                    fontStyle = FontStyle.Normal,
+                    fontSize = 14.sp,
+                    color = Color(0xFF1B1C42),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = task.firstQuestion,
+                    fontFamily = nunitoFont,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Normal,
+                    color = Color(0xFF444654),
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(horizontal = 20.dp)
 
-            Text(
-                text = "\uD83C\uDF31 Intention",
-                fontFamily = nunitoFont,
-                fontWeight = FontWeight.Medium,
-                fontStyle = FontStyle.Normal,
-                fontSize = 14.sp,
-                color =  Color(0xFF1B1C42),
-                modifier = Modifier.fillMaxWidth())
-            Text(
-                text = task.thirdQuestion,
-                fontFamily = nunitoFont,
-                fontWeight = FontWeight.Normal,
-                fontStyle = FontStyle.Normal,
-                color =  Color(0xFF444654),
-                fontSize = 14.sp,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "\uD83C\uDF19 Décharge",
+                    fontFamily = nunitoFont,
+                    fontWeight = FontWeight.Medium,
+                    fontStyle = FontStyle.Normal,
+                    fontSize = 14.sp,
+                    color = Color(0xFF1B1C42),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = task.secondQuestion,
+                    fontFamily = nunitoFont,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Normal,
+                    color = Color(0xFF444654),
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(horizontal = 20.dp)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
 
+                Text(
+                    text = "\uD83C\uDF31 Intention",
+                    fontFamily = nunitoFont,
+                    fontWeight = FontWeight.Medium,
+                    fontStyle = FontStyle.Normal,
+                    fontSize = 14.sp,
+                    color = Color(0xFF1B1C42),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = task.thirdQuestion,
+                    fontFamily = nunitoFont,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Normal,
+                    color = Color(0xFF444654),
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(horizontal = 20.dp)
+                )
+            }
         }
     }
 }
@@ -179,6 +231,7 @@ fun SleepingCard(task:SleepingJournalRecord) {
 @Composable
 @Preview
 fun CardPreview() {
+
     val fakeRecords = listOf(
         SleepingJournalRecord(
             id = 0,
@@ -190,6 +243,54 @@ fun CardPreview() {
         ),
         SleepingJournalRecord(
             id = 1,
+            date = "16 Septembre 2028",
+            firstQuestion = "Une promenade au soleil",
+            secondQuestion = "Courses fatigantes",
+            thirdQuestion = "Être patient demain",
+            epoch = 1
+        ),
+        SleepingJournalRecord(
+            id = 2,
+            date = "16 Septembre 2028",
+            firstQuestion = "Une promenade au soleil",
+            secondQuestion = "Courses fatigantes",
+            thirdQuestion = "Être patient demain",
+            epoch = 1
+        ),
+        SleepingJournalRecord(
+            id = 3,
+            date = "16 Septembre 2028",
+            firstQuestion = "Une promenade au soleil",
+            secondQuestion = "Courses fatigantes",
+            thirdQuestion = "Être patient demain",
+            epoch = 1
+        ),
+        SleepingJournalRecord(
+            id = 4,
+            date = "16 Septembre 2028",
+            firstQuestion = "Une promenade au soleil",
+            secondQuestion = "Courses fatigantes",
+            thirdQuestion = "Être patient demain",
+            epoch = 1
+        ),
+        SleepingJournalRecord(
+            id = 5,
+            date = "16 Septembre 2028",
+            firstQuestion = "Une promenade au soleil",
+            secondQuestion = "Courses fatigantes",
+            thirdQuestion = "Être patient demain",
+            epoch = 1
+        ),
+        SleepingJournalRecord(
+            id = 6,
+            date = "16 Septembre 2028",
+            firstQuestion = "Une promenade au soleil",
+            secondQuestion = "Courses fatigantes",
+            thirdQuestion = "Être patient demain",
+            epoch = 1
+        ),
+        SleepingJournalRecord(
+            id = 7,
             date = "16 Septembre 2028",
             firstQuestion = "Une promenade au soleil",
             secondQuestion = "Courses fatigantes",

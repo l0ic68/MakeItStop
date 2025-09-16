@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -34,10 +33,10 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SleepingJournalScreen(
-    onClick:() -> Unit,
+    onClick: () -> Unit,
     sleepingJournalUiState: SleepingJournalUiState,
     onSleepingJournalValueChange: (SleepingJournal) -> Unit = {},
-    onTabSelected:(Tab) -> Unit,
+    onTabSelected: (Tab) -> Unit,
     currentTab: Tab,
     modifier: Modifier
 ) {
@@ -49,19 +48,20 @@ fun SleepingJournalScreen(
                     containerColor = MaterialTheme.colorScheme.background
                 ),
                 title =
-                {
-                    Text(
-                        text = "Journaling du soir",
-                        fontSize = 30.sp
-                    )
-                }
+                    {
+                        Text(
+                            text = "Journaling du soir",
+                            fontSize = 30.sp
+                        )
+                    }
             )
         },
         bottomBar = {
             BottomSleepingJournalingNavigation(
                 onTabSelected,
                 currentTab,
-                modifier)
+                modifier
+            )
         }
     ) { innerPadding ->
         Column(
@@ -94,21 +94,40 @@ fun SleepingJournalScreen(
                         color = Color.Black,
                         modifier = Modifier
                             .padding(20.dp)
-                            .fillMaxWidth())
+                            .fillMaxWidth()
+                    )
 
                     QuestionItem(
-                            question = "Une gratitude",
-                            text = sleepingJournalUiState.journal.firstQuestion,
-                            onValueChange = { onSleepingJournalValueChange(sleepingJournalUiState.journal.copy(firstQuestion = it)) })
+                        question = "Une gratitude",
+                        text = sleepingJournalUiState.journal.firstQuestion,
+                        onValueChange = {
+                            onSleepingJournalValueChange(
+                                sleepingJournalUiState.journal.copy(
+                                    firstQuestion = it
+                                )
+                            )
+                        })
                     QuestionItem(
                         question = "Une décharge :",
                         text = sleepingJournalUiState.journal.secondQuestion,
-                        onValueChange = { onSleepingJournalValueChange(sleepingJournalUiState.journal.copy(secondQuestion = it)) },
+                        onValueChange = {
+                            onSleepingJournalValueChange(
+                                sleepingJournalUiState.journal.copy(
+                                    secondQuestion = it
+                                )
+                            )
+                        },
                     )
                     QuestionItem(
                         question = "Une intention douce pour demain :",
                         text = sleepingJournalUiState.journal.thirdQuestion,
-                        onValueChange = { onSleepingJournalValueChange(sleepingJournalUiState.journal.copy(thirdQuestion = it)) },
+                        onValueChange = {
+                            onSleepingJournalValueChange(
+                                sleepingJournalUiState.journal.copy(
+                                    thirdQuestion = it
+                                )
+                            )
+                        },
                     )
 
                     Button(
@@ -116,7 +135,7 @@ fun SleepingJournalScreen(
                         modifier = Modifier.padding(vertical = 10.dp),
                         enabled = sleepingJournalUiState.isEntryValid,
                         content = {
-                            Text("Submit")
+                            Text("Mise en ligne" )
                         }
                     )
                 }
