@@ -12,5 +12,6 @@ data class SleepingJournalRecord(
     val firstQuestion: String,
     val secondQuestion: String,
     val thirdQuestion: String,
+    val epoch: Long,
 )
 

@@ -8,7 +8,7 @@ class OfflineSleepingJournalRecordRepository(
     private val sleepingJournalRecordDao: SleepingJournalRecordDao
 ) : SleepingJournalRecordRepository {
 
-    override suspend fun getAllJournal(): Flow<List<SleepingJournalRecord>> {
+    override fun getAllJournal(): Flow<List<SleepingJournalRecord>> {
         return sleepingJournalRecordDao.getAllJournals()
     }
 

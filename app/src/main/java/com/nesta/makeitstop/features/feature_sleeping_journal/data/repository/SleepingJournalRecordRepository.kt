@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SleepingJournalRecordRepository {
 
-    suspend fun getAllJournal(): Flow<List<SleepingJournalRecord>>
+    fun getAllJournal(): Flow<List<SleepingJournalRecord>>
 
     suspend fun insertJournal(item: SleepingJournalRecord) : Long
 

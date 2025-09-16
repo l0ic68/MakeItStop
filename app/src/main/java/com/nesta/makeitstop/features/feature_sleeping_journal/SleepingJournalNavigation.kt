@@ -1,6 +1,8 @@
 package com.nesta.makeitstop.features.feature_sleeping_journal
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -66,6 +68,11 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Routes.SleepingJournaling.Graph)
             }
+            val recordsViewModel: SleepingJournalRecordViewModel =
+                viewModel(parentEntry, factory = AppViewModelProvider.Factory)
+
+            val recordsList by recordsViewModel.recordsList.collectAsState()
+
 
             SleepingJournalsScreen(
                 onTabSelected = { tab ->
@@ -81,6 +88,7 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
                     }
                 },
                 currentTab = Tab.Dashboard,
+                recordList = recordsList,
                 modifier = Modifier.padding(20.dp)
             )
         }

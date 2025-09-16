@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -25,7 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.features.feature_addiction.data.model.Addiction
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
+import com.nesta.makeitstop.features.feature_sleeping_journal.data.model.SleepingJournalRecord
 import com.nesta.makeitstop.ui.theme.nunitoFont
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,12 +37,12 @@ import com.nesta.makeitstop.ui.theme.nunitoFont
 fun SleepingJournalsScreen(
     onTabSelected: (Tab) -> Unit,
     currentTab: Tab,
+    recordList: List<SleepingJournalRecord>,
     modifier: Modifier
 ) {
     Scaffold(
-        //containerColor = MaterialTheme.colorScheme.background,
+        containerColor = MaterialTheme.colorScheme.background,
         //containerColor  = Color(0xFF172242),
-        containerColor  = Color.Red,
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -65,17 +69,21 @@ fun SleepingJournalsScreen(
                 modifier)
         }
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier.padding(innerPadding)
         ) {
-            SleepingCard()
-            SleepingCard()
+            items(
+                items = recordList,
+                key = { task: SleepingJournalRecord -> task.id}
+            ) { task ->
+                SleepingCard(task)
+            }
         }
     }
 }
 
 @Composable
-fun SleepingCard() {
+fun SleepingCard(task:SleepingJournalRecord) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFF9F9FB)
@@ -86,7 +94,7 @@ fun SleepingCard() {
         shape = RoundedCornerShape(25.dp),
 
         modifier = Modifier
-            .padding(vertical = 10.dp, horizontal = 16.dp)
+            .padding(vertical = 16.dp, horizontal = 16.dp)
             .fillMaxWidth()
     ) {
         Column(
@@ -94,12 +102,12 @@ fun SleepingCard() {
                 .padding(vertical = 16.dp, horizontal = 14.dp)
         ) {
             Text(
-                text = "10 Septembre 2025",
+                text = task.date,
                 fontFamily = nunitoFont,
                 fontWeight = FontWeight.SemiBold,
                 fontStyle = FontStyle.Normal,
                 fontSize = 16.sp,
-                color =  Color(0xFF1B1C42),
+                color =  Color(0xFF444654),
                 modifier = Modifier.fillMaxWidth()
             )
             HorizontalDivider(
@@ -109,14 +117,14 @@ fun SleepingCard() {
             Text(
                 text = "\uD83C\uDF1E Gratitude",
                 fontFamily = nunitoFont,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 fontStyle = FontStyle.Normal,
                 fontSize = 14.sp,
                 color =  Color(0xFF1B1C42),
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text = "Le sourire d'un ami",
+                text = task.firstQuestion,
                 fontFamily = nunitoFont,
                 fontWeight = FontWeight.Normal,
                 fontStyle = FontStyle.Normal,
@@ -129,14 +137,14 @@ fun SleepingCard() {
             Text(
                 text = "\uD83C\uDF19 Décharge",
                 fontFamily = nunitoFont,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 fontStyle = FontStyle.Normal,
                 fontSize = 14.sp,
                 color =  Color(0xFF1B1C42),
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text = "Stresse au travail",
+                text = task.secondQuestion,
                 fontFamily = nunitoFont,
                 fontWeight = FontWeight.Normal,
                 fontStyle = FontStyle.Normal,
@@ -149,20 +157,20 @@ fun SleepingCard() {
             Text(
                 text = "\uD83C\uDF31 Intention",
                 fontFamily = nunitoFont,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Medium,
                 fontStyle = FontStyle.Normal,
                 fontSize = 14.sp,
                 color =  Color(0xFF1B1C42),
                 modifier = Modifier.fillMaxWidth())
             Text(
-                text = "être patient demain",
+                text = task.thirdQuestion,
                 fontFamily = nunitoFont,
                 fontWeight = FontWeight.Normal,
                 fontStyle = FontStyle.Normal,
                 color =  Color(0xFF444654),
                 fontSize = 14.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
-                )
+            )
 
         }
     }
@@ -171,10 +179,29 @@ fun SleepingCard() {
 @Composable
 @Preview
 fun CardPreview() {
+    val fakeRecords = listOf(
+        SleepingJournalRecord(
+            id = 0,
+            date = "16 Septembre 2028",
+            firstQuestion = "Un bon café le matin",
+            secondQuestion = "Un peu de stress au travail",
+            thirdQuestion = "Prendre plus de temps pour respirer",
+            epoch = 0
+        ),
+        SleepingJournalRecord(
+            id = 1,
+            date = "16 Septembre 2028",
+            firstQuestion = "Une promenade au soleil",
+            secondQuestion = "Courses fatigantes",
+            thirdQuestion = "Être patient demain",
+            epoch = 1
+        )
+    )
     SleepingJournalsScreen(
         onTabSelected = {
         },
         currentTab = Tab.Dashboard,
+        recordList = fakeRecords,
         modifier = Modifier
     )
 }

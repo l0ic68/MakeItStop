@@ -15,7 +15,7 @@ import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.Sle
 @Database(entities = [
     DailyRecord::class,
     Addiction::class,
-    SleepingJournalRecord::class], version = 6, exportSchema = true)
+    SleepingJournalRecord::class], version = 1, exportSchema = true)
 abstract class AddictionDatabase : RoomDatabase() {
     abstract fun addictionDailyRecordDao(): DailyRecordDao
     abstract fun addictionDao(): AddictionDao
