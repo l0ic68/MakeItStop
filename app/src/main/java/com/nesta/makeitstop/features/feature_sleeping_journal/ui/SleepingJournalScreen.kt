@@ -1,6 +1,7 @@
 package com.nesta.makeitstop.features.feature_sleeping_journal.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -38,6 +39,7 @@ fun SleepingJournalScreen(
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
+        modifier = Modifier.fillMaxHeight(),
         topBar = {
             TopBarSleepingJournalingNavigation()
         },
@@ -53,11 +55,15 @@ fun SleepingJournalScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(innerPadding)
+                .fillMaxHeight()
+
         ) {
             Card(
                 modifier = Modifier
                     .padding(bottom = 25.dp, start = 25.dp, end = 25.dp)
+                    .fillMaxHeight()
                     .fillMaxWidth(),
+
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 5.dp
                 ),

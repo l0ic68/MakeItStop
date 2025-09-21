@@ -1,5 +1,7 @@
 package com.nesta.makeitstop.features.feature_sleeping_journal
 
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -43,6 +45,8 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
                     coroutineScope.launch {
                         viewModel.saveSleepingJournal()
                     }
+                    currentTab = Tab.Dashboard
+
                     navController.navigate(Routes.SleepingJournaling.DashBoard)
                 },
                 sleepingJournalUiState = viewModel.sleepingJournalUiState,
@@ -61,6 +65,7 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
                 },
                 currentTab = Tab.Sleeping,
                 modifier = Modifier.padding(20.dp)
+
             )
         }
 
