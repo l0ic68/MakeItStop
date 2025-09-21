@@ -114,8 +114,8 @@ fun MakeItStopScreenContent(
         item {
             ModuleCard(
                 modifier = Modifier,
-                text = "",
-                onClick = { onModuleClick(Module.Addiction)}
+                text = "Breathing",
+                onClick = { onModuleClick(Module.Breathing)}
             )
         }
 

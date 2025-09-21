@@ -16,4 +16,12 @@ object Routes {
         const val Sleeping = "sleeping_journaling"
         const val Post = "sleeping_journaling/post"
     }
+
+    object Urgency {
+        const val Graph = "urgency_graph"
+        const val Breathing = "urgency_breathing"
+        const val DashBoard = "urgency_dashboard"
+        const val Urgency = "urgency"
+        const val Post = "urgency/post"
+    }
 }
