@@ -50,7 +50,7 @@ fun QuestionItem(
         shape = RoundedCornerShape(12.dp),
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(8.dp),
 
         colors = CardDefaults.cardColors(containerColor = PrimaryWhite),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
