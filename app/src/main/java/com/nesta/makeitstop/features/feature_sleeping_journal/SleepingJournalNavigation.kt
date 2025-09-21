@@ -38,12 +38,12 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
                 viewModel(parentEntry, factory = AppViewModelProvider.Factory)
 
             val coroutineScope = rememberCoroutineScope()
-
             SleepingJournalScreen(
                 onClick = {
                     coroutineScope.launch {
                         viewModel.saveSleepingJournal()
                     }
+                    navController.navigate(Routes.SleepingJournaling.DashBoard)
                 },
                 sleepingJournalUiState = viewModel.sleepingJournalUiState,
                 onSleepingJournalValueChange = viewModel::updateSleepingRecordUiState,
@@ -72,6 +72,7 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
                 viewModel(parentEntry, factory = AppViewModelProvider.Factory)
 
             val recordsList by recordsViewModel.recordsList.collectAsState()
+            val coroutineScope = rememberCoroutineScope()
 
 
             SleepingJournalsScreen(
@@ -89,6 +90,11 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
                 },
                 currentTab = Tab.Dashboard,
                 recordList = recordsList,
+                onDelete = {
+                    coroutineScope.launch {
+                        recordsViewModel.deleteJournal(it)
+                    }
+                },
                 modifier = Modifier.padding(20.dp)
             )
         }

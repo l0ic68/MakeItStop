@@ -15,9 +15,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
+import java.time.Clock
 import java.time.LocalDate
 import java.time.LocalDate.now
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
@@ -68,12 +72,35 @@ class SleepingJournalRecordViewModel (
                 started = SharingStarted.WhileSubscribed(50000),
                 initialValue = emptyList()
             )
+
     var sleepingJournalUiState by mutableStateOf(SleepingJournalUiState())
 
     suspend fun saveSleepingJournal() {
+        val clock: Clock = Clock.system(ZoneId.of("Europe/Paris"))
+        val cutoff: LocalTime = LocalTime.of(5, 0)
         if (validateFirstEntry()) {
-            sleepingJournalRecordRepository.insertJournal(sleepingJournalUiState.journal.toSleepingJournalRecord())
+            val now = ZonedDateTime.now(clock)
+            val adjustedDate = computeJournalDate(now, cutoff)
+            val adjusted = sleepingJournalUiState.journal.copy(
+                date = adjustedDate,
+                epoch = adjustedDate.toEpochDay()
+            )
+            if (!canAddDate())
+                sleepingJournalRecordRepository.insertJournal(adjusted.toSleepingJournalRecord())
         }
+    }
+
+    suspend fun deleteJournal(id: Int) {
+        sleepingJournalRecordRepository.deleteJournal(id)
+    }
+
+    suspend fun canAddDate(uiState: SleepingJournal = sleepingJournalUiState.journal): Boolean {
+        val clock: Clock = Clock.system(ZoneId.of("Europe/Paris"))
+        val cutoff: LocalTime = LocalTime.of(5, 0)
+        val now = ZonedDateTime.now(clock)
+        val adjustedDate = computeJournalDate(now, cutoff)
+        return sleepingJournalRecordRepository.isJournalAlreadyCreate(adjustedDate.toEpochDay())
+
     }
 
     private fun validateFirstEntry(uiState: SleepingJournal = sleepingJournalUiState.journal) : Boolean {
@@ -82,6 +109,25 @@ class SleepingJournalRecordViewModel (
                     !secondQuestion.isEmpty() &&
                     !thirdQuestion.isEmpty()
         }
+    }
+
+    private fun adjustJournal(
+        journal: SleepingJournal,
+        now: ZonedDateTime = ZonedDateTime.now(PARIS)
+    ): SleepingJournal {
+        val d = computeJournalDate(now)
+        return journal.copy(date = d, epoch = d.toEpochDay())
+    }
+
+
+    private val PARIS: ZoneId = ZoneId.of("Europe/Paris")
+
+    fun computeJournalDate(
+        now: ZonedDateTime = ZonedDateTime.now(PARIS),
+        cutoff: LocalTime = LocalTime.of(5, 0)
+    ): LocalDate {
+        val t = now.toLocalTime()
+        return if (t.isBefore(cutoff)) now.minusDays(1).toLocalDate() else now.toLocalDate()
     }
 
     fun updateSleepingRecordUiState(sleepingJournal: SleepingJournal) {

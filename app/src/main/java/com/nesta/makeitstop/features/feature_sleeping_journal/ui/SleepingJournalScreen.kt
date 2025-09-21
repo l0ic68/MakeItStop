@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -21,12 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournal
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournalUiState
+import com.nesta.makeitstop.ui.theme.MakeItStopTheme
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -43,18 +46,7 @@ fun SleepingJournalScreen(
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
-            CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                ),
-                title =
-                    {
-                        Text(
-                            text = "Journaling du soir",
-                            fontSize = 30.sp
-                        )
-                    }
-            )
+            TopBarSleepingJournalingNavigation()
         },
         bottomBar = {
             BottomSleepingJournalingNavigation(
@@ -68,12 +60,10 @@ fun SleepingJournalScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxWidth()
-
         ) {
             Card(
                 modifier = Modifier
-                    .padding(25.dp)
+                    .padding(bottom = 25.dp, start = 25.dp, end = 25.dp)
                     .fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 5.dp
@@ -100,6 +90,7 @@ fun SleepingJournalScreen(
                     QuestionItem(
                         question = "Une gratitude",
                         text = sleepingJournalUiState.journal.firstQuestion,
+                        canIncreaseSize = true,
                         onValueChange = {
                             onSleepingJournalValueChange(
                                 sleepingJournalUiState.journal.copy(
@@ -110,6 +101,7 @@ fun SleepingJournalScreen(
                     QuestionItem(
                         question = "Une décharge :",
                         text = sleepingJournalUiState.journal.secondQuestion,
+                        canIncreaseSize = true,
                         onValueChange = {
                             onSleepingJournalValueChange(
                                 sleepingJournalUiState.journal.copy(
@@ -121,6 +113,7 @@ fun SleepingJournalScreen(
                     QuestionItem(
                         question = "Une intention douce pour demain :",
                         text = sleepingJournalUiState.journal.thirdQuestion,
+                        canIncreaseSize = true,
                         onValueChange = {
                             onSleepingJournalValueChange(
                                 sleepingJournalUiState.journal.copy(
@@ -134,6 +127,12 @@ fun SleepingJournalScreen(
                         onClick = onClick,
                         modifier = Modifier.padding(vertical = 10.dp),
                         enabled = sleepingJournalUiState.isEntryValid,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.background,
+                            contentColor = Color.White,
+                            disabledContainerColor = Color.Gray,
+                            disabledContentColor= Color.White
+                        ),
                         content = {
                             Text("Mise en ligne" )
                         }
@@ -142,5 +141,33 @@ fun SleepingJournalScreen(
             }
 
         }
+    }
+}
+
+
+@Preview(name = "SleepingJournal - Light", showBackground = true)
+@Preview(
+    name = "SleepingJournal - Dark",
+    showBackground = true,
+)
+@Composable
+fun SleepingJournalScreenPreview() {
+    MakeItStopTheme {
+        val previewState = SleepingJournalUiState(
+            journal = SleepingJournal(
+                firstQuestion = "Le sourire d’un ami",
+                secondQuestion = "Stress au travail",
+                thirdQuestion = "Être patient demain"
+            ),
+            isEntryValid = true
+        )
+        SleepingJournalScreen(
+            onClick = {},
+            sleepingJournalUiState = previewState,
+            onSleepingJournalValueChange = {},
+            onTabSelected = { /* no-op */ },
+            currentTab = Tab.Dashboard,
+            modifier = Modifier
+        )
     }
 }

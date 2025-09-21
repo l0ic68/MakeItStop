@@ -11,7 +11,13 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -29,8 +35,17 @@ fun QuestionItem(
     modifier: Modifier = Modifier,
     question: String,
     text: String,
+    canIncreaseSize: Boolean = false,
     onValueChange: (String) -> Unit = {},
 ) {
+
+
+    var textSize by remember{ mutableStateOf(48.dp) }
+    var isFocused by remember { mutableStateOf(false) }
+
+    textSize = if (isFocused && canIncreaseSize) (48.dp * 3) else 48.dp
+
+
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = modifier
@@ -81,7 +96,10 @@ fun QuestionItem(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp)
+                    .height(textSize)
+                    .onFocusChanged { focusState ->
+                        isFocused = focusState.isFocused
+                    }
 
             )
         }

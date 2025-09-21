@@ -12,12 +12,27 @@ class OfflineSleepingJournalRecordRepository(
         return sleepingJournalRecordDao.getAllJournals()
     }
 
+    override fun getJournal(item : Int): Flow<SleepingJournalRecord> {
+        return sleepingJournalRecordDao.getJournal(item)
+    }
+    override fun getJournal(item : Long): Flow<SleepingJournalRecord> {
+        return sleepingJournalRecordDao.getJournal(item)
+    }
+
+    override suspend fun isJournalAlreadyCreate(item : Long): Boolean {
+        return sleepingJournalRecordDao.isJournalAlreadyCreate(item)
+    }
+
     override suspend fun insertJournal(item: SleepingJournalRecord): Long {
         return sleepingJournalRecordDao.insert(item)
     }
 
     override suspend fun deleteJournal(item: SleepingJournalRecord) {
         sleepingJournalRecordDao.delete(item)
+    }
+
+    override suspend fun deleteJournal(item: Int) {
+        sleepingJournalRecordDao.deleteById(item)
     }
 
     override suspend fun updateJournal(item: SleepingJournalRecord) {

@@ -21,10 +21,19 @@ interface SleepingJournalRecordDao {
     @Delete
     suspend fun delete(item: SleepingJournalRecord)
 
+
+    @Query("DELETE FROM sleeping_journaling WHERE id = :id")
+    suspend fun deleteById(id: Int)
+
     @Query("SELECT * FROM sleeping_journaling where id = :id")
     fun getJournal(id: Int): Flow<SleepingJournalRecord>
 
+    @Query("SELECT * FROM sleeping_journaling where epoch = :epoch")
+    fun getJournal(epoch: Long): Flow<SleepingJournalRecord>
 
-    @Query("SELECT * FROM sleeping_journaling order BY date")
+    @Query("SELECT EXISTS( SELECT 1 FROM sleeping_journaling WHERE epoch = :epoch LIMIT 1)")
+    suspend fun isJournalAlreadyCreate(epoch: Long): Boolean
+
+    @Query("SELECT * FROM sleeping_journaling order BY epoch DESC")
     fun getAllJournals(): Flow<List<SleepingJournalRecord>>
 }
