@@ -34,7 +34,7 @@ fun AppNavHost(
                     when (module) {
                         Module.Addiction -> navController.navigate(Routes.Addiction.DashBoard)
                         Module.Sleep -> navController.navigate(Routes.SleepingJournaling.Sleeping)
-                        Module.Breathing -> navController.navigate(Routes.Urgency.Breathing)
+                        Module.Breathing -> navController.navigate(Routes.Urgency.Urgency)
                     }
                 }
             )
