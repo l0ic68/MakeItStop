@@ -20,6 +20,10 @@ object Routes {
     object Urgency {
         const val Graph = "urgency_graph"
         const val Breathing = "urgency_breathing"
+        const val FiveSenses = "urgency_five_senses"
+        const val Discharge = "urgency_discharge"
+        const val StopMental = "urgency_stop_mental"
+        const val CorporalReset = "urgency_corporal_reset"
         const val DashBoard = "urgency_dashboard"
         const val Urgency = "urgency"
         const val Post = "urgency/post"
