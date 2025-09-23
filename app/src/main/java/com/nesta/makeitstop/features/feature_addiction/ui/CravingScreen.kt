@@ -1,11 +1,15 @@
 package com.nesta.makeitstop.features.feature_addiction.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -13,16 +17,21 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,6 +39,7 @@ import com.nesta.makeitstop.R
 import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordUiState
+import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
 import com.nesta.makeitstop.ui.theme.PrimaryWhite
 import com.nesta.makeitstop.ui.theme.poppinFont
 import com.nesta.makeitstop.ui.theme.titleColor
@@ -40,13 +50,34 @@ fun CravingScreen(
     dailyRecordUiState: AddictionDailyRecordUiState,
     onDailyRecordValueChange: (AddictionDailyRecordDetails) -> Unit,
     modifier: Modifier = Modifier) {
+
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    0f to Color(0xFF0E1B4A),
+                    0.6f to Color(0xFF1B2B6A),
+                    1f to Color(0xFF2B2F73)
+                )
+            ),
+        color = Color.Transparent
+    ) {
     Column( modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        topBarTitle("Pause Réflexion", 36.sp)
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = "Pause refléxion",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            color = Color(0xFFE6ECFF)
+        )
+        Spacer(Modifier.size(40.dp))
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -123,6 +154,7 @@ fun CravingScreen(
             }
         }
     }
+    }
 }
 
 @Composable
@@ -137,5 +169,21 @@ fun topBarTitle(title:String, size:TextUnit, modifier: Modifier = Modifier) {
         modifier = Modifier
             .paddingFromBaseline(bottom = 16.dp),
         fontSize = size,
+    )
+}
+
+@Preview()
+@Composable
+fun CravingScreenPreview() {
+    val fakeState = remember { mutableStateOf(AddictionDailyRecordUiState()) }
+
+    val ui = AddictionDailyRecordUiState(
+        isFirstEntryValid = false,
+        isSecondEntryValid = false,
+    )
+    CravingScreen (
+        onClick = {},
+        dailyRecordUiState = ui,
+        onDailyRecordValueChange = {}
     )
 }
