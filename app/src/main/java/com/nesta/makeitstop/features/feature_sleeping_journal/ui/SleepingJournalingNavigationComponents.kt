@@ -27,7 +27,8 @@ fun BottomSleepingJournalingNavigation(
     modifier: Modifier
 ) {
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.background,
+        containerColor = Color.Transparent,
+        contentColor = Color.White,
         modifier = modifier.heightIn(max = 56.dp)
     ) {
         NavigationBarItem(
@@ -63,7 +64,7 @@ fun BottomSleepingJournalingNavigation(
 fun TopBarSleepingJournalingNavigation() {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = Color.Transparent
         ),
         title =
             {
