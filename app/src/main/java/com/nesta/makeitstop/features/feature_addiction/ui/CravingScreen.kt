@@ -49,7 +49,8 @@ fun CravingScreen(
     onClick: () -> Unit,
     dailyRecordUiState: AddictionDailyRecordUiState,
     onDailyRecordValueChange: (AddictionDailyRecordDetails) -> Unit,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier
+) {
 
     Surface(
         modifier = Modifier
@@ -63,29 +64,22 @@ fun CravingScreen(
             ),
         color = Color.Transparent
     ) {
-    Column( modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Spacer(Modifier.height(8.dp))
-        Text(
-            text = "Pause refléxion",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            color = Color(0xFFE6ECFF)
-        )
-        Spacer(Modifier.size(40.dp))
-        Card(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFFFFFFFF)
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = "Pause refléxion",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                color = Color(0xFFE6ECFF)
+            )
+            Spacer(Modifier.size(40.dp))
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -95,12 +89,12 @@ fun CravingScreen(
             ) {
 
                 Text(
-                    text = "Avant de ${dailyRecordUiState.addictionDailyRecordDetails.addiction}, arrête toi deux minutes et pose toi ces questions",
+                    text = "Avant d'agir, arrête toi deux minutes et pose toi ces questions",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Justify,
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    color = Color.White,
+                    modifier = Modifier.padding(8.dp)
                 )
                 QuestionItem(
                     question = stringResource(R.string.craving_first_sentence),
@@ -133,14 +127,15 @@ fun CravingScreen(
 
                 Button(
                     onClick = onClick,
-                    modifier = Modifier.padding(20.dp)
+                    modifier = Modifier
+                        .padding(8.dp)
                         .fillMaxWidth()
                         .height(56.dp),
-                    shape = RoundedCornerShape(4.dp),
+                    shape = RoundedCornerShape(6.dp),
                     enabled = dailyRecordUiState.isFirstEntryValid,
                     colors = ButtonDefaults.buttonColors(
                         contentColor = PrimaryWhite,
-                        containerColor = Color(0xFF4CA77D),
+                        containerColor = Color(0xFFA89CE3),
                     )
                 ) {
                     Text(
@@ -154,11 +149,10 @@ fun CravingScreen(
             }
         }
     }
-    }
 }
 
 @Composable
-fun topBarTitle(title:String, size:TextUnit, modifier: Modifier = Modifier) {
+fun topBarTitle(title: String, size: TextUnit, modifier: Modifier = Modifier) {
     Text(
         text = title,
         fontFamily = poppinFont,
@@ -178,10 +172,10 @@ fun CravingScreenPreview() {
     val fakeState = remember { mutableStateOf(AddictionDailyRecordUiState()) }
 
     val ui = AddictionDailyRecordUiState(
-        isFirstEntryValid = false,
+        isFirstEntryValid = true,
         isSecondEntryValid = false,
     )
-    CravingScreen (
+    CravingScreen(
         onClick = {},
         dailyRecordUiState = ui,
         onDailyRecordValueChange = {}

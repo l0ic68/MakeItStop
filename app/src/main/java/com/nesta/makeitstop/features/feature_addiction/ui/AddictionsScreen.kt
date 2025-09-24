@@ -114,6 +114,7 @@ fun AddictionsScreen(
                 shape = RoundedCornerShape(4.dp),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = PrimaryWhite,
+                    //containerColor = Color(0xFF)//Mettre du violet
                 )
             ) {
                 Text(

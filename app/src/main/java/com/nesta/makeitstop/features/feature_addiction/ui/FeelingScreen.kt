@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,6 +20,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,6 +29,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,23 +47,36 @@ fun FeelingScreen(
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column( modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    0f to Color(0xFF0E1B4A),
+                    0.6f to Color(0xFF1B2B6A),
+                    1f to Color(0xFF2B2F73)
+                )
+            ),
+        color = Color.Transparent
     ) {
-
-        topBarTitle("Mon ressenti", 36.sp)
-
-        Card(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFFFFFFFF)
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = "Mon ressenti",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                color = Color(0xFFE6ECFF)
+            )
+            Spacer(Modifier.size(40.dp))
+
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -70,31 +87,50 @@ fun FeelingScreen(
                     text = "A quel point je regrette ?",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
+                    color = PrimaryWhite,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(8.dp)
                 )
 
-                CustomSlider(dailyRecordUiState.addictionDailyRecordDetails.feelingScore,
+                CustomSlider(
+                    dailyRecordUiState.addictionDailyRecordDetails.feelingScore,
                     onValueChange = {
-                        onDailyRecordValueChange(dailyRecordUiState.addictionDailyRecordDetails.copy(feelingScore = it))
+                        onDailyRecordValueChange(
+                            dailyRecordUiState.addictionDailyRecordDetails.copy(
+                                feelingScore = it
+                            )
+                        )
                     }
                 )
 
                 QuestionItem(
                     question = "Dans quel contexte étais-je ?",
                     text = dailyRecordUiState.addictionDailyRecordDetails.fourthAnswer,
-                    onValueChange = { onDailyRecordValueChange(dailyRecordUiState.addictionDailyRecordDetails.copy(fourthAnswer = it)) })
+                    onValueChange = {
+                        onDailyRecordValueChange(
+                            dailyRecordUiState.addictionDailyRecordDetails.copy(
+                                fourthAnswer = it
+                            )
+                        )
+                    })
                 QuestionItem(
                     question = "Comment je me sens maintenant",
                     text = dailyRecordUiState.addictionDailyRecordDetails.fifthAnswer,
-                    onValueChange = { onDailyRecordValueChange(dailyRecordUiState.addictionDailyRecordDetails.copy(fifthAnswer = it)) })
+                    onValueChange = {
+                        onDailyRecordValueChange(
+                            dailyRecordUiState.addictionDailyRecordDetails.copy(
+                                fifthAnswer = it
+                            )
+                        )
+                    })
 
 
                 Button(
                     onClick = onSaveClick,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp)
+                        .padding(8.dp)
                         .height(56.dp),
                     shape = RoundedCornerShape(12.dp),
                     enabled = dailyRecordUiState.isSecondEntryValid,
@@ -120,13 +156,14 @@ fun FeelingScreen(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun CustomSlider(
-    sliderPosition:Float,
+    sliderPosition: Float,
     onValueChange: (Float) -> Unit
 ) {
     Text(
         text = "${sliderPosition.toInt()}",
         fontSize = 28.sp,
         fontWeight = FontWeight.Medium,
+        color = PrimaryWhite,
         modifier = Modifier.padding(vertical = 12.dp)
     )
 
@@ -194,5 +231,11 @@ fun CustomSlider(
 @Preview(showBackground = true)
 @Composable
 fun FeelingScreenPreview() {
-
+    val fakeUIState = AddictionDailyRecordUiState(
+        isSecondEntryValid = true,
+    )
+    FeelingScreen(
+        dailyRecordUiState = fakeUIState,
+        onSaveClick = {}
+    )
 }
