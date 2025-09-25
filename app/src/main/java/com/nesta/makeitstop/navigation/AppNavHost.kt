@@ -14,7 +14,8 @@ import com.nesta.makeitstop.features.feature_urgency.urgencyGraph
 enum class Module {
     Addiction,
     Sleep,
-    Breathing
+    Breathing,
+    Urgency
 }
 
 @Composable
@@ -34,7 +35,8 @@ fun AppNavHost(
                     when (module) {
                         Module.Addiction -> navController.navigate(Routes.Addiction.DashBoard)
                         Module.Sleep -> navController.navigate(Routes.SleepingJournaling.Sleeping)
-                        Module.Breathing -> navController.navigate(Routes.Urgency.Urgency)
+                        Module.Urgency -> navController.navigate(Routes.Urgency.Urgency)
+                        else -> navController.navigate(Routes.SleepingJournaling.DashBoard)
                     }
                 }
             )

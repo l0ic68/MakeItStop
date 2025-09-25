@@ -10,17 +10,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import androidx.sqlite.db.SupportSQLiteOpenHelper
-import com.nesta.makeitstop.Screen
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordEntryViewModel
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionViewModel
 import com.nesta.makeitstop.features.feature_addiction.ui.AddictionsScreen
 import com.nesta.makeitstop.features.feature_addiction.ui.CravingScreen
 import com.nesta.makeitstop.features.feature_addiction.ui.FeelingScreen
-import com.nesta.makeitstop.features.feature_tutorial.OnBoardingScreen
 import com.nesta.makeitstop.navigation.Routes
 import com.nesta.makeitstop.ui.AppViewModelProvider
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.addictionGraph(navController: NavHostController) {

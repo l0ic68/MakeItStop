@@ -6,10 +6,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -24,9 +26,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -40,6 +44,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nesta.makeitstop.navigation.Module
+import com.nesta.makeitstop.ui.theme.titleColor
 
 
 /**
@@ -57,9 +62,26 @@ fun MakeItStopApp(
     onModuleClick: (Module) -> Unit
 ) {
     Scaffold(
+        containerColor = Color.Transparent,
+        modifier = Modifier.background(
+            Brush.verticalGradient(
+                0f to Color(0xFF0E1B4A),
+                0.6f to Color(0xFF1B2B6A),
+                1f to Color(0xFF2B2F73)
+            )
+        ),
         topBar = {
             CenterAlignedTopAppBar(
-                { Text("MakeItStop") }
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent,
+                    titleContentColor = Color.White
+                ),
+                title = {
+                    Text(
+                        text = "MakeItStop",
+                        fontSize = 30.sp
+                    )
+                }
             )
         }
     ) { innerPadding ->
@@ -68,6 +90,7 @@ fun MakeItStopApp(
                 .background(MaterialTheme.colorScheme.background)
                 .padding(innerPadding)
         ) {
+            Spacer(Modifier.height(8.dp))
             MakeItStopScreenContent(
                 onModuleClick = onModuleClick,
                 Modifier
@@ -94,7 +117,6 @@ fun MakeItStopScreenContent(
 
         modifier = modifier.padding(
             bottom = 6.dp
-
         )
     ) {
         item {
@@ -114,8 +136,8 @@ fun MakeItStopScreenContent(
         item {
             ModuleCard(
                 modifier = Modifier,
-                text = "Breathing",
-                onClick = { onModuleClick(Module.Breathing)}
+                text = "Urgency",
+                onClick = { onModuleClick(Module.Urgency)}
             )
         }
 
