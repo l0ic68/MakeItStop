@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.nesta.makeitstop.features.feature_urgency.ui.BreathingScreen
+import com.nesta.makeitstop.features.feature_urgency.ui.FiveSensesScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.UrgencyPlanScreen
 import com.nesta.makeitstop.navigation.Routes
 
@@ -59,6 +60,8 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Routes.Urgency.Graph)
             }
+
+            FiveSensesScreen()
 
         }
 

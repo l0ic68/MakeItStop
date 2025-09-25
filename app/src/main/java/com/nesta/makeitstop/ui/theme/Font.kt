@@ -6,6 +6,10 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import com.nesta.makeitstop.R
 
+
+val materialSymbols = FontFamily(
+    Font(R.font.material_symbols_outlined_latin_500_normal, weight = FontWeight.Normal)
+)
 val interFont = FontFamily(
     Font(R.font.inter_font, FontWeight.Normal),
     Font(R.font.inter_bold, FontWeight.Bold),
@@ -17,6 +21,7 @@ val poppinFont = FontFamily(
     Font(R.font.poppins_semi_bold, FontWeight.SemiBold),
     Font(R.font.inter_italic_font, FontWeight.Normal, FontStyle.Italic)
 )
+
 
 val nunitoFont = FontFamily(
     Font(R.font.nunito_bold, FontWeight.Bold),

@@ -52,6 +52,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.core.utils.KeepScreenOn
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.time.delay
 
@@ -71,6 +72,7 @@ fun BreathingScreen(
     exhaleSeconds: Int = 6,
     circleSize: Dp = 280.dp
 ) {
+    KeepScreenOn()
     var phase by remember { mutableStateOf(Phase.Idle) }
     var cycle by remember { mutableIntStateOf(0) }
     var secondLeft by remember { mutableIntStateOf(inhaleSeconds) }
