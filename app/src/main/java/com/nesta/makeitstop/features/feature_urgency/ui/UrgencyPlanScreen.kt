@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -105,7 +106,10 @@ fun UrgencyPlanScreen(
                 color = Color(0xFFE6ECFF)
             )
             LazyColumn(
-                modifier = Modifier.fillMaxSize(0.8f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.8f)
+                ,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 items(urgencyActions) { action ->
@@ -136,6 +140,7 @@ fun ButtonUrgency(
         onClick = onClick,
         modifier = Modifier
             .padding(bottom = 20.dp)
+            .height(50.dp)
             .fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             containerColor = color,
@@ -149,11 +154,11 @@ fun ButtonUrgency(
         ) {
             Text(
                 text = icon,
-                fontSize = 18.sp
+                fontSize = 20.sp
             )
             Text(
                 text = text,
-                fontSize = 15.sp
+                fontSize = 17.sp
             )
         }
     }

@@ -87,7 +87,6 @@ fun MakeItStopApp(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
                 .padding(innerPadding)
         ) {
             Spacer(Modifier.height(8.dp))
@@ -99,8 +98,6 @@ fun MakeItStopApp(
 
             )
         }
-
-
     }
 }
 @Composable
@@ -187,4 +184,12 @@ fun ModuleCard(
 
         }
     }
+}
+
+@Preview
+@Composable
+fun MakeItStopScreenPreview() {
+    MakeItStopApp(
+        onModuleClick = {}
+    )
 }
