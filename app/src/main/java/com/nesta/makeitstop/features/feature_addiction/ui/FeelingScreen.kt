@@ -107,6 +107,7 @@ fun FeelingScreen(
                 QuestionItem(
                     question = "Dans quel contexte étais-je ?",
                     text = dailyRecordUiState.addictionDailyRecordDetails.fourthAnswer,
+                    canIncreaseSize = true,
                     onValueChange = {
                         onDailyRecordValueChange(
                             dailyRecordUiState.addictionDailyRecordDetails.copy(
@@ -117,6 +118,7 @@ fun FeelingScreen(
                 QuestionItem(
                     question = "Comment je me sens maintenant",
                     text = dailyRecordUiState.addictionDailyRecordDetails.fifthAnswer,
+                    canIncreaseSize = true,
                     onValueChange = {
                         onDailyRecordValueChange(
                             dailyRecordUiState.addictionDailyRecordDetails.copy(
@@ -136,7 +138,7 @@ fun FeelingScreen(
                     enabled = dailyRecordUiState.isSecondEntryValid,
                     colors = ButtonDefaults.buttonColors(
                         contentColor = PrimaryWhite,
-                        containerColor = Color(0xFF5468e8),
+                        containerColor = Color(0xFFA89CE3),
                     )
                 ) {
                     Text(
@@ -222,8 +224,8 @@ fun CustomSlider(
             .fillMaxWidth(0.9f),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text("0", fontSize = 14.sp, color = Color.DarkGray)
-        Text("10", fontSize = 14.sp, color = Color.DarkGray)
+        Text("0", fontSize = 14.sp, color = Color.White)
+        Text("10", fontSize = 14.sp, color = Color.White)
     }
 }
 

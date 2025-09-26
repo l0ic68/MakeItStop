@@ -114,7 +114,7 @@ fun AddictionsScreen(
                 shape = RoundedCornerShape(4.dp),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = PrimaryWhite,
-                    //containerColor = Color(0xFF)//Mettre du violet
+                    containerColor = Color(0xFFA89CE3)
                 )
             ) {
                 Text(
@@ -128,8 +128,22 @@ fun AddictionsScreen(
             }
             if (addictionUiState.value.showDialog) {
                 AlertDialog(
+                    containerColor = Color.Transparent,
+                    
+                    modifier = Modifier.background(
+                        Brush.verticalGradient(
+                            0f to Color(0xFF0E1B4A),
+                            0.6f to Color(0xFF1B2B6A),
+                            1f to Color(0xFF2B2F73)
+                        )
+                    ),
                     onDismissRequest = { },
-                    title = { Text(text = "Nouvelle Addiction") },
+                    title = {
+                        Text(
+                            text = "Nouvelle Addiction",
+                            color = Color.White
+                        )
+                    },
                     text = {
                         TextField(
                             value = addictionUiState.value.addictionDetails.addiction,

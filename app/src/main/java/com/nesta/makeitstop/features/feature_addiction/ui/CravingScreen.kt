@@ -99,6 +99,7 @@ fun CravingScreen(
                 QuestionItem(
                     question = stringResource(R.string.craving_first_sentence),
                     text = dailyRecordUiState.addictionDailyRecordDetails.firstAnswer,
+                    canIncreaseSize = true,
                     onValueChange = {
                         onDailyRecordValueChange(
                             dailyRecordUiState.addictionDailyRecordDetails.copy(firstAnswer = it)
@@ -108,6 +109,7 @@ fun CravingScreen(
                 QuestionItem(
                     question = stringResource(R.string.craving_second_sentence),
                     text = dailyRecordUiState.addictionDailyRecordDetails.secondAnswer,
+                    canIncreaseSize = true,
                     onValueChange = {
                         onDailyRecordValueChange(
                             dailyRecordUiState.addictionDailyRecordDetails.copy(secondAnswer = it)
@@ -117,6 +119,7 @@ fun CravingScreen(
                 QuestionItem(
                     question = stringResource(R.string.craving_third_sentence),
                     text = dailyRecordUiState.addictionDailyRecordDetails.thirdAnswer,
+                    canIncreaseSize = true,
                     onValueChange = {
                         onDailyRecordValueChange(
                             dailyRecordUiState.addictionDailyRecordDetails.copy(thirdAnswer = it)

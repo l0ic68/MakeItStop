@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -158,6 +159,11 @@ fun FiveSenseRow(
         Checkbox(
             checked = checked,
             onCheckedChange = { checked = it },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Color.White,
+                checkmarkColor = Color.Black,
+                uncheckedColor = Color.White
+            ),
             modifier = Modifier.fillMaxWidth(0.1f)
         )
     }
