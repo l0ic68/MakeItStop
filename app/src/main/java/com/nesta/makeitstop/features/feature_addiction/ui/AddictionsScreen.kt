@@ -3,7 +3,9 @@ package com.nesta.makeitstop.features.feature_addiction.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -24,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
@@ -32,6 +37,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
 import com.nesta.makeitstop.features.feature_addiction.data.model.Addiction
@@ -126,48 +133,77 @@ fun AddictionsScreen(
                     textAlign = TextAlign.Center
                 )
             }
-            if (addictionUiState.value.showDialog) {
-                AlertDialog(
-                    containerColor = Color.Transparent,
-                    
-                    modifier = Modifier.background(
-                        Brush.verticalGradient(
-                            0f to Color(0xFF0E1B4A),
-                            0.6f to Color(0xFF1B2B6A),
-                            1f to Color(0xFF2B2F73)
-                        )
-                    ),
+//            if (addictionUiState.value.showDialog) {
+            if (true) {
+                Dialog(
                     onDismissRequest = { },
-                    title = {
-                        Text(
-                            text = "Nouvelle Addiction",
-                            color = Color.White
-                        )
-                    },
-                    text = {
-                        TextField(
-                            value = addictionUiState.value.addictionDetails.addiction,
-                            onValueChange = {
-                                onAddAddiction(
-                                    addictionUiState.value.addictionDetails.copy(
-                                        addiction = it
-                                    )
+                    properties = DialogProperties(
+                        dismissOnBackPress = true,
+                        dismissOnClickOutside = true,
+                        usePlatformDefaultWidth = false // on gère la largeur nous-mêmes
+                    )
+
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth(0.8f)
+                            .clip(RoundedCornerShape(24.dp))              // <-- important
+                            .background(
+                                Brush.verticalGradient(
+                                    0f to Color(0xFF0E1B4A),
+                                    0.6f to Color(0xFF1B2B6A),
+                                    1f to Color(0xFF2B2F73)
                                 )
-                            },
-                            label = { Text("Nom de l'addiction") }
-                        )
-                    },
-                    confirmButton = {
-                        Button(onClick = onClick) {
-                            Text("Ajouter")
-                        }
-                    },
-                    dismissButton = {
-                        Button(onClick = { /*showDialog = false*/ }) {
-                            Text("Annuler")
+                            ),
+                        shape = RoundedCornerShape(24.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(24.dp))              // <-- important
+                                .background(
+                                    Brush.verticalGradient(
+                                        0f to Color(0xFF0E1B4A),
+                                        0.6f to Color(0xFF1B2B6A),
+                                        1f to Color(0xFF2B2F73)
+                                    ),
+                                    shape = RoundedCornerShape(24.dp)
+                                )
+                                .padding(20.dp)
+                        ) {
+                            Text(
+                                "Ajouter une addiction",
+                                fontSize = 25.sp,
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+                            )
+                            TextField(
+                                value = addictionUiState.value.addictionDetails.addiction,
+                                onValueChange = {
+                                    onAddAddiction(
+                                        addictionUiState.value.addictionDetails.copy(
+                                            addiction = it
+                                        )
+                                    )
+                                },
+                                label = { Text("Nom de l'addiction") }
+                            )
+
+                            Row() {
+                                Button(
+                                    onClick = {}
+                                ) {
+                                    Text("Annuler")
+                                }
+                                Button(
+                                    onClick = {}
+                                ) {
+                                    Text("Confirmer")
+                                }
+                            }
                         }
                     }
-                )
+                }
             }
         }
     }

@@ -1,20 +1,8 @@
-<!--
-  Copyright 2022 The Android Open Source Project
-
-  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software distributed under the License
-  is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
-  or implied. See the License for the specific language governing permissions and limitations under
-  the License.
-  -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="journal_App">MakeItStop</string>
     <!-- Tutorial -->
     <string name="app_name">MakeItStop</string>
-    <string name="journal_App">MakeItStop</string>
     <string name="favorite_collections">Favorite Collections</string>
     <string name="align_your_body">Align your Body</string>
     <string name="ab1_inversions">Inversions</string>
@@ -37,7 +25,4 @@
     <string name="craving_first_sentence">Est-ce que j\'en ai vraiment envie ?</string>
     <string name="craving_second_sentence">Est-ce que ça va me faire du bien ?</string>
     <string name="craving_third_sentence">Est-ce que je suis prêt à me sentir encore plus mal après ?</string>
-
-    <string name="urgency_breathing_title">Respiration Anti Stress</string>
-
 </resources>

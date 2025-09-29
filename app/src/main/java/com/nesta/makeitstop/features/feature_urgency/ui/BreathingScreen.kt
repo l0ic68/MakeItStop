@@ -61,6 +61,7 @@ enum class Phase {
     Idle,
     Inhale,
     Exhale,
+    Hold,
     Done
 }
 
@@ -70,6 +71,7 @@ fun BreathingScreen(
     totalCycles: Int = 5,
     inhaleSeconds: Int = 4,
     exhaleSeconds: Int = 6,
+    holdSeconds:Int = 0,
     circleSize: Dp = 280.dp
 ) {
     KeepScreenOn()
@@ -128,7 +130,7 @@ fun BreathingScreen(
                 }
             }
 
-            Phase.Idle, Phase.Done -> Unit
+            Phase.Idle, Phase.Done, Phase.Hold -> Unit
         }
     }
     Surface(
@@ -179,6 +181,7 @@ fun BreathingScreen(
                         when (phase) {
                             Phase.Exhale -> "Expirez"
                             Phase.Inhale -> "Inspirez"
+                            Phase.Hold -> "Retenir"
                             Phase.Done -> "Terminé"
                             Phase.Idle -> "Inspirez"
                         },
