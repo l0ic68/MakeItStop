@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
 import com.nesta.makeitstop.features.feature_addiction.data.model.Addiction
@@ -172,7 +174,7 @@ fun AddictionsScreen(
                                 .padding(20.dp)
                         ) {
                             Text(
-                                "Ajouter une addiction",
+                                stringResource(R.string.add_addiction),
                                 fontSize = 25.sp,
                                 color = Color.White,
                                 textAlign = TextAlign.Center
@@ -186,19 +188,22 @@ fun AddictionsScreen(
                                         )
                                     )
                                 },
-                                label = { Text("Nom de l'addiction") }
+                                label = {
+                                    Text(stringResource(R.string.add_addiction_name),
+                                      )
+                                }
                             )
 
                             Row() {
                                 Button(
                                     onClick = {}
                                 ) {
-                                    Text("Annuler")
+                                    Text(stringResource(R.string.app_cancel))
                                 }
                                 Button(
                                     onClick = {}
                                 ) {
-                                    Text("Confirmer")
+                                    Text(stringResource(R.string.app_confirme))
                                 }
                             }
                         }

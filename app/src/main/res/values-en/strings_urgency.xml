@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="urgency_plan_start">Lancer mon plan d\'urgence</string>
+    <string name="urgency_plan_breathing_guide">Respiration guidée</string>
+    <string name="urgency_plan_five_senses">Exercice des 5 senses</string>
+    <string name="urgency_plan_written_release">Décharge écrite</string>
+    <string name="urgency_plan_stop_mental">Rituel stop mental</string>
+    <string name="urgency_plan_body_reset">Reset corporel express</string>
+    <string name="urgency_breathing_inhale">Inspirez</string>
+    <string name="urgency_breathing_exhale">Expirez</string>
+    <string name="urgency_breathing_hold">Retenir</string>
+    <string name="urgency_breathing_done">Terminé</string>
+
+</resources>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="journal_App">MakeItStop</string>
+    <string name="sleeping_journal_title">Journaling du soir</string>
+    <string name="sleeping_journal_gratitude">Une gratitude :</string>
+    <string name="sleeping_journal_release">Une décharge :</string>
+    <string name="sleeping_journal_sweet_intention">Une intention douce pour demain :</string>
+    <string name="sleeping_journal_intention">Une intention :</string>
     <!-- Tutorial -->
     <string name="app_name">MakeItStop</string>
     <string name="favorite_collections">Favorite Collections</string>

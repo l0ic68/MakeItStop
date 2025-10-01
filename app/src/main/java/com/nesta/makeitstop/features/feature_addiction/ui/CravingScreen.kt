@@ -73,7 +73,7 @@ fun CravingScreen(
         ) {
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Pause refléxion",
+                text = stringResource(R.string.addiction_reflexion_title),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
@@ -89,7 +89,7 @@ fun CravingScreen(
             ) {
 
                 Text(
-                    text = "Avant d'agir, arrête toi deux minutes et pose toi ces questions",
+                    text = stringResource(R.string.addiction_before_acting),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Justify,
@@ -142,7 +142,7 @@ fun CravingScreen(
                     )
                 ) {
                     Text(
-                        text = "Valider ma décision",
+                        text = stringResource(R.string.addiction_validate_decision),
                         fontSize = 18.sp,
                         fontFamily = poppinFont,
                         fontWeight = FontWeight.Normal,

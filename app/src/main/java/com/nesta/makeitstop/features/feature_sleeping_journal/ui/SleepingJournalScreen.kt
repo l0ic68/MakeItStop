@@ -20,9 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournal
@@ -88,7 +90,7 @@ fun SleepingJournalScreen(
                 }
                 item {
                     QuestionItem(
-                        question = "Une gratitude",
+                        question = stringResource(R.string.sleeping_journal_gratitude),
                         text = sleepingJournalUiState.journal.firstQuestion,
                         canIncreaseSize = true,
                         onValueChange = {
@@ -101,7 +103,7 @@ fun SleepingJournalScreen(
                 }
                 item {
                     QuestionItem(
-                        question = "Une décharge :",
+                        question = stringResource(R.string.sleeping_journal_release),
                         text = sleepingJournalUiState.journal.secondQuestion,
                         canIncreaseSize = true,
                         onValueChange = {
@@ -115,7 +117,7 @@ fun SleepingJournalScreen(
                 }
                 item {
                     QuestionItem(
-                        question = "Une intention douce pour demain :",
+                        question = stringResource(R.string.sleeping_journal_sweet_intention),
                         text = sleepingJournalUiState.journal.thirdQuestion,
                         canIncreaseSize = true,
                         onValueChange = {
@@ -139,7 +141,7 @@ fun SleepingJournalScreen(
                             disabledContentColor = Color.White
                         ),
                         content = {
-                            Text("Mise en ligne")
+                            Text(stringResource(R.string.app_confirme))
                         }
                     )
                 }

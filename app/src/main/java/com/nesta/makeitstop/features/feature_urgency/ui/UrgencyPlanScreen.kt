@@ -24,11 +24,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.features.feature_urgency.Module
 
 data class UrgencyAction(
@@ -47,34 +49,35 @@ fun UrgencyPlanScreen(
     val urgencyActions = listOf(
         UrgencyAction(
             icon = "⚡\uFE0F ",
-            text = " Lancer mon plan d'urgence",
+            text = stringResource(R.string.urgency_plan_start),
             color = Color(0xFF4a5cd8),
             textColor = Color(0xFFE6ECFF),
             onClick = {onModuleClick(Module.Urgency)}
         ),
         UrgencyAction(
             icon = "\uD83C\uDF2C ",
-            text = " Respiration guidée",
+            text = stringResource(R.string.urgency_plan_breathing_guide),
             onClick = {onModuleClick(Module.Breathing)}
         ),
         UrgencyAction(
             icon = "\uD83E\uDD1A ",
-            text = "Exercice des 5 senses",
+            text = stringResource(R.string.urgency_plan_five_senses),
             onClick = {onModuleClick(Module.FiveSenses)}
         ),
         UrgencyAction(
             icon = "✍\uFE0F ",
-            text = "Décharge écrite",
+            text = stringResource(R.string.urgency_plan_written_release),
             onClick = {onModuleClick(Module.Discharge)}
         ),
         UrgencyAction(
             icon = "✋ ",
-            text = "Rituel stop mental",
+            text = stringResource(R.string.urgency_plan_stop_mental),
             onClick = {onModuleClick(Module.StopMental)}
         ),
         UrgencyAction(
             icon = "\uD83D\uDCAA ",
-            text = "Reset corporel express",
+            text = stringResource(R.string.urgency_plan_body_reset),
+
             onClick = {onModuleClick(Module.CorporalReset)}
         ),
     )

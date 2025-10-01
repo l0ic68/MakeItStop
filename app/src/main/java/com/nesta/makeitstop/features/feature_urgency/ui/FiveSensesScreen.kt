@@ -1,6 +1,6 @@
 package com.nesta.makeitstop.features.feature_urgency.ui
 
-import androidx.compose.foundation.R
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

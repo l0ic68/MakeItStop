@@ -45,6 +45,7 @@ import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -52,6 +53,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.core.utils.KeepScreenOn
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.time.delay
@@ -154,7 +156,7 @@ fun BreathingScreen(
         ) {
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Respiration Anti Stress",
+                text = stringResource(R.string.urgency_breathing_title),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFE6ECFF),
@@ -179,11 +181,11 @@ fun BreathingScreen(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         when (phase) {
-                            Phase.Exhale -> "Expirez"
-                            Phase.Inhale -> "Inspirez"
-                            Phase.Hold -> "Retenir"
-                            Phase.Done -> "Terminé"
-                            Phase.Idle -> "Inspirez"
+                            Phase.Exhale -> stringResource(R.string.urgency_breathing_exhale)
+                            Phase.Inhale -> stringResource(R.string.urgency_breathing_inhale)
+                            Phase.Hold -> stringResource(R.string.urgency_breathing_hold)
+                            Phase.Done -> stringResource(R.string.urgency_breathing_done)
+                            Phase.Idle ->  stringResource(R.string.urgency_breathing_inhale)
                         },
                         fontSize = 26.sp,
                         fontWeight = FontWeight.SemiBold,
