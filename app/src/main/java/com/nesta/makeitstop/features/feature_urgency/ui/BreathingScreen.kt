@@ -73,7 +73,7 @@ fun BreathingScreen(
     totalCycles: Int = 5,
     inhaleSeconds: Int = 4,
     exhaleSeconds: Int = 6,
-    holdSeconds:Int = 0,
+    holdSeconds: Int = 0,
     circleSize: Dp = 280.dp
 ) {
     KeepScreenOn()
@@ -173,8 +173,12 @@ fun BreathingScreen(
                 BreathingRing(
                     modifier = Modifier.fillMaxSize(),
                     progress = when (phase) {
-                        Phase.Inhale -> 1f - (secondLeft / inhaleSeconds.toFloat().coerceAtLeast(1f))
-                        Phase.Exhale -> 1f - (secondLeft / exhaleSeconds.toFloat().coerceAtLeast(1f))
+                        Phase.Inhale -> 1f - (secondLeft / inhaleSeconds.toFloat()
+                            .coerceAtLeast(1f))
+
+                        Phase.Exhale -> 1f - (secondLeft / exhaleSeconds.toFloat()
+                            .coerceAtLeast(1f))
+
                         else -> 0f
                     }
                 )
@@ -185,23 +189,32 @@ fun BreathingScreen(
                             Phase.Inhale -> stringResource(R.string.urgency_breathing_inhale)
                             Phase.Hold -> stringResource(R.string.urgency_breathing_hold)
                             Phase.Done -> stringResource(R.string.urgency_breathing_done)
-                            Phase.Idle ->  stringResource(R.string.urgency_breathing_inhale)
+                            Phase.Idle -> stringResource(R.string.urgency_breathing_inhale)
                         },
                         fontSize = 26.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color(0xFFE6ECFF)
                     )
                     Spacer(Modifier.height(8.dp))
+                    val current = if (phase == Phase.Done) totalCycles else cycle
+                    val progress = stringResource(
+                        id = R.string.urgency_breathing_cycles_progress,
+                        current,
+                        totalCycles
+                    )
+
                     Text(
-                        text = if (phase == Phase.Done || !running) "$inhaleSeconds"
-                        else "${maxOf(0,secondLeft)}s",
+                        text = progress,
                         fontSize = 64.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFE6ECFF)
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        "Expirez par la bouche\n${exhaleSeconds} secondes",
+                        text = stringResource(
+                            id = R.string.urgency_breathing_exhale_mouth,
+                            exhaleSeconds,
+                        ),
                         lineHeight = 18.sp,
                         fontSize = 16.sp,
                         color = Color(0xFFE6ECFF),
@@ -234,13 +247,28 @@ fun BreathingScreen(
                     .widthIn(min = 220.dp)
                     .height(56.dp)
             ) {
-                Text(if (running) "Arrêter" else "Commencer", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                val currentText =
+                    if (phase == Phase.Done)
+                        stringResource(R.string.urgency_breathing_stop)
+                    else
+                        stringResource(R.string.urgency_breathing_start)
+
+                Text(
+                    text = currentText,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
 
             Spacer(Modifier.height(18.dp))
-
+            val current = if (phase == Phase.Done) totalCycles else cycle
+            val progress = stringResource(
+                id = R.string.urgency_breathing_cycles_progress,
+                current,
+                totalCycles
+            )
             Text(
-                "${if (phase == Phase.Done) totalCycles else cycle} sur $totalCycles",
+                progress,
                 fontSize = 16.sp,
                 color = Color(0xFFADB6E6)
             )
@@ -273,24 +301,24 @@ private fun BreathingRing(
         )
     }
 }
-
-@Composable
-@OptIn(ExperimentalMaterial3Api::class)
-fun TopBarSleepingJournalingNavigation() {
-    CenterAlignedTopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background
-        ),
-        title =
-            {
-                Text(
-                    text = "Journaling du soir",
-                    color = Color.White,
-                    fontSize = 30.sp
-                )
-            }
-    )
-}
+//
+//@Composable
+//@OptIn(ExperimentalMaterial3Api::class)
+//fun TopBarSleepingJournalingNavigation() {
+//    CenterAlignedTopAppBar(
+//        colors = TopAppBarDefaults.topAppBarColors(
+//            containerColor = MaterialTheme.colorScheme.background
+//        ),
+//        title =
+//            {
+//                Text(
+//                    text = "Journaling du soir",
+//                    color = Color.White,
+//                    fontSize = 30.sp
+//                )
+//            }
+//    )
+//}
 
 @Preview
 @Composable

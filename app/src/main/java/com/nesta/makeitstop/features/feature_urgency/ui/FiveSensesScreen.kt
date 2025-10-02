@@ -10,10 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,13 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.ui.theme.materialSymbols
 
 
@@ -57,14 +55,14 @@ fun FiveSensesScreen() {
         ) {
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Exercice \"5-4-3-2-1\"",
+                text = stringResource(R.string.urgency_senses_title),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 color = Color(0xFFE6ECFF),
             )
             Text(
-                "(Ancrage)",
+                text = stringResource(R.string.urgency_senses_anchor),
                 modifier = Modifier.padding(10.dp),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -73,7 +71,7 @@ fun FiveSensesScreen() {
             )
             Spacer(Modifier.height(45.dp))
             Text(
-                "Quand tu sens la confusion monter",
+                text = stringResource(R.string.urgency_senses_confusion_burst),
                 modifier = Modifier.padding(10.dp),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -86,23 +84,23 @@ fun FiveSensesScreen() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 FiveSenseRow(
-                    icon = "visibility",
-                    text = "5 choses que tu vois"
+                    icon = stringResource(R.string.urgency_senses_row_visibility_icon),
+                    text = stringResource(R.string.urgency_senses_row_visibility_text)
                 )
 
                 FiveSenseRow(
-                    icon = "back_hand",
-                    text = "4 choses que tu touches"
+                    icon = stringResource(R.string.urgency_senses_row_back_hand_icon),
+                    text = stringResource(R.string.urgency_senses_row_back_hand_text)
                 )
 
                 FiveSenseRow(
-                    icon = "hearing",
-                    text = "3 choses que tu entends"
+                    icon = stringResource(R.string.urgency_senses_row_hearing_icon),
+                    text = stringResource(R.string.urgency_senses_row_hearing_text)
                 )
 
                 FiveSenseRow(
-                    icon = "local_florist",
-                    text = "2 choses que tu sens"
+                    icon = stringResource(R.string.urgency_senses_row_smell_icon),
+                    text = stringResource(R.string.urgency_senses_row_smell_text)
                 )
             }
             Spacer(Modifier.height(20.dp))
@@ -110,14 +108,14 @@ fun FiveSensesScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    "arrow_right_alt",
+                    text = stringResource(R.string.urgency_senses_row_smell_icon),
                     fontSize = 30.sp,
                     fontFamily = materialSymbols,
                     color = Color.White,
                     modifier = Modifier.padding(end = 8.dp)
                 )
                 Text(
-                    "ça oblige ton cerveau à revenir au moment présent",
+                    text = stringResource(R.string.urgency_senses_arrow_right_alt_text),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,

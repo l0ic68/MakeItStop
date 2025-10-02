@@ -20,14 +20,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -42,9 +50,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.nesta.makeitstop.core.ui.TopBarNavigation
+import com.nesta.makeitstop.features.feature_sleeping_journal.ui.BottomSleepingJournalingNavigation
+import com.nesta.makeitstop.navigation.AppNavHost
 import com.nesta.makeitstop.navigation.Module
+import com.nesta.makeitstop.navigation.Routes
 import com.nesta.makeitstop.ui.theme.titleColor
+import kotlinx.coroutines.launch
 
 
 /**
@@ -56,140 +70,68 @@ enum class MakeItStopScreen() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MakeItStopApp(
-    onModuleClick: (Module) -> Unit
+    navController: NavHostController
 ) {
+    val backstackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backstackEntry?.destination?.route
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
     Scaffold(
         containerColor = Color.Transparent,
-        modifier = Modifier.background(
-            Brush.verticalGradient(
-                0f to Color(0xFF0E1B4A),
-                0.6f to Color(0xFF1B2B6A),
-                1f to Color(0xFF2B2F73)
-            )
-        ),
+        modifier = Modifier
+            .background(
+                Brush.verticalGradient(
+                    0f to Color(0xFF0E1B4A),
+                    0.6f to Color(0xFF1B2B6A),
+                    1f to Color(0xFF2B2F73)
+                )
+            ),
         topBar = {
-            CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent,
-                    titleContentColor = Color.White
-                ),
-                title = {
-                    Text(
-                        text = "MakeItStop",
-                        fontSize = 30.sp
-                    )
+            TopBarNavigation(
+                currentRoute == "home",
+                onClick = {
+                    if (currentRoute != "home")
+                        navController.navigate(Routes.Home)
+                    else {
+                        scope.launch {
+                            drawerState.apply {
+                                if (isClosed) open() else close()
+                            }
+                        }
+                    }
                 }
             )
+        },
+        bottomBar = {
+
         }
     ) { innerPadding ->
-        Column(
+        ModalNavigationDrawer(
             modifier = Modifier
-                .padding(innerPadding)
+                .padding(innerPadding),
+            drawerState = drawerState,
+            drawerContent = {
+                ModalDrawerSheet {
+                    Text("Drawer title", modifier = Modifier.padding(16.dp))
+                    HorizontalDivider()
+                    NavigationDrawerItem(
+                        label = { Text(text = "Drawer Item") },
+                        selected = false,
+                        onClick = { /*TODO*/ }
+                    )
+                    // ...other drawer items
+                }
+            },
+            gesturesEnabled = false
         ) {
-            Spacer(Modifier.height(8.dp))
-            MakeItStopScreenContent(
-                onModuleClick = onModuleClick,
-                Modifier
-                     .fillMaxWidth()
-                    .fillMaxHeight()
-
-            )
-        }
-    }
-}
-@Composable
-fun MakeItStopScreenContent(
-    onModuleClick: (Module) -> Unit,
-    modifier: Modifier
-) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(
-            horizontal = 6.dp,
-            vertical = 0.dp
-        ),
-
-        modifier = modifier.padding(
-            bottom = 6.dp
-        )
-    ) {
-        item {
-            ModuleCard(
-                modifier = Modifier,
-                text = "Addiction",
-                onClick = { onModuleClick(Module.Addiction)}
-            )
-        }
-        item {
-            ModuleCard(
-                modifier = Modifier,
-                text = "Sleeping",
-                onClick = { onModuleClick(Module.Sleep)}
-            )
-        }
-        item {
-            ModuleCard(
-                modifier = Modifier,
-                text = "Urgency",
-                onClick = { onModuleClick(Module.Urgency)}
-            )
-        }
-
-    }
-}
-
-@Composable
-fun ModuleCard(
-    onClick: () -> Unit,
-    text: String,
-    modifier: Modifier
-) {
-    Card(
-        modifier
-            .padding(6.dp)
-            .aspectRatio(1f)
-            .clickable(
-                enabled = true,
-                onClick = onClick,
-                role = Role.Button
-            ),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White,
-            contentColor = Color.Black
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
-        ),
-
-        ) {
-        Column(
-            modifier = modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Image(
-                painter = painterResource(R.drawable.dormir),
-                contentScale = ContentScale.Crop,
+            AppNavHost(
+                navController = navController,
                 modifier = Modifier
-                    .size(80.dp),
-                contentDescription = ""
+                    .fillMaxSize()
             )
-            Text(
-                text = text,
-            )
-
         }
     }
-}
-
-@Preview
-@Composable
-fun MakeItStopScreenPreview() {
-    MakeItStopApp(
-        onModuleClick = {}
-    )
 }

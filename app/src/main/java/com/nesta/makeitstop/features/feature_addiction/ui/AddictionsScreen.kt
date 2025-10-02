@@ -19,9 +19,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +48,7 @@ import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionD
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
 import com.nesta.makeitstop.features.feature_addiction.data.model.Addiction
 import com.nesta.makeitstop.ui.theme.PrimaryWhite
+import com.nesta.makeitstop.ui.theme.nunitoFont
 import com.nesta.makeitstop.ui.theme.poppinFont
 
 @Composable
@@ -52,6 +56,7 @@ fun AddictionsScreen(
     addictionUiState: State<AddictionUiState>,
     onClick: () -> Unit,
     onAddAddictionClick: () -> Unit,
+    onRemoveAddictionPopupClick: () -> Unit,
     onAddAddiction: (AddictionDetails) -> Unit,
     addictionList: List<Addiction>,
     modifier: Modifier = Modifier,
@@ -127,7 +132,7 @@ fun AddictionsScreen(
                 )
             ) {
                 Text(
-                    text = "Ajouter une addiction",
+                    text = stringResource(R.string.add_addiction),
                     fontSize = 20.sp,
                     fontFamily = poppinFont,
                     fontWeight = FontWeight.Normal,
@@ -135,79 +140,106 @@ fun AddictionsScreen(
                     textAlign = TextAlign.Center
                 )
             }
-//            if (addictionUiState.value.showDialog) {
-            if (true) {
+            if (addictionUiState.value.showDialog) {
                 Dialog(
-                    onDismissRequest = { },
+                    onDismissRequest = onRemoveAddictionPopupClick,
                     properties = DialogProperties(
                         dismissOnBackPress = true,
                         dismissOnClickOutside = true,
-                        usePlatformDefaultWidth = false // on gère la largeur nous-mêmes
+                        usePlatformDefaultWidth = false
                     )
-
                 ) {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .clip(RoundedCornerShape(24.dp))              // <-- important
-                            .background(
-                                Brush.verticalGradient(
-                                    0f to Color(0xFF0E1B4A),
-                                    0.6f to Color(0xFF1B2B6A),
-                                    1f to Color(0xFF2B2F73)
-                                )
-                            ),
-                        shape = RoundedCornerShape(24.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(24.dp))              // <-- important
-                                .background(
-                                    Brush.verticalGradient(
-                                        0f to Color(0xFF0E1B4A),
-                                        0.6f to Color(0xFF1B2B6A),
-                                        1f to Color(0xFF2B2F73)
-                                    ),
-                                    shape = RoundedCornerShape(24.dp)
-                                )
-                                .padding(20.dp)
-                        ) {
-                            Text(
-                                stringResource(R.string.add_addiction),
-                                fontSize = 25.sp,
-                                color = Color.White,
-                                textAlign = TextAlign.Center
-                            )
-                            TextField(
-                                value = addictionUiState.value.addictionDetails.addiction,
-                                onValueChange = {
-                                    onAddAddiction(
-                                        addictionUiState.value.addictionDetails.copy(
-                                            addiction = it
-                                        )
-                                    )
-                                },
-                                label = {
-                                    Text(stringResource(R.string.add_addiction_name),
-                                      )
-                                }
-                            )
+                    AddAddictionPopup(
+                        onClick = onClick,
+                        addictionUiState = addictionUiState,
+                        onAddAddiction = onAddAddiction,
+                        onRemoveAddictionPopupClick = onRemoveAddictionPopupClick
+                    )
+                }
+            }
+        }
+    }
+}
 
-                            Row() {
-                                Button(
-                                    onClick = {}
-                                ) {
-                                    Text(stringResource(R.string.app_cancel))
-                                }
-                                Button(
-                                    onClick = {}
-                                ) {
-                                    Text(stringResource(R.string.app_confirme))
-                                }
-                            }
-                        }
-                    }
+@Composable
+fun AddAddictionPopup(
+    onClick: () -> Unit,
+    addictionUiState: State<AddictionUiState>,
+    onAddAddiction: (AddictionDetails) -> Unit,
+    onRemoveAddictionPopupClick: () -> Unit,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(0.8f)
+            .clip(RoundedCornerShape(24.dp)),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF9F9FB))
+    ) {
+        Column(
+            modifier = Modifier
+                .clip(RoundedCornerShape(24.dp))
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(
+                text = stringResource(R.string.add_addiction),
+                fontSize = 25.sp,
+                fontFamily = nunitoFont,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF1B1C42),
+                textAlign = TextAlign.Center
+            )
+            OutlinedTextField(
+                value = addictionUiState.value.addictionDetails.addiction,
+                onValueChange = {
+                    onAddAddiction(
+                        addictionUiState.value.addictionDetails.copy(
+                            addiction = it
+                        )
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    unfocusedPrefixColor = Color.Red,
+                    focusedBorderColor = Color(0xFFA89CE3),
+                    unfocusedBorderColor = Color(0xFFA89CE3),
+                    focusedPlaceholderColor = Color.LightGray,
+                    unfocusedPlaceholderColor = Color.LightGray
+                ),
+                shape = RoundedCornerShape(12.dp),
+                label = {
+                    Text(
+                        stringResource(R.string.add_addiction_name),
+                    )
+                }
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Button(
+                    onClick = onRemoveAddictionPopupClick,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                    ),
+                    shape = RoundedCornerShape(25.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.app_cancel),
+                        color = Color.Black
+                    )
+                }
+                Button(
+                    onClick = onClick,
+                    shape = RoundedCornerShape(25.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFa89ce3),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(stringResource(R.string.app_confirme))
                 }
             }
         }
@@ -230,6 +262,24 @@ fun OnBoardingScreenPreview() {
         onClick = {},
         onAddAddictionClick = {},
         onAddAddiction = {},
+        onRemoveAddictionPopupClick = {},
         addictionList = fakeList
+    )
+}
+
+@Composable
+@Preview(
+    showBackground = true,
+    widthDp = 360,
+    heightDp = 200
+)
+fun AddAddictionPopupScreenPreview() {
+    val fakeState = remember { mutableStateOf(AddictionUiState(showDialog = false)) }
+
+    AddAddictionPopup(
+        onClick = {},
+        fakeState,
+        { },
+        onRemoveAddictionPopupClick = {}
     )
 }

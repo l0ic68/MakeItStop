@@ -29,21 +29,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MakeItStopTheme {
-
                 val navController = rememberNavController()
-
-                AppNavHost(
-                    navController = navController,
-                    modifier = Modifier
-                )
-
+                MakeItStopApp(navController)
             }
-            /*Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                SleepingJournalScreen()
-            }*/
         }
     }
 }

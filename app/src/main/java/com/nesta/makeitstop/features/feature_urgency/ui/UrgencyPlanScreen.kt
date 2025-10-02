@@ -48,36 +48,35 @@ fun UrgencyPlanScreen(
 ) {
     val urgencyActions = listOf(
         UrgencyAction(
-            icon = "⚡\uFE0F ",
+            icon = stringResource(R.string.urgency_plan_start_icon),
             text = stringResource(R.string.urgency_plan_start),
             color = Color(0xFF4a5cd8),
             textColor = Color(0xFFE6ECFF),
             onClick = {onModuleClick(Module.Urgency)}
         ),
         UrgencyAction(
-            icon = "\uD83C\uDF2C ",
+            icon = stringResource(R.string.urgency_plan_breathing_guide_icon),
             text = stringResource(R.string.urgency_plan_breathing_guide),
             onClick = {onModuleClick(Module.Breathing)}
         ),
         UrgencyAction(
-            icon = "\uD83E\uDD1A ",
+            icon = stringResource(R.string.urgency_plan_five_senses_icon),
             text = stringResource(R.string.urgency_plan_five_senses),
             onClick = {onModuleClick(Module.FiveSenses)}
         ),
         UrgencyAction(
-            icon = "✍\uFE0F ",
+            icon = stringResource(R.string.urgency_plan_written_release_icon),
             text = stringResource(R.string.urgency_plan_written_release),
             onClick = {onModuleClick(Module.Discharge)}
         ),
         UrgencyAction(
-            icon = "✋ ",
+            icon = stringResource(R.string.urgency_plan_stop_mental_icon),
             text = stringResource(R.string.urgency_plan_stop_mental),
             onClick = {onModuleClick(Module.StopMental)}
         ),
         UrgencyAction(
-            icon = "\uD83D\uDCAA ",
+            icon = stringResource(R.string.urgency_plan_body_reset_icon),
             text = stringResource(R.string.urgency_plan_body_reset),
-
             onClick = {onModuleClick(Module.CorporalReset)}
         ),
     )
@@ -102,7 +101,7 @@ fun UrgencyPlanScreen(
         ) {
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Plan d'urgence",
+                text = stringResource(R.string.urgency_plan_title),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,

@@ -66,6 +66,7 @@ fun NavGraphBuilder.addictionGraph(navController: NavHostController) {
                 addictionUiState = addictionViewModel.uiState.collectAsState(),
                 onAddAddiction = addictionViewModel::updateAddictionUiState,
                 onAddAddictionClick = addictionViewModel::addAddictionClick,
+                onRemoveAddictionPopupClick = addictionViewModel::removeAddictionPopup,
                 addictionList = addictionList
             )
         }

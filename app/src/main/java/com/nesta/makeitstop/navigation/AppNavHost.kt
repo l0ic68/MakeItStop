@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 
 import com.nesta.makeitstop.MakeItStopApp
 import com.nesta.makeitstop.features.feature_addiction.addictionGraph
+import com.nesta.makeitstop.features.feature_dashboard.ui.DashboardScreen
 import com.nesta.makeitstop.features.feature_sleeping_journal.sleepingJournalGraph
 import com.nesta.makeitstop.features.feature_urgency.urgencyGraph
 
@@ -30,7 +31,7 @@ fun AppNavHost(
     ) {
         // Dashboard
         composable(route = Routes.Home) {
-            MakeItStopApp(
+            DashboardScreen(
                 onModuleClick = { module ->
                     when (module) {
                         Module.Addiction -> navController.navigate(Routes.Addiction.DashBoard)
