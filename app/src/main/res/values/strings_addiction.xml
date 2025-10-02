@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_addiction">Ajouter une addiction</string>
+    <string name="add_addiction_name">Nom de l\'addiction</string>
+    <string name="addiction_reflexion_title">Pause refléxion</string>
+    <string name="addiction_before_acting">Avant d\'agir, arrête toi deux minutes et pose toi ces questions</string>
+    <string name="addiction_validate_decision">Valider ma décision</string>
+    <string name="addiction_feeling">Mon ressenti</string>
+    <string name="addiction_regret">A quel point je regrette ?</string>
+    <string name="addiction_context">Dans quel contexte étais-je ?</string>
+    <string name="addiction_current_feeling">Comment je me sens maintenant ? </string>
+    <string name="addiction_save_feeling">Enregistrer mon ressenti </string>
+    <string name="addiction_feeling_range_0">0</string>
+    <string name="addiction_feeling_range_10">10</string>
+
+    <string name="craving_first_sentence">Est-ce que j\'en ai vraiment envie ?</string>
+    <string name="craving_second_sentence">Est-ce que ça va me faire du bien ?</string>
+    <string name="craving_third_sentence">Est-ce que je suis prêt à me sentir encore plus mal après ?</string>
+</resources>

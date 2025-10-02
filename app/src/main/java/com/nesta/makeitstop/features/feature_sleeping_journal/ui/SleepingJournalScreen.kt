@@ -1,8 +1,10 @@
 package com.nesta.makeitstop.features.feature_sleeping_journal.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,16 +16,22 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.core.ui.QuestionItem
+import com.nesta.makeitstop.core.ui.TopBarNavigation
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournal
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournalUiState
@@ -41,9 +49,9 @@ fun SleepingJournalScreen(
     currentTab: Tab,
     modifier: Modifier
 ) {
-    Scaffold(
-        containerColor = Color.Transparent,
+    Surface(
         modifier = Modifier
+            .fillMaxSize()
             .background(
                 Brush.verticalGradient(
                     0f to Color(0xFF0E1B4A),
@@ -51,25 +59,23 @@ fun SleepingJournalScreen(
                     1f to Color(0xFF2B2F73)
                 )
             ),
-        topBar = {
-            TopBarSleepingJournalingNavigation()
-        },
-        bottomBar = {
-            BottomSleepingJournalingNavigation(
-                onTabSelected,
-                currentTab,
-                modifier
-            )
-        }
-    ) { innerPadding ->
-        Spacer(Modifier.height(8.dp))
+        color = Color.Transparent
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
-                .padding(vertical = innerPadding.calculateTopPadding(), horizontal = 25.dp)
-                .fillMaxWidth()
+                .padding(top = 0.dp, start = 25.dp, end = 25.dp)
+                .fillMaxSize()
         ) {
-
+            Spacer(Modifier.height(12.dp))
+            Text(
+                text = stringResource(R.string.sleeping_journal_title),
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFE6ECFF),
+                textAlign = TextAlign.Center
+            )
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
@@ -88,7 +94,7 @@ fun SleepingJournalScreen(
                 }
                 item {
                     QuestionItem(
-                        question = "Une gratitude",
+                        question = stringResource(R.string.sleeping_journal_gratitude),
                         text = sleepingJournalUiState.journal.firstQuestion,
                         canIncreaseSize = true,
                         onValueChange = {
@@ -101,7 +107,7 @@ fun SleepingJournalScreen(
                 }
                 item {
                     QuestionItem(
-                        question = "Une décharge :",
+                        question = stringResource(R.string.sleeping_journal_release),
                         text = sleepingJournalUiState.journal.secondQuestion,
                         canIncreaseSize = true,
                         onValueChange = {
@@ -115,7 +121,7 @@ fun SleepingJournalScreen(
                 }
                 item {
                     QuestionItem(
-                        question = "Une intention douce pour demain :",
+                        question = stringResource(R.string.sleeping_journal_sweet_intention),
                         text = sleepingJournalUiState.journal.thirdQuestion,
                         canIncreaseSize = true,
                         onValueChange = {
@@ -139,11 +145,17 @@ fun SleepingJournalScreen(
                             disabledContentColor = Color.White
                         ),
                         content = {
-                            Text("Mise en ligne")
+                            Text(stringResource(R.string.app_confirme))
                         }
                     )
                 }
+
             }
+            BottomSleepingJournalingNavigation(
+                onTabSelected = onTabSelected,
+                currentTab = currentTab,
+                modifier = modifier
+            )
         }
     }
 }

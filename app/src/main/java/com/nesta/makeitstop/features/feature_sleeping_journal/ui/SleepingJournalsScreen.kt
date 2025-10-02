@@ -42,11 +42,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.model.SleepingJournalRecord
 import com.nesta.makeitstop.ui.theme.nunitoFont
@@ -177,7 +179,7 @@ fun SleepingCard(
                             .padding(10.dp)
                     )
                     Text(
-                        text = "\uD83C\uDF1E Gratitude",
+                        text = "\uD83C\uDF1E " + stringResource(R.string.sleeping_journal_gratitude), // TODO LOU Ajouter new Icon
                         fontFamily = nunitoFont,
                         fontWeight = FontWeight.Medium,
                         fontStyle = FontStyle.Normal,
@@ -197,7 +199,7 @@ fun SleepingCard(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "\uD83C\uDF19 Décharge",
+                        text = "\uD83C\uDF19 " + stringResource(R.string.sleeping_journal_release),
                         fontFamily = nunitoFont,
                         fontWeight = FontWeight.Medium,
                         fontStyle = FontStyle.Normal,
@@ -217,7 +219,7 @@ fun SleepingCard(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "\uD83C\uDF31 Intention",
+                        text = "\uD83C\uDF31 Intention " + stringResource(R.string.sleeping_journal_intention),
                         fontFamily = nunitoFont,
                         fontWeight = FontWeight.Medium,
                         fontStyle = FontStyle.Normal,

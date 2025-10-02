@@ -3,7 +3,9 @@ package com.nesta.makeitstop.features.feature_addiction.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,27 +17,38 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
 import com.nesta.makeitstop.features.feature_addiction.data.model.Addiction
 import com.nesta.makeitstop.ui.theme.PrimaryWhite
+import com.nesta.makeitstop.ui.theme.nunitoFont
 import com.nesta.makeitstop.ui.theme.poppinFont
 
 @Composable
@@ -43,6 +56,7 @@ fun AddictionsScreen(
     addictionUiState: State<AddictionUiState>,
     onClick: () -> Unit,
     onAddAddictionClick: () -> Unit,
+    onRemoveAddictionPopupClick: () -> Unit,
     onAddAddiction: (AddictionDetails) -> Unit,
     addictionList: List<Addiction>,
     modifier: Modifier = Modifier,
@@ -114,11 +128,11 @@ fun AddictionsScreen(
                 shape = RoundedCornerShape(4.dp),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = PrimaryWhite,
-                    //containerColor = Color(0xFF)//Mettre du violet
+                    containerColor = Color(0xFFA89CE3)
                 )
             ) {
                 Text(
-                    text = "Ajouter une addiction",
+                    text = stringResource(R.string.add_addiction),
                     fontSize = 20.sp,
                     fontFamily = poppinFont,
                     fontWeight = FontWeight.Normal,
@@ -127,33 +141,106 @@ fun AddictionsScreen(
                 )
             }
             if (addictionUiState.value.showDialog) {
-                AlertDialog(
-                    onDismissRequest = { },
-                    title = { Text(text = "Nouvelle Addiction") },
-                    text = {
-                        TextField(
-                            value = addictionUiState.value.addictionDetails.addiction,
-                            onValueChange = {
-                                onAddAddiction(
-                                    addictionUiState.value.addictionDetails.copy(
-                                        addiction = it
-                                    )
-                                )
-                            },
-                            label = { Text("Nom de l'addiction") }
+                Dialog(
+                    onDismissRequest = onRemoveAddictionPopupClick,
+                    properties = DialogProperties(
+                        dismissOnBackPress = true,
+                        dismissOnClickOutside = true,
+                        usePlatformDefaultWidth = false
+                    )
+                ) {
+                    AddAddictionPopup(
+                        onClick = onClick,
+                        addictionUiState = addictionUiState,
+                        onAddAddiction = onAddAddiction,
+                        onRemoveAddictionPopupClick = onRemoveAddictionPopupClick
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun AddAddictionPopup(
+    onClick: () -> Unit,
+    addictionUiState: State<AddictionUiState>,
+    onAddAddiction: (AddictionDetails) -> Unit,
+    onRemoveAddictionPopupClick: () -> Unit,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(0.8f)
+            .clip(RoundedCornerShape(24.dp)),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF9F9FB))
+    ) {
+        Column(
+            modifier = Modifier
+                .clip(RoundedCornerShape(24.dp))
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(
+                text = stringResource(R.string.add_addiction),
+                fontSize = 25.sp,
+                fontFamily = nunitoFont,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF1B1C42),
+                textAlign = TextAlign.Center
+            )
+            OutlinedTextField(
+                value = addictionUiState.value.addictionDetails.addiction,
+                onValueChange = {
+                    onAddAddiction(
+                        addictionUiState.value.addictionDetails.copy(
+                            addiction = it
                         )
-                    },
-                    confirmButton = {
-                        Button(onClick = onClick) {
-                            Text("Ajouter")
-                        }
-                    },
-                    dismissButton = {
-                        Button(onClick = { /*showDialog = false*/ }) {
-                            Text("Annuler")
-                        }
-                    }
-                )
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    unfocusedPrefixColor = Color.Red,
+                    focusedBorderColor = Color(0xFFA89CE3),
+                    unfocusedBorderColor = Color(0xFFA89CE3),
+                    focusedPlaceholderColor = Color.LightGray,
+                    unfocusedPlaceholderColor = Color.LightGray
+                ),
+                shape = RoundedCornerShape(12.dp),
+                label = {
+                    Text(
+                        stringResource(R.string.add_addiction_name),
+                    )
+                }
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Button(
+                    onClick = onRemoveAddictionPopupClick,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                    ),
+                    shape = RoundedCornerShape(25.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.app_cancel),
+                        color = Color.Black
+                    )
+                }
+                Button(
+                    onClick = onClick,
+                    shape = RoundedCornerShape(25.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFa89ce3),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(stringResource(R.string.app_confirme))
+                }
             }
         }
     }
@@ -175,6 +262,24 @@ fun OnBoardingScreenPreview() {
         onClick = {},
         onAddAddictionClick = {},
         onAddAddiction = {},
+        onRemoveAddictionPopupClick = {},
         addictionList = fakeList
+    )
+}
+
+@Composable
+@Preview(
+    showBackground = true,
+    widthDp = 360,
+    heightDp = 200
+)
+fun AddAddictionPopupScreenPreview() {
+    val fakeState = remember { mutableStateOf(AddictionUiState(showDialog = false)) }
+
+    AddAddictionPopup(
+        onClick = {},
+        fakeState,
+        { },
+        onRemoveAddictionPopupClick = {}
     )
 }

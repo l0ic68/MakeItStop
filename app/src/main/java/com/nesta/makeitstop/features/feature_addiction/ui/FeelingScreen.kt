@@ -27,12 +27,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordUiState
@@ -68,7 +70,7 @@ fun FeelingScreen(
         ) {
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Mon ressenti",
+                text = stringResource(R.string.addiction_feeling),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
@@ -84,7 +86,7 @@ fun FeelingScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "A quel point je regrette ?",
+                    text = stringResource(R.string.addiction_regret),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = PrimaryWhite,
@@ -105,8 +107,9 @@ fun FeelingScreen(
                 )
 
                 QuestionItem(
-                    question = "Dans quel contexte étais-je ?",
+                    question = stringResource(R.string.addiction_context),
                     text = dailyRecordUiState.addictionDailyRecordDetails.fourthAnswer,
+                    canIncreaseSize = true,
                     onValueChange = {
                         onDailyRecordValueChange(
                             dailyRecordUiState.addictionDailyRecordDetails.copy(
@@ -115,8 +118,9 @@ fun FeelingScreen(
                         )
                     })
                 QuestionItem(
-                    question = "Comment je me sens maintenant",
+                    question = stringResource(R.string.addiction_current_feeling),
                     text = dailyRecordUiState.addictionDailyRecordDetails.fifthAnswer,
+                    canIncreaseSize = true,
                     onValueChange = {
                         onDailyRecordValueChange(
                             dailyRecordUiState.addictionDailyRecordDetails.copy(
@@ -136,11 +140,11 @@ fun FeelingScreen(
                     enabled = dailyRecordUiState.isSecondEntryValid,
                     colors = ButtonDefaults.buttonColors(
                         contentColor = PrimaryWhite,
-                        containerColor = Color(0xFF5468e8),
+                        containerColor = Color(0xFFA89CE3),
                     )
                 ) {
                     Text(
-                        text = "Enregistrer mon ressenti",
+                        text = stringResource(R.string.addiction_save_feeling),
                         fontSize = 18.sp,
                         fontFamily = poppinFont,
                         fontWeight = FontWeight.Normal,
@@ -222,8 +226,16 @@ fun CustomSlider(
             .fillMaxWidth(0.9f),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text("0", fontSize = 14.sp, color = Color.DarkGray)
-        Text("10", fontSize = 14.sp, color = Color.DarkGray)
+        Text(
+            stringResource(R.string.addiction_feeling_range_0),
+            fontSize = 14.sp,
+            color = Color.White
+        )
+        Text(
+            stringResource(R.string.addiction_feeling_range_10),
+            fontSize = 14.sp,
+            color = Color.White
+        )
     }
 }
 

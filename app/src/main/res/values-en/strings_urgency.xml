@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="urgency_plan_title">Plan d\'urgence</string>
+    <string name="urgency_plan_start">Lancer mon plan d\'urgence</string>
+    <string name="urgency_plan_start_icon" translatable="false">⚡️</string>
+
+    <string name="urgency_plan_breathing_guide">Respiration guidée</string>
+    <string name="urgency_plan_breathing_guide_icon" translatable="false">🌬 </string>
+
+    <string name="urgency_plan_five_senses">Exercice des 5 senses</string>
+    <string name="urgency_plan_five_senses_icon" translatable="false">🤚 </string>
+
+    <string name="urgency_plan_written_release">Décharge écrite</string>
+    <string name="urgency_plan_written_release_icon" translatable="false">✍️ </string>
+
+    <string name="urgency_plan_stop_mental">Rituel stop mental</string>
+    <string name="urgency_plan_stop_mental_icon" translatable="false">✋ </string>
+
+    <string name="urgency_plan_body_reset">Reset corporel express</string>
+    <string name="urgency_plan_body_reset_icon" translatable="false">💪 </string>
+
+    <string name="urgency_breathing_title">Respiration Anti Stress</string>
+    <string name="urgency_breathing_inhale">Inspirez</string>
+    <string name="urgency_breathing_exhale">Expirez</string>
+    <string name="urgency_breathing_hold">Retenir</string>
+    <string name="urgency_breathing_done">Terminé</string>
+    <string name="urgency_breathing_cycles_progress">%1$d sur %2$d</string>
+    <string name="urgency_breathing_exhale_mouth">
+        Expirez par la bouche "\n"
+%1$d secondes
+    </string>
+    <string name="urgency_breathing_cycle_count"> %1$d sur
+    </string>
+    <string name="urgency_breathing_stop">Arrêter</string>
+    <string name="urgency_breathing_start">Commencer</string>
+
+
+    <string name="urgency_senses_title">Exercice "5–4–3–2–1"</string>
+    <string name="urgency_senses_anchor">(Ancrage)</string>
+    <string name="urgency_senses_confusion_burst">Quand tu sens la confusion monter</string>
+
+    <string name="urgency_senses_row_visibility_icon" translatable="false">visibility</string>
+    <string name="urgency_senses_row_visibility_text">5 choses que tu vois</string>
+    <string name="urgency_senses_row_back_hand_icon" translatable="false">back_hand</string>
+    <string name="urgency_senses_row_back_hand_text">4 choses que tu touches</string>
+    <string name="urgency_senses_row_hearing_icon" translatable="false">hearing</string>
+    <string name="urgency_senses_row_hearing_text">3 choses que tu entends</string>
+    <string name="urgency_senses_row_smell_icon" translatable="false">local_florist</string>
+    <string name="urgency_senses_row_smell_text">2 choses que tu sens</string>
+    <string name="urgency_senses_arrow_right_alt_icon" translatable="false">arrow_right_alt</string>
+    <string name="urgency_senses_arrow_right_alt_text">ça oblige ton cerveau à revenir au moment présent</string>
+
+
+
+
+</resources>

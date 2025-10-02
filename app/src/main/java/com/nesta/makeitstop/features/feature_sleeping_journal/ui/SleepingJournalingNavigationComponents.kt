@@ -15,8 +15,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.R
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
 
 
@@ -69,7 +71,7 @@ fun TopBarSleepingJournalingNavigation() {
         title =
             {
                 Text(
-                    text = "Journaling du soir",
+                    text = stringResource(R.string.sleeping_journal_title),
                     color = Color.White,
                     fontSize = 30.sp
                 )
