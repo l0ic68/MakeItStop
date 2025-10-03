@@ -7,11 +7,13 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,6 +34,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,9 +66,9 @@ fun SleepingJournalsScreen(
     onDelete: (Int) -> Unit = {},
     modifier: Modifier
 ) {
-    Scaffold(
-        containerColor = Color.Transparent,
+    Surface(
         modifier = Modifier
+            .fillMaxSize()
             .background(
                 Brush.verticalGradient(
                     0f to Color(0xFF0E1B4A),
@@ -72,26 +76,42 @@ fun SleepingJournalsScreen(
                     1f to Color(0xFF2B2F73)
                 )
             ),
-        topBar = {
-            TopBarSleepingJournalingNavigation()
-        },
-        bottomBar = {
-            BottomSleepingJournalingNavigation(
-                onTabSelected,
-                currentTab,
-                modifier
-            )
-        }
-    ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier.padding(innerPadding)
+        color = Color.Transparent
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier
+                .padding(top = 0.dp, start = 25.dp, end = 25.dp)
+                .fillMaxSize()
         ) {
-            items(
-                items = recordList,
-                key = { task: SleepingJournalRecord -> task.id }
-            ) { task ->
-                SleepingCard(task, onDelete)
+            Spacer(Modifier.height(12.dp))
+            Text(
+                text = stringResource(R.string.sleeping_journal_title),
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFE6ECFF),
+                textAlign = TextAlign.Center
+            )
+            LazyColumn(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.8f)
+            ) {
+                items(
+                    items = recordList,
+                    key = { task: SleepingJournalRecord -> task.id }
+                ) { task ->
+                    SleepingCard(task, onDelete)
+                }
             }
+
+            BottomSleepingJournalingNavigation(
+                onTabSelected = onTabSelected,
+                currentTab = currentTab,
+                modifier = modifier
+            )
         }
     }
 }
