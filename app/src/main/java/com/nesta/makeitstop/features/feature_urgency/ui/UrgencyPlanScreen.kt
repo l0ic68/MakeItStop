@@ -1,7 +1,6 @@
 package com.nesta.makeitstop.features.feature_urgency.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,10 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
@@ -97,9 +94,7 @@ fun UrgencyPlanScreen(
                 .fillMaxSize()
                 .padding(horizontal = 24.dp, vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Spacer(Modifier.height(8.dp))
             Text(
                 text = stringResource(R.string.urgency_plan_title),
                 fontSize = 28.sp,
@@ -109,6 +104,7 @@ fun UrgencyPlanScreen(
             )
             LazyColumn(
                 modifier = Modifier
+                    .padding(top = 40.dp)
                     .fillMaxWidth()
                     .fillMaxHeight(0.8f)
                 ,

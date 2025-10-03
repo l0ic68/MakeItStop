@@ -8,6 +8,7 @@ import com.nesta.makeitstop.MakeItStopApplication
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordEntryViewModel
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionViewModel
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournalRecordViewModel
+import com.nesta.makeitstop.features.feature_urgency.viewmodel.WrittenReleaseViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -25,6 +26,11 @@ object AppViewModelProvider {
         initializer {
             SleepingJournalRecordViewModel(
                 makeItStopApplication().container.sleepingJournalRecordRepository
+            )
+        }
+        initializer {
+            WrittenReleaseViewModel(
+
             )
         }
     }

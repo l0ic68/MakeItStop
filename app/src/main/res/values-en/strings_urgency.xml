@@ -50,7 +50,13 @@
     <string name="urgency_senses_arrow_right_alt_icon" translatable="false">arrow_right_alt</string>
     <string name="urgency_senses_arrow_right_alt_text">ça oblige ton cerveau à revenir au moment présent</string>
 
-
+    <string name="urgency_release_title">Décharge écrite</string>
+    <string name="urgency_release_description">"Ecris tout ce qui te passe par la tête sans filtre.\n
+ Prends toi 5 minutes"</string>
+    <string name="urgency_release_textfield_placeholder">Ecris ici...</string>
+    <string name="urgency_release_initial_timer">5 : 00</string>
+    <string name="urgency_release_button_start_timer">Lancer le timer</string>
+    <string name="urgency_release_button_save">Sauvegarder</string>
 
 
 </resources>

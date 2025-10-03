@@ -1,6 +1,10 @@
 package com.nesta.makeitstop.features.feature_urgency
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -8,7 +12,10 @@ import androidx.navigation.navigation
 import com.nesta.makeitstop.features.feature_urgency.ui.BreathingScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.FiveSensesScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.UrgencyPlanScreen
+import com.nesta.makeitstop.features.feature_urgency.ui.WrittenReleaseScreen
+import com.nesta.makeitstop.features.feature_urgency.viewmodel.WrittenReleaseViewModel
 import com.nesta.makeitstop.navigation.Routes
+import com.nesta.makeitstop.ui.AppViewModelProvider
 
 
 enum class Module {
@@ -69,6 +76,21 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Routes.Urgency.Graph)
             }
+            val viewModel: WrittenReleaseViewModel =
+                viewModel(parentEntry, factory = AppViewModelProvider.Factory)
+
+            LaunchedEffect(Unit) {
+                viewModel.setTimer(5)
+                viewModel.setIsCountDown(true)
+            }
+
+            val timerValue by viewModel.timer.collectAsState()
+
+            WrittenReleaseScreen(
+                timerValue,
+                onStartTimer = viewModel::startTimer,
+                onSaveTimer = { viewModel::startTimer }
+            )
 
         }
 
