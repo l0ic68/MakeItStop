@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -68,77 +69,83 @@ fun FeelingScreen(
         Spacer(Modifier.size(40.dp))
 
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = stringResource(R.string.addiction_regret),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = PrimaryWhite,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
-
-            CustomSlider(
-                dailyRecordUiState.addictionDailyRecordDetails.feelingScore,
-                onValueChange = {
-                    onDailyRecordValueChange(
-                        dailyRecordUiState.addictionDailyRecordDetails.copy(
-                            feelingScore = it
+            item {
+                Text(
+                    text = stringResource(R.string.addiction_regret),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = PrimaryWhite,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                )
+            }
+            item {
+                CustomSlider(
+                    dailyRecordUiState.addictionDailyRecordDetails.feelingScore,
+                    onValueChange = {
+                        onDailyRecordValueChange(
+                            dailyRecordUiState.addictionDailyRecordDetails.copy(
+                                feelingScore = it
+                            )
                         )
+                    }
+                )
+            }
+            item {
+                QuestionItem(
+                    question = stringResource(R.string.addiction_context),
+                    text = dailyRecordUiState.addictionDailyRecordDetails.fourthAnswer,
+                    canIncreaseSize = true,
+                    onValueChange = {
+                        onDailyRecordValueChange(
+                            dailyRecordUiState.addictionDailyRecordDetails.copy(
+                                fourthAnswer = it
+                            )
+                        )
+                    })
+            }
+            item {
+                QuestionItem(
+                    question = stringResource(R.string.addiction_current_feeling),
+                    text = dailyRecordUiState.addictionDailyRecordDetails.fifthAnswer,
+                    canIncreaseSize = true,
+                    onValueChange = {
+                        onDailyRecordValueChange(
+                            dailyRecordUiState.addictionDailyRecordDetails.copy(
+                                fifthAnswer = it
+                            )
+                        )
+                    })
+            }
+            item {
+                Button(
+                    onClick = onSaveClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .height(56.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    enabled = dailyRecordUiState.isSecondEntryValid,
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = PrimaryWhite,
+                        containerColor = Color(0xFFA89CE3),
+                    )
+                ) {
+                    Text(
+                        text = stringResource(R.string.addiction_save_feeling),
+                        fontSize = 18.sp,
+                        fontFamily = poppinFont,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Normal,
                     )
                 }
-            )
-
-            QuestionItem(
-                question = stringResource(R.string.addiction_context),
-                text = dailyRecordUiState.addictionDailyRecordDetails.fourthAnswer,
-                canIncreaseSize = true,
-                onValueChange = {
-                    onDailyRecordValueChange(
-                        dailyRecordUiState.addictionDailyRecordDetails.copy(
-                            fourthAnswer = it
-                        )
-                    )
-                })
-            QuestionItem(
-                question = stringResource(R.string.addiction_current_feeling),
-                text = dailyRecordUiState.addictionDailyRecordDetails.fifthAnswer,
-                canIncreaseSize = true,
-                onValueChange = {
-                    onDailyRecordValueChange(
-                        dailyRecordUiState.addictionDailyRecordDetails.copy(
-                            fifthAnswer = it
-                        )
-                    )
-                })
-
-
-            Button(
-                onClick = onSaveClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .height(56.dp),
-                shape = RoundedCornerShape(12.dp),
-                enabled = dailyRecordUiState.isSecondEntryValid,
-                colors = ButtonDefaults.buttonColors(
-                    contentColor = PrimaryWhite,
-                    containerColor = Color(0xFFA89CE3),
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.addiction_save_feeling),
-                    fontSize = 18.sp,
-                    fontFamily = poppinFont,
-                    fontWeight = FontWeight.Normal,
-                    fontStyle = FontStyle.Normal,
-                )
             }
         }
     }
