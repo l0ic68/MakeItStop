@@ -13,7 +13,7 @@ import com.nesta.makeitstop.features.feature_urgency.ui.BreathingScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.FiveSensesScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.UrgencyPlanScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.WrittenReleaseScreen
-import com.nesta.makeitstop.features.feature_urgency.viewmodel.WrittenReleaseViewModel
+import com.nesta.makeitstop.features.feature_urgency.data.viewmodel.WrittenReleaseViewModel
 import com.nesta.makeitstop.navigation.Routes
 import com.nesta.makeitstop.ui.AppViewModelProvider
 
@@ -87,9 +87,10 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
             val timerValue by viewModel.timer.collectAsState()
 
             WrittenReleaseScreen(
-                timerValue,
+                writtenReleaseUiState = viewModel.uiState.collectAsState(),
                 onStartTimer = viewModel::startTimer,
-                onSaveTimer = { viewModel::startTimer }
+                onSaveTimer = { viewModel::startTimer },
+                onTextChange = viewModel::updateWrittenReleaseText
             )
 
         }

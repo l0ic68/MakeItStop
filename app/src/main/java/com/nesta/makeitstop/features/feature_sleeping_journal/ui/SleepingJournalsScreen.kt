@@ -49,6 +49,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -116,14 +117,14 @@ fun SleepingJournalsScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class) // <- important pour combinedClickable
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SleepingCard(
     task: SleepingJournalRecord,
     onDelete: (Int) -> Unit = {}
 ) {
 
-    var isCardOpen by remember { mutableStateOf(false) }
+    var isCardOpen by remember { mutableStateOf(true) }
     var clickHold by remember { mutableStateOf(false) }
     Card(
         colors = CardDefaults.cardColors(
@@ -201,9 +202,9 @@ fun SleepingCard(
                     Text(
                         text = "\uD83C\uDF1E " + stringResource(R.string.sleeping_journal_gratitude), // TODO LOU Ajouter new Icon
                         fontFamily = nunitoFont,
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.Bold,
                         fontStyle = FontStyle.Normal,
-                        fontSize = 14.sp,
+                        fontSize = 16.sp,
                         color = Color(0xFF1B1C42),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -214,16 +215,17 @@ fun SleepingCard(
                         fontStyle = FontStyle.Normal,
                         color = Color(0xFF444654),
                         fontSize = 14.sp,
-                        modifier = Modifier.padding(horizontal = 20.dp)
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp)
 
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "\uD83C\uDF19 " + stringResource(R.string.sleeping_journal_release),
                         fontFamily = nunitoFont,
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.Bold,
                         fontStyle = FontStyle.Normal,
-                        fontSize = 14.sp,
+                        fontSize = 16.sp,
                         color = Color(0xFF1B1C42),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -239,11 +241,12 @@ fun SleepingCard(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "\uD83C\uDF31 Intention " + stringResource(R.string.sleeping_journal_intention),
+                        text = "\uD83C\uDF31 " + stringResource(R.string.sleeping_journal_intention),
                         fontFamily = nunitoFont,
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.Bold,
                         fontStyle = FontStyle.Normal,
-                        fontSize = 14.sp,
+                        textDecoration = TextDecoration.Underline,
+                        fontSize = 16.sp,
                         color = Color(0xFF1B1C42),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -299,7 +302,7 @@ fun CardPreview() {
         SleepingJournalRecord(
             id = 1,
             date = "16 Septembre 2028",
-            firstQuestion = "Une promenade au soleil",
+            firstQuestion = "Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil",
             secondQuestion = "Courses fatigantes",
             thirdQuestion = "Être patient demain",
             epoch = 1

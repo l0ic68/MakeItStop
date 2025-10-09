@@ -73,7 +73,7 @@ class SleepingJournalRecordViewModel (
                 initialValue = emptyList()
             )
 
-    var sleepingJournalUiState by mutableStateOf(SleepingJournalUiState())
+    var sleepingJournalUiState by mutableStateOf(SleepingJournalUiState()) // TODO LOU vérifier
 
     suspend fun saveSleepingJournal() {
         val clock: Clock = Clock.system(ZoneId.of("Europe/Paris"))

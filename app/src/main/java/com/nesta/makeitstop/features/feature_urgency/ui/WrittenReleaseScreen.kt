@@ -18,6 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,13 +33,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
-import com.nesta.makeitstop.features.feature_urgency.viewmodel.formatTime
+import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
+import com.nesta.makeitstop.features.feature_urgency.data.viewmodel.WrittenReleaseUiState
+import com.nesta.makeitstop.features.feature_urgency.data.viewmodel.formatTime
 
 @Composable
 fun WrittenReleaseScreen(
-    timerValue: Long,
+    writtenReleaseUiState: State<WrittenReleaseUiState>,
     onStartTimer: () -> Unit,
-    onSaveTimer: () -> Unit
+    onSaveTimer: () -> Unit,
+    onTextChange: (String) -> Unit = {}
 ) {
     Surface(
         modifier = Modifier
@@ -74,8 +80,8 @@ fun WrittenReleaseScreen(
                 color = Color(0xFFE6ECFF)
             )
             TextField(
-                value = "",
-                onValueChange = {},
+                value = writtenReleaseUiState.value.text,
+                onValueChange = onTextChange,
                 placeholder = {
                     Text(
                         text = stringResource(R.string.urgency_release_textfield_placeholder),
@@ -91,7 +97,7 @@ fun WrittenReleaseScreen(
             )
 
             Text(
-                text = timerValue.formatTime(),
+                text = writtenReleaseUiState.value.timer.formatTime(),
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -134,8 +140,10 @@ fun WrittenReleaseScreen(
 @Composable
 @Preview()
 fun WrittenReleaseScreenPreview() {
+    val fakeState = remember { mutableStateOf(WrittenReleaseUiState()) }
+
     WrittenReleaseScreen(
-        5.toLong(),
+        writtenReleaseUiState = fakeState,
         {
         },
         {}
