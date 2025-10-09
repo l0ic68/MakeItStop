@@ -70,6 +70,7 @@ fun WrittenReleaseScreen(
         )
         TextField(
             value = writtenReleaseUiState.value.text,
+            enabled = writtenReleaseUiState.value.isTextEnabled,
             onValueChange = onTextChange,
             placeholder = {
                 Text(
@@ -79,6 +80,7 @@ fun WrittenReleaseScreen(
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 unfocusedContainerColor = Color.White,
+                focusedTextColor = Color.Black
             ),
             modifier = Modifier
                 .fillMaxWidth()

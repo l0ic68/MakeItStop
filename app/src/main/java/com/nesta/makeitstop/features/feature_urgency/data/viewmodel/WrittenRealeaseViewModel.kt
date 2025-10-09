@@ -18,7 +18,8 @@ import kotlinx.coroutines.launch
 
 data class WrittenReleaseUiState(
     val timer: Long = 0L,
-    val text: String = ""
+    val text: String = "",
+    val isTextEnabled:Boolean = false,
 )
 
 class WrittenReleaseViewModel : ViewModel() {
@@ -52,7 +53,14 @@ class WrittenReleaseViewModel : ViewModel() {
                 else {
                     _timer.value++
                 }
+
                 _uiState.value = _uiState.value.copy(timer = _timer.value)
+                _uiState.value = _uiState.value.copy(isTextEnabled = true)
+
+                if ( _timer.value == 0L) {
+                    stopTimer()
+                }
+
             }
         }
     }
@@ -61,6 +69,8 @@ class WrittenReleaseViewModel : ViewModel() {
         _timer.value = 0
         timerJob?.cancel()
         _uiState.value = _uiState.value.copy(timer = 0)
+        _uiState.value = _uiState.value.copy(isTextEnabled = false)
+
     }
 
     override fun onCleared() {

@@ -58,7 +58,6 @@ fun FeelingScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.addiction_feeling),
             fontSize = 28.sp,
@@ -66,8 +65,6 @@ fun FeelingScreen(
             textAlign = TextAlign.Center,
             color = Color(0xFFE6ECFF)
         )
-        Spacer(Modifier.size(40.dp))
-
 
         LazyColumn(
             modifier = Modifier

@@ -84,12 +84,10 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
                 viewModel.setIsCountDown(true)
             }
 
-            val timerValue by viewModel.timer.collectAsState()
-
             WrittenReleaseScreen(
                 writtenReleaseUiState = viewModel.uiState.collectAsState(),
                 onStartTimer = viewModel::startTimer,
-                onSaveTimer = { viewModel::startTimer },
+                onSaveTimer = viewModel::startTimer ,
                 onTextChange = viewModel::updateWrittenReleaseText
             )
 

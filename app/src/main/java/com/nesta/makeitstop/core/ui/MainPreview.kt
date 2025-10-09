@@ -26,9 +26,9 @@ fun PreviewBackground(content: @Composable () -> Unit) {
         modifier = Modifier
             .background(
                 Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
+                    0f to Color(0xFF101d3f),
+                    0.6f to Color(0xFF2e2b57),
+                    1f to Color(0xFF3b3063)
                 )
             ),
         topBar = {
