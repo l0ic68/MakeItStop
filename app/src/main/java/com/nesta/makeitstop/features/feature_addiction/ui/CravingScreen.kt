@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordUiState
@@ -51,104 +52,90 @@ fun CravingScreen(
     onDailyRecordValueChange: (AddictionDailyRecordDetails) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    Surface(
+    Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
-                )
-            ),
-        color = Color.Transparent
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = stringResource(R.string.addiction_reflexion_title),
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            color = Color(0xFFE6ECFF)
+        )
+        Spacer(Modifier.size(40.dp))
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(Modifier.height(8.dp))
+
             Text(
-                text = stringResource(R.string.addiction_reflexion_title),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                color = Color(0xFFE6ECFF)
+                text = stringResource(R.string.addiction_before_acting),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Justify,
+                color = Color.White,
+                modifier = Modifier.padding(8.dp)
             )
-            Spacer(Modifier.size(40.dp))
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                Text(
-                    text = stringResource(R.string.addiction_before_acting),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Justify,
-                    color = Color.White,
-                    modifier = Modifier.padding(8.dp)
-                )
-                QuestionItem(
-                    question = stringResource(R.string.craving_first_sentence),
-                    text = dailyRecordUiState.addictionDailyRecordDetails.firstAnswer,
-                    canIncreaseSize = true,
-                    onValueChange = {
-                        onDailyRecordValueChange(
-                            dailyRecordUiState.addictionDailyRecordDetails.copy(firstAnswer = it)
-                        )
-                    }
-                )
-                QuestionItem(
-                    question = stringResource(R.string.craving_second_sentence),
-                    text = dailyRecordUiState.addictionDailyRecordDetails.secondAnswer,
-                    canIncreaseSize = true,
-                    onValueChange = {
-                        onDailyRecordValueChange(
-                            dailyRecordUiState.addictionDailyRecordDetails.copy(secondAnswer = it)
-                        )
-                    }
-                )
-                QuestionItem(
-                    question = stringResource(R.string.craving_third_sentence),
-                    text = dailyRecordUiState.addictionDailyRecordDetails.thirdAnswer,
-                    canIncreaseSize = true,
-                    onValueChange = {
-                        onDailyRecordValueChange(
-                            dailyRecordUiState.addictionDailyRecordDetails.copy(thirdAnswer = it)
-                        )
-                    }
-                )
-
-
-                Button(
-                    onClick = onClick,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    shape = RoundedCornerShape(6.dp),
-                    enabled = dailyRecordUiState.isFirstEntryValid,
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = PrimaryWhite,
-                        containerColor = Color(0xFFA89CE3),
-                    )
-                ) {
-                    Text(
-                        text = stringResource(R.string.addiction_validate_decision),
-                        fontSize = 18.sp,
-                        fontFamily = poppinFont,
-                        fontWeight = FontWeight.Normal,
-                        fontStyle = FontStyle.Normal,
+            QuestionItem(
+                question = stringResource(R.string.craving_first_sentence),
+                text = dailyRecordUiState.addictionDailyRecordDetails.firstAnswer,
+                canIncreaseSize = true,
+                onValueChange = {
+                    onDailyRecordValueChange(
+                        dailyRecordUiState.addictionDailyRecordDetails.copy(firstAnswer = it)
                     )
                 }
+            )
+            QuestionItem(
+                question = stringResource(R.string.craving_second_sentence),
+                text = dailyRecordUiState.addictionDailyRecordDetails.secondAnswer,
+                canIncreaseSize = true,
+                onValueChange = {
+                    onDailyRecordValueChange(
+                        dailyRecordUiState.addictionDailyRecordDetails.copy(secondAnswer = it)
+                    )
+                }
+            )
+            QuestionItem(
+                question = stringResource(R.string.craving_third_sentence),
+                text = dailyRecordUiState.addictionDailyRecordDetails.thirdAnswer,
+                canIncreaseSize = true,
+                onValueChange = {
+                    onDailyRecordValueChange(
+                        dailyRecordUiState.addictionDailyRecordDetails.copy(thirdAnswer = it)
+                    )
+                }
+            )
+
+
+            Button(
+                onClick = onClick,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(6.dp),
+                enabled = dailyRecordUiState.isFirstEntryValid,
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = PrimaryWhite,
+                    containerColor = Color(0xFFA89CE3),
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.addiction_validate_decision),
+                    fontSize = 18.sp,
+                    fontFamily = poppinFont,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Normal,
+                )
             }
         }
     }
@@ -172,15 +159,16 @@ fun topBarTitle(title: String, size: TextUnit, modifier: Modifier = Modifier) {
 @Preview()
 @Composable
 fun CravingScreenPreview() {
-    val fakeState = remember { mutableStateOf(AddictionDailyRecordUiState()) }
-
     val ui = AddictionDailyRecordUiState(
         isFirstEntryValid = true,
         isSecondEntryValid = false,
     )
-    CravingScreen(
-        onClick = {},
-        dailyRecordUiState = ui,
-        onDailyRecordValueChange = {}
-    )
+
+    PreviewBackground {
+        CravingScreen(
+            onClick = {},
+            dailyRecordUiState = ui,
+            onDailyRecordValueChange = {}
+        )
+    }
 }

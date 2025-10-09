@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
 import com.nesta.makeitstop.features.feature_addiction.data.model.Addiction
@@ -59,105 +60,68 @@ fun AddictionsDashboardScreen(
     addictionCount: Int,
     modifier: Modifier = Modifier,
 ) {
-
-    Surface(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
-                )
-            ),
-        color = Color.Transparent
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = title,
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            color = Color(0xFFE6ECFF)
+        )
+
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(20.dp)
+
         ) {
-            Spacer(Modifier.height(8.dp))
+
             Text(
-                text = title,
+                text = "Compteur : $addictionCount",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                color = Color(0xFFE6ECFF)
+                color = Color(0xFFE6ECFF),
+                modifier = Modifier.fillMaxWidth()
             )
 
-            Column(
-                modifier = Modifier.padding(20.dp)
+            Spacer(modifier = Modifier.height(12.dp))
 
+            Row(
+                modifier = Modifier.fillMaxWidth()
             ) {
-
-                Text(
-                    text = "Compteur : $addictionCount",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    color = Color(0xFFE6ECFF),
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(0.5f),
-                        horizontalArrangement = Arrangement.SpaceAround,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "alarm",
-                            fontFamily = materialSymbols,
-                            fontSize = 30.sp,
-                            color = Color(0xFFc2c1f8),
-                        )
-                        Spacer(Modifier.width(8.dp))
-                        Text(
-                            text = "12 jours sans consommation ",
-                            fontSize = 15.sp,
-                            fontFamily = poppinFont,
-                            fontWeight = FontWeight.Normal,
-                            color = Color(0xFFE6ECFF),
-                        )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-
-                    ) {
-                        Text(
-                            text = "mode_heat",
-                            fontFamily = materialSymbols,
-                            fontSize = 30.sp,
-                            color = Color(0xFFc2c1f8),
-                        )
-                        Spacer(Modifier.width(8.dp))
-
-                        Text(
-                            text = "Meilleure série : \n21 jours",
-                            fontSize = 15.sp,
-                            fontFamily = poppinFont,
-                            fontWeight = FontWeight.Normal,
-                            color = Color(0xFFE6ECFF),
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(12.dp))
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth(0.5f),
+                    horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "alarm",
+                        fontFamily = materialSymbols,
+                        fontSize = 30.sp,
+                        color = Color(0xFFc2c1f8),
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = "12 jours sans consommation ",
+                        fontSize = 15.sp,
+                        fontFamily = poppinFont,
+                        fontWeight = FontWeight.Normal,
+                        color = Color(0xFFE6ECFF),
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
 
                 ) {
                     Text(
-                        text = "double_arrow",
+                        text = "mode_heat",
                         fontFamily = materialSymbols,
                         fontSize = 30.sp,
                         color = Color(0xFFc2c1f8),
@@ -165,21 +129,44 @@ fun AddictionsDashboardScreen(
                     Spacer(Modifier.width(8.dp))
 
                     Text(
-                        text = "Dernière consommation : 4 sept",
+                        text = "Meilleure série : \n21 jours",
                         fontSize = 15.sp,
                         fontFamily = poppinFont,
                         fontWeight = FontWeight.Normal,
                         color = Color(0xFFE6ECFF),
                     )
                 }
-                Spacer(Modifier.height(8.dp))
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
 
-                Button(
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "test")
-                }
+            ) {
+                Text(
+                    text = "double_arrow",
+                    fontFamily = materialSymbols,
+                    fontSize = 30.sp,
+                    color = Color(0xFFc2c1f8),
+                )
+                Spacer(Modifier.width(8.dp))
+
+                Text(
+                    text = "Dernière consommation : 4 sept",
+                    fontSize = 15.sp,
+                    fontFamily = poppinFont,
+                    fontWeight = FontWeight.Normal,
+                    color = Color(0xFFE6ECFF),
+                )
+            }
+            Spacer(Modifier.height(8.dp))
+
+            Button(
+                onClick = {},
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "test")
             }
         }
     }
@@ -195,9 +182,12 @@ fun AddictionsDashboardScreenPreview() {
         Addiction(id = 1, name = "Monster Energy"),
         Addiction(id = 2, name = "Café")
     )
-    AddictionsDashboardScreen(
-        title = "Monster Energy",
-        addictionCount = 5,
-        modifier = Modifier
-    )
+    PreviewBackground {
+        AddictionsDashboardScreen(
+            title = "Monster Energy",
+            addictionCount = 5,
+            modifier = Modifier
+        )
+    }
+
 }

@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.navigation.Module
 
 
@@ -52,7 +53,6 @@ enum class MakeItStopScreen() {
     DashBoard,
     Addiction
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -164,7 +164,9 @@ fun settingBar() {
 @Preview
 @Composable
 fun MakeItStopScreenPreview() {
-    DashboardScreen(
-        onModuleClick = {}
-    )
+    PreviewBackground {
+        DashboardScreen(
+            onModuleClick = {}
+        )
+    }
 }

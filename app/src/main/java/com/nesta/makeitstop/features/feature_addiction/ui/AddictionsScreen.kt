@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
 import com.nesta.makeitstop.features.feature_addiction.data.model.Addiction
@@ -57,101 +58,87 @@ fun AddictionsScreen(
     addictionList: List<Addiction>,
     modifier: Modifier = Modifier,
 ) {
-
-    Surface(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
-                )
-            ),
-        color = Color.Transparent
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = "Pause refléxion",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                color = Color(0xFFE6ECFF)
-            )
-            Spacer(Modifier.size(40.dp))
-            LazyColumn(modifier = modifier) {
-                items(
-                    items = addictionList,
-                    key = { task: Addiction -> task.id }
-                ) { task ->
-                    Button(
-                        onClick = onClick,
-                        modifier = Modifier
-                            .padding(20.dp)
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        shape = RoundedCornerShape(4.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            contentColor = Color.Black,
-                            containerColor = Color.White
-                        )
-                    ) {
-                        Text(
-                            text = task.name,
-                            fontSize = 20.sp,
-                            fontFamily = poppinFont,
-                            fontWeight = FontWeight.Normal,
-                            fontStyle = FontStyle.Normal,
-                        )
-                    }
-                }
-            }
-
-
-            Button(
-                onClick = onAddAddictionClick,
-                modifier = Modifier
-                    .padding(20.dp)
-                    .fillMaxWidth()
-                    .height(56.dp),
-                shape = RoundedCornerShape(4.dp),
-                colors = ButtonDefaults.buttonColors(
-                    contentColor = PrimaryWhite,
-                    containerColor = Color(0xFFA89CE3)
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.add_addiction),
-                    fontSize = 20.sp,
-                    fontFamily = poppinFont,
-                    fontWeight = FontWeight.Normal,
-                    fontStyle = FontStyle.Normal,
-                    textAlign = TextAlign.Center
-                )
-            }
-            if (addictionUiState.value.showDialog) {
-                Dialog(
-                    onDismissRequest = onRemoveAddictionPopupClick,
-                    properties = DialogProperties(
-                        dismissOnBackPress = true,
-                        dismissOnClickOutside = true,
-                        usePlatformDefaultWidth = false
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = "Pause refléxion",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            color = Color(0xFFE6ECFF)
+        )
+        Spacer(Modifier.size(40.dp))
+        LazyColumn(modifier = modifier) {
+            items(
+                items = addictionList,
+                key = { task: Addiction -> task.id }
+            ) { task ->
+                Button(
+                    onClick = onClick,
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = RoundedCornerShape(4.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = Color.Black,
+                        containerColor = Color.White
                     )
                 ) {
-                    AddAddictionPopup(
-                        onClick = onClick,
-                        addictionUiState = addictionUiState,
-                        onAddAddiction = onAddAddiction,
-                        onRemoveAddictionPopupClick = onRemoveAddictionPopupClick
+                    Text(
+                        text = task.name,
+                        fontSize = 20.sp,
+                        fontFamily = poppinFont,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Normal,
                     )
                 }
+            }
+        }
+
+
+        Button(
+            onClick = onAddAddictionClick,
+            modifier = Modifier
+                .padding(20.dp)
+                .fillMaxWidth()
+                .height(56.dp),
+            shape = RoundedCornerShape(4.dp),
+            colors = ButtonDefaults.buttonColors(
+                contentColor = PrimaryWhite,
+                containerColor = Color(0xFFA89CE3)
+            )
+        ) {
+            Text(
+                text = stringResource(R.string.add_addiction),
+                fontSize = 20.sp,
+                fontFamily = poppinFont,
+                fontWeight = FontWeight.Normal,
+                fontStyle = FontStyle.Normal,
+                textAlign = TextAlign.Center
+            )
+        }
+        if (addictionUiState.value.showDialog) {
+            Dialog(
+                onDismissRequest = onRemoveAddictionPopupClick,
+                properties = DialogProperties(
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true,
+                    usePlatformDefaultWidth = false
+                )
+            ) {
+                AddAddictionPopup(
+                    onClick = onClick,
+                    addictionUiState = addictionUiState,
+                    onAddAddiction = onAddAddiction,
+                    onRemoveAddictionPopupClick = onRemoveAddictionPopupClick
+                )
             }
         }
     }
@@ -261,6 +248,17 @@ fun OnBoardingScreenPreview() {
         onRemoveAddictionPopupClick = {},
         addictionList = fakeList
     )
+    PreviewBackground {
+        AddictionsScreen(
+            modifier = Modifier,
+            addictionUiState = fakeState,
+            onClick = {},
+            onAddAddictionClick = {},
+            onAddAddiction = {},
+            onRemoveAddictionPopupClick = {},
+            addictionList = fakeList
+        )
+    }
 }
 
 @Composable

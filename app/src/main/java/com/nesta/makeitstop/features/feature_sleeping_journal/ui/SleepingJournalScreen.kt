@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.core.ui.TopBarNavigation
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
@@ -50,115 +51,103 @@ fun SleepingJournalScreen(
     currentTab: Tab,
     modifier: Modifier
 ) {
-    Surface(
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
+            .padding(top = 0.dp, start = 25.dp, end = 25.dp)
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
-                )
-            ),
-        color = Color.Transparent
     ) {
-        Column(
+        Spacer(Modifier.height(12.dp))
+        Text(
+            text = stringResource(R.string.sleeping_journal_title),
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFFE6ECFF),
+            textAlign = TextAlign.Center
+        )
+        LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
-                .padding(top = 0.dp, start = 25.dp, end = 25.dp)
-                .fillMaxSize()
+                .fillMaxWidth()
+                .fillMaxHeight(0.8f)
         ) {
-            Spacer(Modifier.height(12.dp))
-            Text(
-                text = stringResource(R.string.sleeping_journal_title),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFE6ECFF),
-                textAlign = TextAlign.Center
-            )
-            LazyColumn(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
-                    .fillMaxHeight(0.8f)
-            ) {
-                val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
-                val currentDate = LocalDateTime.now().format(formatter)
-                item {
-                    Text(
-                        text = currentDate.toString(),
-                        fontSize = 20.sp,
-                        color = Color.White,
-                        modifier = Modifier
-                            .padding(20.dp)
-                            .fillMaxWidth()
-                    )
-                }
-                item {
-                    QuestionItem(
-                        question = stringResource(R.string.sleeping_journal_gratitude),
-                        text = sleepingJournalUiState.journal.firstQuestion,
-                        canIncreaseSize = true,
-                        onValueChange = {
-                            onSleepingJournalValueChange(
-                                sleepingJournalUiState.journal.copy(
-                                    firstQuestion = it
-                                )
-                            )
-                        })
-                }
-                item {
-                    QuestionItem(
-                        question = stringResource(R.string.sleeping_journal_release),
-                        text = sleepingJournalUiState.journal.secondQuestion,
-                        canIncreaseSize = true,
-                        onValueChange = {
-                            onSleepingJournalValueChange(
-                                sleepingJournalUiState.journal.copy(
-                                    secondQuestion = it
-                                )
-                            )
-                        },
-                    )
-                }
-                item {
-                    QuestionItem(
-                        question = stringResource(R.string.sleeping_journal_sweet_intention),
-                        text = sleepingJournalUiState.journal.thirdQuestion,
-                        canIncreaseSize = true,
-                        onValueChange = {
-                            onSleepingJournalValueChange(
-                                sleepingJournalUiState.journal.copy(
-                                    thirdQuestion = it
-                                )
-                            )
-                        },
-                    )
-                }
-                item {
-                    Button(
-                        onClick = onClick,
-                        modifier = Modifier.padding(vertical = 10.dp),
-                        enabled = sleepingJournalUiState.isEntryValid,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.background,
-                            contentColor = Color.White,
-                            disabledContainerColor = Color.Gray,
-                            disabledContentColor = Color.White
-                        ),
-                        content = {
-                            Text(stringResource(R.string.app_confirme))
-                        }
-                    )
-                }
-
+            val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+            val currentDate = LocalDateTime.now().format(formatter)
+            item {
+                Text(
+                    text = currentDate.toString(),
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .fillMaxWidth()
+                )
             }
-            BottomSleepingJournalingNavigation(
-                onTabSelected = onTabSelected,
-                currentTab = currentTab,
-                modifier = modifier
-            )
+            item {
+                QuestionItem(
+                    question = stringResource(R.string.sleeping_journal_gratitude),
+                    text = sleepingJournalUiState.journal.firstQuestion,
+                    canIncreaseSize = true,
+                    onValueChange = {
+                        onSleepingJournalValueChange(
+                            sleepingJournalUiState.journal.copy(
+                                firstQuestion = it
+                            )
+                        )
+                    })
+            }
+            item {
+                QuestionItem(
+                    question = stringResource(R.string.sleeping_journal_release),
+                    text = sleepingJournalUiState.journal.secondQuestion,
+                    canIncreaseSize = true,
+                    onValueChange = {
+                        onSleepingJournalValueChange(
+                            sleepingJournalUiState.journal.copy(
+                                secondQuestion = it
+                            )
+                        )
+                    },
+                )
+            }
+            item {
+                QuestionItem(
+                    question = stringResource(R.string.sleeping_journal_sweet_intention),
+                    text = sleepingJournalUiState.journal.thirdQuestion,
+                    canIncreaseSize = true,
+                    onValueChange = {
+                        onSleepingJournalValueChange(
+                            sleepingJournalUiState.journal.copy(
+                                thirdQuestion = it
+                            )
+                        )
+                    },
+                )
+            }
+            item {
+                Button(
+                    onClick = onClick,
+                    modifier = Modifier.padding(vertical = 10.dp),
+                    enabled = sleepingJournalUiState.isEntryValid,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                        contentColor = Color.White,
+                        disabledContainerColor = Color.Gray,
+                        disabledContentColor = Color.White
+                    ),
+                    content = {
+                        Text(stringResource(R.string.app_confirme))
+                    }
+                )
+            }
+
         }
+        BottomSleepingJournalingNavigation(
+            onTabSelected = onTabSelected,
+            currentTab = currentTab,
+            modifier = modifier
+        )
     }
 }
 
@@ -179,13 +168,15 @@ fun SleepingJournalScreenPreview() {
             ),
             isEntryValid = true
         )
-        SleepingJournalScreen(
-            onClick = {},
-            sleepingJournalUiState = previewState,
-            onSleepingJournalValueChange = {},
-            onTabSelected = { /* no-op */ },
-            currentTab = Tab.Dashboard,
-            modifier = Modifier
-        )
+        PreviewBackground {
+            SleepingJournalScreen(
+                onClick = {},
+                sleepingJournalUiState = previewState,
+                onSleepingJournalValueChange = {},
+                onTabSelected = { /* no-op */ },
+                currentTab = Tab.Dashboard,
+                modifier = Modifier
+            )
+        }
     }
 }

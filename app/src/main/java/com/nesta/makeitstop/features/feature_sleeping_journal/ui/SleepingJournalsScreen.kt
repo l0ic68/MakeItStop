@@ -54,6 +54,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.model.SleepingJournalRecord
 import com.nesta.makeitstop.ui.theme.nunitoFont
@@ -67,53 +68,40 @@ fun SleepingJournalsScreen(
     onDelete: (Int) -> Unit = {},
     modifier: Modifier
 ) {
-    Surface(
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
+            .padding(top = 0.dp, start = 25.dp, end = 25.dp)
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
-                )
-            ),
-        color = Color.Transparent
     ) {
-        Column(
+        Spacer(Modifier.height(12.dp))
+        Text(
+            text = stringResource(R.string.sleeping_journal_title),
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFFE6ECFF),
+            textAlign = TextAlign.Center
+        )
+        LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
-                .padding(top = 0.dp, start = 25.dp, end = 25.dp)
-                .fillMaxSize()
+                .fillMaxWidth()
+                .fillMaxHeight(0.8f)
         ) {
-            Spacer(Modifier.height(12.dp))
-            Text(
-                text = stringResource(R.string.sleeping_journal_title),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFE6ECFF),
-                textAlign = TextAlign.Center
-            )
-            LazyColumn(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.8f)
-            ) {
-                items(
-                    items = recordList,
-                    key = { task: SleepingJournalRecord -> task.id }
-                ) { task ->
-                    SleepingCard(task, onDelete)
-                }
+            items(
+                items = recordList,
+                key = { task: SleepingJournalRecord -> task.id }
+            ) { task ->
+                SleepingCard(task, onDelete)
             }
-
-            BottomSleepingJournalingNavigation(
-                onTabSelected = onTabSelected,
-                currentTab = currentTab,
-                modifier = modifier
-            )
         }
+
+        BottomSleepingJournalingNavigation(
+            onTabSelected = onTabSelected,
+            currentTab = currentTab,
+            modifier = modifier
+        )
     }
 }
 
@@ -245,7 +233,6 @@ fun SleepingCard(
                         fontFamily = nunitoFont,
                         fontWeight = FontWeight.Bold,
                         fontStyle = FontStyle.Normal,
-                        textDecoration = TextDecoration.Underline,
                         fontSize = 16.sp,
                         color = Color(0xFF1B1C42),
                         modifier = Modifier.fillMaxWidth()
@@ -356,11 +343,13 @@ fun CardPreview() {
             epoch = 1
         )
     )
-    SleepingJournalsScreen(
-        onTabSelected = {
-        },
-        currentTab = Tab.Dashboard,
-        recordList = fakeRecords,
-        modifier = Modifier
-    )
+    PreviewBackground {
+        SleepingJournalsScreen(
+            onTabSelected = {
+            },
+            currentTab = Tab.Dashboard,
+            recordList = fakeRecords,
+            modifier = Modifier
+        )
+    }
 }

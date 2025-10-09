@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
 import com.nesta.makeitstop.features.feature_urgency.data.viewmodel.WrittenReleaseUiState
 import com.nesta.makeitstop.features.feature_urgency.data.viewmodel.formatTime
@@ -44,96 +45,84 @@ fun WrittenReleaseScreen(
     onSaveTimer: () -> Unit,
     onTextChange: (String) -> Unit = {}
 ) {
-    Surface(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
-                )
-            ),
-        color = Color.Transparent
+            .padding(horizontal = 24.dp, vertical = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceAround
     ) {
-        Column(
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = stringResource(R.string.urgency_release_title),
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            color = Color(0xFFE6ECFF),
+        )
+        Text(
+            text = stringResource(R.string.urgency_release_description),
+            modifier = Modifier.padding(10.dp),
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Center,
+            color = Color(0xFFE6ECFF)
+        )
+        TextField(
+            value = writtenReleaseUiState.value.text,
+            onValueChange = onTextChange,
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.urgency_release_textfield_placeholder),
+                )
+            },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+            ),
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 24.dp, vertical = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround
-        ) {
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = stringResource(R.string.urgency_release_title),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                color = Color(0xFFE6ECFF),
-            )
-            Text(
-                text = stringResource(R.string.urgency_release_description),
-                modifier = Modifier.padding(10.dp),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.Center,
-                color = Color(0xFFE6ECFF)
-            )
-            TextField(
-                value = writtenReleaseUiState.value.text,
-                onValueChange = onTextChange,
-                placeholder = {
-                    Text(
-                        text = stringResource(R.string.urgency_release_textfield_placeholder),
-                    ) },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.4f)
-                    .clip(RoundedCornerShape(12.dp))
-            )
+                .fillMaxWidth()
+                .fillMaxHeight(0.4f)
+                .clip(RoundedCornerShape(12.dp))
+        )
 
-            Text(
-                text = writtenReleaseUiState.value.timer.formatTime(),
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-            Row(
-                horizontalArrangement = Arrangement.SpaceAround,
-                modifier = Modifier.fillMaxWidth()
+        Text(
+            text = writtenReleaseUiState.value.timer.formatTime(),
+            fontSize = 40.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White
+        )
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Button(
+                onClick = onStartTimer,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF5450a3)
+                )
             ) {
-                Button(
-                    onClick = onStartTimer,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF5450a3)
-                    )
-                ) {
-                    Text(
-                        text = stringResource(R.string.urgency_release_button_start_timer),
-                        fontSize = 16.sp,
-                        color = Color.White
-                    )
-                }
-                Button(
-                    onClick = onSaveTimer,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFeadffa)
-                    )
-                ) {
-                    Text(
-                        text = stringResource(R.string.urgency_release_button_save),
-                        fontSize = 16.sp,
-                        color = Color.Black
-                    )
-                }
+                Text(
+                    text = stringResource(R.string.urgency_release_button_start_timer),
+                    fontSize = 16.sp,
+                    color = Color.White
+                )
+            }
+            Button(
+                onClick = onSaveTimer,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFeadffa)
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.urgency_release_button_save),
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
             }
         }
-
     }
+
 }
 
 
@@ -141,11 +130,12 @@ fun WrittenReleaseScreen(
 @Preview()
 fun WrittenReleaseScreenPreview() {
     val fakeState = remember { mutableStateOf(WrittenReleaseUiState()) }
-
-    WrittenReleaseScreen(
-        writtenReleaseUiState = fakeState,
-        {
-        },
-        {}
-    )
+    PreviewBackground {
+        WrittenReleaseScreen(
+            writtenReleaseUiState = fakeState,
+            {
+            },
+            {}
+        )
+    }
 }

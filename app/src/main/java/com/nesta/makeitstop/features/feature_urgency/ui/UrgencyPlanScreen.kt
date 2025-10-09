@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.features.feature_urgency.Module
 
 data class UrgencyAction(
@@ -164,8 +165,10 @@ fun ButtonUrgency(
 
 @Preview
 @Composable
-fun preview() {
-    UrgencyPlanScreen(
-        onModuleClick = {}
-    )
+fun UrgencyPlanPreview() {
+    PreviewBackground {
+        UrgencyPlanScreen(
+            onModuleClick = {}
+        )
+    }
 }

@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.core.utils.KeepScreenOn
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.time.delay
@@ -135,144 +136,131 @@ fun BreathingScreen(
             Phase.Idle, Phase.Done, Phase.Hold -> Unit
         }
     }
-    Surface(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
-                )
-            ),
-        color = Color.Transparent
+            .padding(horizontal = 24.dp, vertical = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceAround
     ) {
-        Column(
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = stringResource(R.string.urgency_breathing_title),
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFFE6ECFF),
+            textAlign = TextAlign.Center
+        )
+        Spacer(Modifier.height(28.dp))
+
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 24.dp, vertical = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround
+                .size(circleSize)
+                .scale(scale),
+            contentAlignment = Alignment.Center
         ) {
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = stringResource(R.string.urgency_breathing_title),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFE6ECFF),
-                textAlign = TextAlign.Center
-            )
-            Spacer(Modifier.height(28.dp))
+            BreathingRing(
+                modifier = Modifier.fillMaxSize(),
+                progress = when (phase) {
+                    Phase.Inhale -> 1f - (secondLeft / inhaleSeconds.toFloat()
+                        .coerceAtLeast(1f))
 
-            Box(
-                modifier = Modifier
-                    .size(circleSize)
-                    .scale(scale),
-                contentAlignment = Alignment.Center
-            ) {
-                BreathingRing(
-                    modifier = Modifier.fillMaxSize(),
-                    progress = when (phase) {
-                        Phase.Inhale -> 1f - (secondLeft / inhaleSeconds.toFloat()
-                            .coerceAtLeast(1f))
+                    Phase.Exhale -> 1f - (secondLeft / exhaleSeconds.toFloat()
+                        .coerceAtLeast(1f))
 
-                        Phase.Exhale -> 1f - (secondLeft / exhaleSeconds.toFloat()
-                            .coerceAtLeast(1f))
-
-                        else -> 0f
-                    }
-                )
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        when (phase) {
-                            Phase.Exhale -> stringResource(R.string.urgency_breathing_exhale)
-                            Phase.Inhale -> stringResource(R.string.urgency_breathing_inhale)
-                            Phase.Hold -> stringResource(R.string.urgency_breathing_hold)
-                            Phase.Done -> stringResource(R.string.urgency_breathing_done)
-                            Phase.Idle -> stringResource(R.string.urgency_breathing_inhale)
-                        },
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFFE6ECFF)
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    val current = if (phase == Phase.Done) totalCycles else cycle
-                    val progress = stringResource(
-                        id = R.string.urgency_breathing_cycles_progress,
-                        current,
-                        totalCycles
-                    )
-
-                    Text(
-                        text = progress,
-                        fontSize = 64.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFFE6ECFF)
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        text = stringResource(
-                            id = R.string.urgency_breathing_exhale_mouth,
-                            exhaleSeconds,
-                        ),
-                        lineHeight = 18.sp,
-                        fontSize = 16.sp,
-                        color = Color(0xFFE6ECFF),
-                        textAlign = TextAlign.Center
-                    )
+                    else -> 0f
                 }
-            }
-            Spacer(Modifier.height(32.dp))
-
-            Button(
-                onClick = {
-                    if (running) {
-                        running = false
-                        phase = Phase.Idle
-                        cycle = 0
-                        secondLeft = inhaleSeconds
-                    } else {
-                        running = true
-                        phase = Phase.Inhale
-                        cycle = 0
-                        secondLeft = inhaleSeconds
-                    }
-                },
-                shape = RoundedCornerShape(18.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF7C89D9),
-                    contentColor = Color(0xFF0E1330)
-                ),
-                modifier = Modifier
-                    .widthIn(min = 220.dp)
-                    .height(56.dp)
-            ) {
-                val currentText =
-                    if (phase == Phase.Done)
-                        stringResource(R.string.urgency_breathing_stop)
-                    else
-                        stringResource(R.string.urgency_breathing_start)
+            )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    when (phase) {
+                        Phase.Exhale -> stringResource(R.string.urgency_breathing_exhale)
+                        Phase.Inhale -> stringResource(R.string.urgency_breathing_inhale)
+                        Phase.Hold -> stringResource(R.string.urgency_breathing_hold)
+                        Phase.Done -> stringResource(R.string.urgency_breathing_done)
+                        Phase.Idle -> stringResource(R.string.urgency_breathing_inhale)
+                    },
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFFE6ECFF)
+                )
+                Spacer(Modifier.height(8.dp))
+                val current = if (phase == Phase.Done) totalCycles else cycle
+                val progress = stringResource(
+                    id = R.string.urgency_breathing_cycles_progress,
+                    current,
+                    totalCycles
+                )
 
                 Text(
-                    text = currentText,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold
+                    text = progress,
+                    fontSize = 64.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFE6ECFF)
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = stringResource(
+                        id = R.string.urgency_breathing_exhale_mouth,
+                        exhaleSeconds,
+                    ),
+                    lineHeight = 18.sp,
+                    fontSize = 16.sp,
+                    color = Color(0xFFE6ECFF),
+                    textAlign = TextAlign.Center
                 )
             }
+        }
+        Spacer(Modifier.height(32.dp))
 
-            Spacer(Modifier.height(18.dp))
-            val current = if (phase == Phase.Done) totalCycles else cycle
-            val progress = stringResource(
-                id = R.string.urgency_breathing_cycles_progress,
-                current,
-                totalCycles
-            )
+        Button(
+            onClick = {
+                if (running) {
+                    running = false
+                    phase = Phase.Idle
+                    cycle = 0
+                    secondLeft = inhaleSeconds
+                } else {
+                    running = true
+                    phase = Phase.Inhale
+                    cycle = 0
+                    secondLeft = inhaleSeconds
+                }
+            },
+            shape = RoundedCornerShape(18.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF7C89D9),
+                contentColor = Color(0xFF0E1330)
+            ),
+            modifier = Modifier
+                .widthIn(min = 220.dp)
+                .height(56.dp)
+        ) {
+            val currentText =
+                if (phase == Phase.Done)
+                    stringResource(R.string.urgency_breathing_stop)
+                else
+                    stringResource(R.string.urgency_breathing_start)
+
             Text(
-                progress,
-                fontSize = 16.sp,
-                color = Color(0xFFADB6E6)
+                text = currentText,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold
             )
         }
+
+        Spacer(Modifier.height(18.dp))
+        val current = if (phase == Phase.Done) totalCycles else cycle
+        val progress = stringResource(
+            id = R.string.urgency_breathing_cycles_progress,
+            current,
+            totalCycles
+        )
+        Text(
+            progress,
+            fontSize = 16.sp,
+            color = Color(0xFFADB6E6)
+        )
     }
 }
 
@@ -323,9 +311,11 @@ private fun BreathingRing(
 @Preview
 @Composable
 fun BreathingScreenPreview() {
-    BreathingScreen(
-        totalCycles = 8,
-        inhaleSeconds = 4,
-        exhaleSeconds = 6
-    )
+    PreviewBackground {
+        BreathingScreen(
+            totalCycles = 8,
+            inhaleSeconds = 4,
+            exhaleSeconds = 6
+        )
+    }
 }

@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.core.ui.QuestionItem
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordDetails
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordUiState
@@ -49,108 +50,95 @@ fun FeelingScreen(
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Surface(
+    Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
-                )
-            ),
-        color = Color.Transparent
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = stringResource(R.string.addiction_feeling),
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            color = Color(0xFFE6ECFF)
+        )
+        Spacer(Modifier.size(40.dp))
+
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(Modifier.height(8.dp))
             Text(
-                text = stringResource(R.string.addiction_feeling),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                color = Color(0xFFE6ECFF)
-            )
-            Spacer(Modifier.size(40.dp))
-
-
-            Column(
+                text = stringResource(R.string.addiction_regret),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = PrimaryWhite,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = stringResource(R.string.addiction_regret),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = PrimaryWhite,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                )
+                    .padding(8.dp)
+            )
 
-                CustomSlider(
-                    dailyRecordUiState.addictionDailyRecordDetails.feelingScore,
-                    onValueChange = {
-                        onDailyRecordValueChange(
-                            dailyRecordUiState.addictionDailyRecordDetails.copy(
-                                feelingScore = it
-                            )
+            CustomSlider(
+                dailyRecordUiState.addictionDailyRecordDetails.feelingScore,
+                onValueChange = {
+                    onDailyRecordValueChange(
+                        dailyRecordUiState.addictionDailyRecordDetails.copy(
+                            feelingScore = it
                         )
-                    }
-                )
-
-                QuestionItem(
-                    question = stringResource(R.string.addiction_context),
-                    text = dailyRecordUiState.addictionDailyRecordDetails.fourthAnswer,
-                    canIncreaseSize = true,
-                    onValueChange = {
-                        onDailyRecordValueChange(
-                            dailyRecordUiState.addictionDailyRecordDetails.copy(
-                                fourthAnswer = it
-                            )
-                        )
-                    })
-                QuestionItem(
-                    question = stringResource(R.string.addiction_current_feeling),
-                    text = dailyRecordUiState.addictionDailyRecordDetails.fifthAnswer,
-                    canIncreaseSize = true,
-                    onValueChange = {
-                        onDailyRecordValueChange(
-                            dailyRecordUiState.addictionDailyRecordDetails.copy(
-                                fifthAnswer = it
-                            )
-                        )
-                    })
-
-
-                Button(
-                    onClick = onSaveClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .height(56.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    enabled = dailyRecordUiState.isSecondEntryValid,
-                    colors = ButtonDefaults.buttonColors(
-                        contentColor = PrimaryWhite,
-                        containerColor = Color(0xFFA89CE3),
-                    )
-                ) {
-                    Text(
-                        text = stringResource(R.string.addiction_save_feeling),
-                        fontSize = 18.sp,
-                        fontFamily = poppinFont,
-                        fontWeight = FontWeight.Normal,
-                        fontStyle = FontStyle.Normal,
                     )
                 }
+            )
+
+            QuestionItem(
+                question = stringResource(R.string.addiction_context),
+                text = dailyRecordUiState.addictionDailyRecordDetails.fourthAnswer,
+                canIncreaseSize = true,
+                onValueChange = {
+                    onDailyRecordValueChange(
+                        dailyRecordUiState.addictionDailyRecordDetails.copy(
+                            fourthAnswer = it
+                        )
+                    )
+                })
+            QuestionItem(
+                question = stringResource(R.string.addiction_current_feeling),
+                text = dailyRecordUiState.addictionDailyRecordDetails.fifthAnswer,
+                canIncreaseSize = true,
+                onValueChange = {
+                    onDailyRecordValueChange(
+                        dailyRecordUiState.addictionDailyRecordDetails.copy(
+                            fifthAnswer = it
+                        )
+                    )
+                })
+
+
+            Button(
+                onClick = onSaveClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .height(56.dp),
+                shape = RoundedCornerShape(12.dp),
+                enabled = dailyRecordUiState.isSecondEntryValid,
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = PrimaryWhite,
+                    containerColor = Color(0xFFA89CE3),
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.addiction_save_feeling),
+                    fontSize = 18.sp,
+                    fontFamily = poppinFont,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Normal,
+                )
             }
         }
     }
@@ -246,8 +234,10 @@ fun FeelingScreenPreview() {
     val fakeUIState = AddictionDailyRecordUiState(
         isSecondEntryValid = true,
     )
-    FeelingScreen(
-        dailyRecordUiState = fakeUIState,
-        onSaveClick = {}
-    )
+    PreviewBackground {
+        FeelingScreen(
+            dailyRecordUiState = fakeUIState,
+            onSaveClick = {}
+        )
+    }
 }

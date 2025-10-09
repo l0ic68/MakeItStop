@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.R
+import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.ui.theme.materialSymbols
 
 
@@ -170,5 +171,7 @@ fun FiveSenseRow(
 @Composable
 @Preview()
 fun FiveSensesScreenPreview() {
-    FiveSensesScreen()
+    PreviewBackground {
+        FiveSensesScreen()
+    }
 }
