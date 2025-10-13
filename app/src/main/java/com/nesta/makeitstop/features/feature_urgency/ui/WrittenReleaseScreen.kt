@@ -48,22 +48,20 @@ fun WrittenReleaseScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 24.dp),
+            .padding(start = 24.dp, end = 24.dp, bottom = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround
     ) {
-        Spacer(Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.urgency_release_title),
-            fontSize = 28.sp,
+            fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             color = Color(0xFFE6ECFF),
         )
         Text(
             text = stringResource(R.string.urgency_release_description),
-            modifier = Modifier.padding(10.dp),
-            fontSize = 14.sp,
+            fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Center,
             color = Color(0xFFE6ECFF)

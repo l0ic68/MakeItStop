@@ -50,7 +50,7 @@ fun UrgencyPlanScreen(
             text = stringResource(R.string.urgency_plan_start),
             color = Color(0xFF4a5cd8),
             textColor = Color(0xFFE6ECFF),
-            onClick = {onModuleClick(Module.Urgency)}
+            onClick = {onModuleClick(Module.UrgencyPlan)}
         ),
         UrgencyAction(
             icon = stringResource(R.string.urgency_plan_breathing_guide_icon),

@@ -14,11 +14,14 @@ import com.nesta.makeitstop.features.feature_urgency.ui.FiveSensesScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.UrgencyPlanScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.WrittenReleaseScreen
 import com.nesta.makeitstop.features.feature_urgency.data.viewmodel.WrittenReleaseViewModel
+import com.nesta.makeitstop.features.feature_urgency.ui.ResetCorporelScreen
+import com.nesta.makeitstop.features.feature_urgency.ui.StopMentalScreen
 import com.nesta.makeitstop.navigation.Routes
 import com.nesta.makeitstop.ui.AppViewModelProvider
 
 
 enum class Module {
+                  UrgencyPlan,
     Urgency,
     Breathing,
     FiveSenses,
@@ -44,6 +47,7 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
                 onModuleClick = { module ->
                     when (module) {
                         Module.Urgency -> navController.navigate(Routes.Urgency.Urgency)
+                        Module.UrgencyPlan -> navController.navigate(Routes.Urgency.UrgencyPlan)
                         Module.Breathing -> navController.navigate(Routes.Urgency.Breathing)
                         Module.FiveSenses -> navController.navigate(Routes.Urgency.FiveSenses)
                         Module.Discharge -> navController.navigate(Routes.Urgency.Discharge)
@@ -52,6 +56,15 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
                     }
                 }
             )
+
+        }
+
+        composable(Routes.Urgency.UrgencyPlan) { backStackEntry ->
+            val parentEntry = remember(backStackEntry) {
+                navController.getBackStackEntry(Routes.Urgency.Graph)
+            }
+
+
 
         }
 
@@ -98,13 +111,15 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
                 navController.getBackStackEntry(Routes.Urgency.Graph)
             }
 
+            StopMentalScreen()
+
         }
 
         composable(Routes.Urgency.CorporalReset) { backStackEntry ->
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Routes.Urgency.Graph)
             }
-
+            ResetCorporelScreen()
         }
 
     }

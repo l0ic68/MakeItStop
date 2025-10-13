@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 import com.nesta.makeitstop.MakeItStopApp
+import com.nesta.makeitstop.core.ui.SettingsScreen
 import com.nesta.makeitstop.features.feature_addiction.addictionGraph
 import com.nesta.makeitstop.features.feature_dashboard.ui.DashboardScreen
 import com.nesta.makeitstop.features.feature_sleeping_journal.sleepingJournalGraph
@@ -41,6 +42,9 @@ fun AppNavHost(
                     }
                 }
             )
+        }
+        composable(route = Routes.Settings) {
+            SettingsScreen()
         }
 
         addictionGraph(navController)

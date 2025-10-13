@@ -2,6 +2,7 @@ package com.nesta.makeitstop.navigation
 
 object Routes {
     const val Home = "home"
+    const val Settings = "settings"
 
     object Addiction {
         const val Graph = "craving_graph"
@@ -19,6 +20,7 @@ object Routes {
 
     object Urgency {
         const val Graph = "urgency_graph"
+        const val UrgencyPlan = "urgency_breathing"
         const val Breathing = "urgency_breathing"
         const val FiveSenses = "urgency_five_senses"
         const val Discharge = "urgency_discharge"

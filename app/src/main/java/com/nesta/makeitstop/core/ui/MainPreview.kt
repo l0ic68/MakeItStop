@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nesta.makeitstop.navigation.AppNavHost
 import com.nesta.makeitstop.navigation.Routes
@@ -61,5 +62,15 @@ fun PreviewBackground(content: @Composable () -> Unit) {
         ) {
             content()
         }
+    }
+}
+
+
+@Preview
+@Composable
+fun MasterPreveiw()
+{
+    PreviewBackground {
+        Text("terst")
     }
 }

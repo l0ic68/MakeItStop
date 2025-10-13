@@ -102,6 +102,9 @@ fun MakeItStopApp(
                             }
                         }
                     }
+                },
+                onClickSettings = {
+                    navController.navigate(Routes.Settings)
                 }
             )
         },

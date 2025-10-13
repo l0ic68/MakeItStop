@@ -109,7 +109,7 @@ fun FiveSensesScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(R.string.urgency_senses_row_smell_icon),
+                    text = stringResource(R.string.urgency_senses_arrow_right_alt_icon),
                     fontSize = 30.sp,
                     fontFamily = materialSymbols,
                     color = Color.White,

@@ -35,7 +35,8 @@ import com.nesta.makeitstop.ui.theme.nunitoFont
 @OptIn(ExperimentalMaterial3Api::class)
 fun TopBarNavigation(
     isMainDashBoard: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onClickSettings: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -79,7 +80,11 @@ fun TopBarNavigation(
                         text = "settings",
                         fontFamily = materialSymbols,
                         color = Color.White,
-                        fontSize = 30.sp
+                        fontSize = 30.sp,
+                        modifier = Modifier.clickable(
+                            role = Role.Button,
+                            onClick = onClickSettings
+                        )
                     )
                 }
             }
@@ -91,13 +96,15 @@ fun TopBarNavigation(
 fun TopAppBarPreview() {
     TopBarNavigation(
         isMainDashBoard = false,
-        onClick = {}
+        onClick = {},
+        onClickSettings = {},
     )
 }
 @Preview
 @Composable
 fun TopAppBarDashboardPreview() {
     TopBarNavigation(
-        onClick = {}
+        onClick = {},
+        onClickSettings = {},
     )
 }
