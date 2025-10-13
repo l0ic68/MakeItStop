@@ -85,22 +85,26 @@ fun BreathingScreen(
 
     val targetScale = when (phase) {
         Phase.Inhale -> 1.12f
+        Phase.Hold -> 1.12f
         Phase.Exhale -> 0.96f
         else -> 1f
     }
 
     val phaseDuration = when (phase) {
         Phase.Inhale -> inhaleSeconds
+        Phase.Hold -> holdSeconds
         Phase.Exhale -> exhaleSeconds
         else -> 0
     }
 
+
     val scale by animateFloatAsState(
         targetValue = targetScale,
-        animationSpec = if (phase == Phase.Inhale)
-            tween(phaseDuration * 1000, easing = FastOutSlowInEasing)
-        else
-            tween(maxOf(1, phaseDuration) * 1000, easing = LinearEasing),
+        animationSpec = when (phase) {
+            Phase.Inhale -> tween(phaseDuration * 1000, easing = FastOutSlowInEasing)
+            Phase.Hold -> tween(phaseDuration * 1000, easing = FastOutSlowInEasing) // en pratique pas utile, la valeur reste constante
+            else -> tween(phaseDuration * 1000, easing = LinearEasing)
+        },
         label = "breathScale"
     )
 
@@ -110,6 +114,17 @@ fun BreathingScreen(
         when (phase) {
             Phase.Inhale -> {
                 secondLeft = inhaleSeconds
+                while (secondLeft > 0 && running) {
+                    delay(1000); secondLeft--
+                }
+                if (!running) return@LaunchedEffect
+                if (holdSeconds != 0)
+                    phase = Phase.Hold
+                else
+                    phase = Phase.Exhale
+            }
+            Phase.Hold -> {
+                secondLeft = holdSeconds
                 while (secondLeft > 0 && running) {
                     delay(1000); secondLeft--
                 }
@@ -133,7 +148,7 @@ fun BreathingScreen(
                 }
             }
 
-            Phase.Idle, Phase.Done, Phase.Hold -> Unit
+            Phase.Idle, Phase.Done -> Unit
         }
     }
     Column(
@@ -164,8 +179,9 @@ fun BreathingScreen(
                 progress = when (phase) {
                     Phase.Inhale -> 1f - (secondLeft / inhaleSeconds.toFloat()
                         .coerceAtLeast(1f))
-
                     Phase.Exhale -> 1f - (secondLeft / exhaleSeconds.toFloat()
+                        .coerceAtLeast(1f))
+                    Phase.Hold -> 1f - (secondLeft / holdSeconds.toFloat()
                         .coerceAtLeast(1f))
 
                     else -> 0f
@@ -289,24 +305,7 @@ private fun BreathingRing(
         )
     }
 }
-//
-//@Composable
-//@OptIn(ExperimentalMaterial3Api::class)
-//fun TopBarSleepingJournalingNavigation() {
-//    CenterAlignedTopAppBar(
-//        colors = TopAppBarDefaults.topAppBarColors(
-//            containerColor = MaterialTheme.colorScheme.background
-//        ),
-//        title =
-//            {
-//                Text(
-//                    text = "Journaling du soir",
-//                    color = Color.White,
-//                    fontSize = 30.sp
-//                )
-//            }
-//    )
-//}
+
 
 @Preview
 @Composable
