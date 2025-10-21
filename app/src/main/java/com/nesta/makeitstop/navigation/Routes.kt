@@ -18,10 +18,16 @@ object Routes {
         const val Post = "sleeping_journaling/post"
     }
 
+    object Breathing {
+        const val Graph = "breathing_graph"
+        const val DashBoard = "breathing_dashboard"
+        const val Sleeping = "breathing"
+    }
     object Urgency {
         const val Graph = "urgency_graph"
         const val UrgencyPlan = "urgency_breathing"
         const val Breathing = "urgency_breathing"
+        const val BreathingWithParam = "urgency_breathing/{breathingJson}"
         const val FiveSenses = "urgency_five_senses"
         const val Discharge = "urgency_discharge"
         const val StopMental = "urgency_stop_mental"

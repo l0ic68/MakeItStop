@@ -108,6 +108,13 @@ fun MakeItStopScreenContent(
                 onClick = { onModuleClick(Module.Urgency) }
             )
         }
+        item {
+            ModuleCard(
+                modifier = Modifier,
+                text = "Breathing",
+                onClick = { onModuleClick(Module.Breathing) }
+            )
+        }
     }
 }
 

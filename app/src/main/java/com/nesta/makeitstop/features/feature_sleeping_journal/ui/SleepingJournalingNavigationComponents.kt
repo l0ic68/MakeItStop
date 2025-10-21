@@ -13,11 +13,13 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.LocalBottomBarState
 import com.nesta.makeitstop.R
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
 
@@ -58,6 +60,26 @@ fun BottomSleepingJournalingNavigation(
                 onTabSelected(Tab.Dashboard)
             }
         )
+    }
+}
+
+@Composable
+fun AddSleepingBottomBar(
+    onTabSelected: (Tab) -> Unit,
+    currentTab: Tab,
+    modifier: Modifier
+) {
+    val bottomBar = LocalBottomBarState.current
+
+    DisposableEffect(Unit) {
+        bottomBar.content = {
+            BottomSleepingJournalingNavigation(
+                onTabSelected = onTabSelected,
+                currentTab = currentTab,
+                modifier = modifier
+            )
+        }
+        onDispose { bottomBar.content = null }
     }
 }
 

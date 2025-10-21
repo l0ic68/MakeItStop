@@ -37,6 +37,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,6 +54,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.LocalBottomBarState
 import com.nesta.makeitstop.R
 import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
@@ -68,6 +70,11 @@ fun SleepingJournalsScreen(
     onDelete: (Int) -> Unit = {},
     modifier: Modifier
 ) {
+    AddSleepingBottomBar(
+        onTabSelected,
+        currentTab,
+        modifier
+    )
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround,
@@ -96,12 +103,6 @@ fun SleepingJournalsScreen(
                 SleepingCard(task, onDelete)
             }
         }
-
-        BottomSleepingJournalingNavigation(
-            onTabSelected = onTabSelected,
-            currentTab = currentTab,
-            modifier = modifier
-        )
     }
 }
 

@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.nesta.makeitstop.MakeItStopApp
 import com.nesta.makeitstop.core.ui.SettingsScreen
 import com.nesta.makeitstop.features.feature_addiction.addictionGraph
+import com.nesta.makeitstop.features.feature_breathing.breathingGraph
 import com.nesta.makeitstop.features.feature_dashboard.ui.DashboardScreen
 import com.nesta.makeitstop.features.feature_sleeping_journal.sleepingJournalGraph
 import com.nesta.makeitstop.features.feature_urgency.urgencyGraph
@@ -38,6 +39,7 @@ fun AppNavHost(
                         Module.Addiction -> navController.navigate(Routes.Addiction.DashBoard)
                         Module.Sleep -> navController.navigate(Routes.SleepingJournaling.Sleeping)
                         Module.Urgency -> navController.navigate(Routes.Urgency.Urgency)
+                        Module.Breathing -> navController.navigate(Routes.Breathing.Graph)
                         else -> navController.navigate(Routes.SleepingJournaling.DashBoard)
                     }
                 }
@@ -50,5 +52,6 @@ fun AppNavHost(
         addictionGraph(navController)
         sleepingJournalGraph(navController)
         urgencyGraph(navController)
+        breathingGraph(navController)
     }
 }

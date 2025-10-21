@@ -7,8 +7,11 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.nesta.makeitstop.features.feature_breathing.ui.ComponentBreathing
 import com.nesta.makeitstop.features.feature_urgency.ui.BreathingScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.FiveSensesScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.UrgencyPlanScreen
@@ -18,10 +21,11 @@ import com.nesta.makeitstop.features.feature_urgency.ui.ResetCorporelScreen
 import com.nesta.makeitstop.features.feature_urgency.ui.StopMentalScreen
 import com.nesta.makeitstop.navigation.Routes
 import com.nesta.makeitstop.ui.AppViewModelProvider
+import kotlinx.serialization.json.Json
 
 
 enum class Module {
-                  UrgencyPlan,
+    UrgencyPlan,
     Urgency,
     Breathing,
     FiveSenses,
@@ -32,7 +36,7 @@ enum class Module {
 }
 
 
-fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
+fun NavGraphBuilder.urgencyGraph(navController: NavHostController) {
     navigation(
         route = Routes.Urgency.Graph,
         startDestination = Routes.Urgency.Urgency
@@ -65,7 +69,6 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
             }
 
 
-
         }
 
         composable(Routes.Urgency.Breathing) { backStackEntry ->
@@ -74,6 +77,21 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
             }
 
             BreathingScreen()
+        }
+
+        composable(
+            route = Routes.Urgency.BreathingWithParam,
+            arguments = listOf(navArgument("breathingJson") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val json = backStackEntry.arguments?.getString("breathingJson")
+            val breathing = Json.decodeFromString<ComponentBreathing>(json!!)
+            BreathingScreen(
+                title = breathing.title,
+                totalCycles = 5,
+                inhaleSeconds = breathing.inhaleSeconds,
+                holdSeconds = breathing.holdSeconds,
+                exhaleSeconds = breathing.exhaleSeconds
+            )
         }
 
         composable(Routes.Urgency.FiveSenses) { backStackEntry ->
@@ -100,7 +118,7 @@ fun NavGraphBuilder.urgencyGraph(navController : NavHostController) {
             WrittenReleaseScreen(
                 writtenReleaseUiState = viewModel.uiState.collectAsState(),
                 onStartTimer = viewModel::startTimer,
-                onSaveTimer = viewModel::startTimer ,
+                onSaveTimer = viewModel::startTimer,
                 onTextChange = viewModel::updateWrittenReleaseText
             )
 

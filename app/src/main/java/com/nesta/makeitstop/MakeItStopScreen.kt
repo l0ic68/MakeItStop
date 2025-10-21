@@ -34,7 +34,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,62 +81,67 @@ fun MakeItStopApp(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    Scaffold(
-        containerColor = Color.Transparent,
-        modifier = Modifier
-            .background(
-                Brush.verticalGradient(
-                    0f to Color(0xFF0E1B4A),
-                    0.6f to Color(0xFF1B2B6A),
-                    1f to Color(0xFF2B2F73)
-                )
-            ),
-        topBar = {
-            TopBarNavigation(
-                currentRoute == "home",
-                onClick = {
-                    if (currentRoute != "home")
-                        navController.navigate(Routes.Home)
-                    else {
-                        scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
+    val bottomBarState = remember { BottomBarState() }
+    CompositionLocalProvider(LocalBottomBarState provides bottomBarState) {
+
+        Scaffold(
+            containerColor = Color.Transparent,
+            modifier = Modifier
+                .background(
+                    Brush.verticalGradient(
+                        0f to Color(0xFF0E1B4A),
+                        0.6f to Color(0xFF1B2B6A),
+                        1f to Color(0xFF2B2F73)
+                    )
+                ),
+            topBar = {
+                TopBarNavigation(
+                    currentRoute == "home",
+                    onClick = {
+                        if (currentRoute != "home")
+                            navController.navigate(Routes.Home)
+                        else {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
                             }
                         }
+                    },
+                    onClickSettings = {
+                        navController.navigate(Routes.Settings)
+                    }
+                )
+            },
+            bottomBar = {
+                val injected = bottomBarState.content
+                if (injected != null) injected()
+            }
+        ) { innerPadding ->
+            ModalNavigationDrawer(
+                modifier = Modifier
+                    .padding(innerPadding),
+                drawerState = drawerState,
+                drawerContent = {
+                    ModalDrawerSheet {
+                        Text("Drawer title", modifier = Modifier.padding(16.dp))
+                        HorizontalDivider()
+                        NavigationDrawerItem(
+                            label = { Text(text = "Drawer Item") },
+                            selected = false,
+                            onClick = { /*TODO*/ }
+                        )
+                        // ...other drawer items
                     }
                 },
-                onClickSettings = {
-                    navController.navigate(Routes.Settings)
-                }
-            )
-        },
-        bottomBar = {
-
-        }
-    ) { innerPadding ->
-        ModalNavigationDrawer(
-            modifier = Modifier
-                .padding(innerPadding),
-            drawerState = drawerState,
-            drawerContent = {
-                ModalDrawerSheet {
-                    Text("Drawer title", modifier = Modifier.padding(16.dp))
-                    HorizontalDivider()
-                    NavigationDrawerItem(
-                        label = { Text(text = "Drawer Item") },
-                        selected = false,
-                        onClick = { /*TODO*/ }
-                    )
-                    // ...other drawer items
-                }
-            },
-            gesturesEnabled = false
-        ) {
-            AppNavHost(
-                navController = navController,
-                modifier = Modifier
-                    .fillMaxSize()
-            )
+                gesturesEnabled = false
+            ) {
+                AppNavHost(
+                    navController = navController,
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+            }
         }
     }
 }

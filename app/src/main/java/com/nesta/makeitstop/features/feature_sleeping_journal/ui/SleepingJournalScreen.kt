@@ -20,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.LocalBottomBarState
 import com.nesta.makeitstop.R
 import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.core.ui.QuestionItem
@@ -51,6 +53,12 @@ fun SleepingJournalScreen(
     currentTab: Tab,
     modifier: Modifier
 ) {
+    AddSleepingBottomBar(
+        onTabSelected,
+        currentTab,
+        modifier
+    )
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround,
@@ -143,11 +151,7 @@ fun SleepingJournalScreen(
             }
 
         }
-        BottomSleepingJournalingNavigation(
-            onTabSelected = onTabSelected,
-            currentTab = currentTab,
-            modifier = modifier
-        )
+
     }
 }
 

@@ -71,6 +71,7 @@ enum class Phase {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BreathingScreen(
+    title:String = stringResource(R.string.urgency_breathing_title),
     totalCycles: Int = 5,
     inhaleSeconds: Int = 4,
     exhaleSeconds: Int = 6,
@@ -160,7 +161,7 @@ fun BreathingScreen(
     ) {
         Spacer(Modifier.height(8.dp))
         Text(
-            text = stringResource(R.string.urgency_breathing_title),
+            text = title,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFFE6ECFF),
