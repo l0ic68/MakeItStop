@@ -1,6 +1,5 @@
 package com.nesta.makeitstop.features.feature_sleeping_journal.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,18 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,11 +26,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.BottomBarState
 import com.nesta.makeitstop.LocalBottomBarState
 import com.nesta.makeitstop.R
 import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.core.ui.QuestionItem
-import com.nesta.makeitstop.core.ui.TopBarNavigation
 import com.nesta.makeitstop.features.feature_sleeping_journal.Tab
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournal
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournalUiState
@@ -172,15 +167,20 @@ fun SleepingJournalScreenPreview() {
             ),
             isEntryValid = true
         )
-        PreviewBackground {
-            SleepingJournalScreen(
-                onClick = {},
-                sleepingJournalUiState = previewState,
-                onSleepingJournalValueChange = {},
-                onTabSelected = { /* no-op */ },
-                currentTab = Tab.Dashboard,
-                modifier = Modifier
-            )
+        val fakeBottomBar = remember { BottomBarState() }
+
+        CompositionLocalProvider(LocalBottomBarState provides fakeBottomBar) {
+
+            PreviewBackground {
+                SleepingJournalScreen(
+                    onClick = {},
+                    sleepingJournalUiState = previewState,
+                    onSleepingJournalValueChange = {},
+                    onTabSelected = { /* no-op */ },
+                    currentTab = Tab.Dashboard,
+                    modifier = Modifier
+                )
+            }
         }
     }
 }

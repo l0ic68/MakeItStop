@@ -35,6 +35,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -82,6 +83,11 @@ fun MakeItStopApp(
     val scope = rememberCoroutineScope()
 
     val bottomBarState = remember { BottomBarState() }
+    LaunchedEffect(navController) {
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            bottomBarState.clear() // ou clearIfSame(owner)
+        }
+    }
     CompositionLocalProvider(LocalBottomBarState provides bottomBarState) {
 
         Scaffold(
@@ -114,8 +120,7 @@ fun MakeItStopApp(
                 )
             },
             bottomBar = {
-                val injected = bottomBarState.content
-                if (injected != null) injected()
+                LocalBottomBarState.current.content?.invoke()
             }
         ) { innerPadding ->
             ModalNavigationDrawer(

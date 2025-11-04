@@ -77,7 +77,7 @@ class SleepingJournalRecordViewModel (
 
     suspend fun saveSleepingJournal() {
         val clock: Clock = Clock.system(ZoneId.of("Europe/Paris"))
-        val cutoff: LocalTime = LocalTime.of(5, 0)
+        val cutoff: LocalTime = LocalTime.of(8, 0)
         if (validateFirstEntry()) {
             val now = ZonedDateTime.now(clock)
             val adjustedDate = computeJournalDate(now, cutoff)

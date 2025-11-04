@@ -21,7 +21,26 @@ class MakeItStopApplication : Application() {
 typealias BottomBarContent = @Composable () -> Unit
 
 class BottomBarState {
-    var content by mutableStateOf<BottomBarContent?>(null)
+    var content by mutableStateOf<(@Composable () -> Unit)?>(null)
+        private set
+    private var ownerRef: Any? = null
+
+    fun setWithOwner(owner: Any, content: @Composable () -> Unit) {
+        ownerRef = owner
+        this.content = content
+    }
+    fun clearIfSame(owner: Any) {
+        if (ownerRef === owner) {
+            content = null
+            ownerRef = null
+        }
+    }
+
+    fun clear() {
+            content = null
+            ownerRef = null
+
+    }
 }
 
 val LocalBottomBarState = staticCompositionLocalOf<BottomBarState> {

@@ -33,6 +33,7 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
     ) {
         var currentTab = Tab.Sleeping
         composable(Routes.SleepingJournaling.Sleeping) { backStackEntry ->
+            currentTab = Tab.Sleeping
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Routes.SleepingJournaling.Graph)
             }
@@ -70,6 +71,8 @@ fun NavGraphBuilder.sleepingJournalGraph(navController : NavHostController) {
         }
 
         composable(Routes.SleepingJournaling.DashBoard) { backStackEntry ->
+            currentTab = Tab.Dashboard
+
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry(Routes.SleepingJournaling.Graph)
             }

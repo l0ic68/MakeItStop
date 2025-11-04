@@ -14,6 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -47,7 +51,7 @@ fun BottomSleepingJournalingNavigation(
                 onTabSelected(Tab.Sleeping)
             },
 
-        )
+            )
         NavigationBarItem(
             icon = {
                 Icon(
@@ -70,18 +74,26 @@ fun AddSleepingBottomBar(
     modifier: Modifier
 ) {
     val bottomBar = LocalBottomBarState.current
-
-    DisposableEffect(Unit) {
-        bottomBar.content = {
+    val owner = remember { Any() }
+    val content by rememberUpdatedState(
+        newValue = @Composable {
             BottomSleepingJournalingNavigation(
                 onTabSelected = onTabSelected,
                 currentTab = currentTab,
                 modifier = modifier
             )
         }
-        onDispose { bottomBar.content = null }
+    )
+
+    DisposableEffect(bottomBar, owner) {
+        bottomBar.setWithOwner(owner) { content() }   // set “atomique”
+        onDispose { bottomBar.clearIfSame(owner) }    // clear seulement si c’est toujours nous
     }
+
+    // si currentTab change souvent :
+    SideEffect { bottomBar.setWithOwner(owner) { content() } }
 }
+
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

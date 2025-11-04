@@ -37,6 +37,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +55,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nesta.makeitstop.BottomBarState
 import com.nesta.makeitstop.LocalBottomBarState
 import com.nesta.makeitstop.R
 import com.nesta.makeitstop.core.ui.PreviewBackground
@@ -113,7 +115,7 @@ fun SleepingCard(
     onDelete: (Int) -> Unit = {}
 ) {
 
-    var isCardOpen by remember { mutableStateOf(true) }
+    var isCardOpen by remember { mutableStateOf(false) }
     var clickHold by remember { mutableStateOf(false) }
     Card(
         colors = CardDefaults.cardColors(
@@ -281,7 +283,7 @@ fun CardPreview() {
     val fakeRecords = listOf(
         SleepingJournalRecord(
             id = 0,
-            date = "16 Septembre 2028",
+            date = "10 Septembre 2028",
             firstQuestion = "Un bon café le matin",
             secondQuestion = "Un peu de stress au travail",
             thirdQuestion = "Prendre plus de temps pour respirer",
@@ -289,7 +291,7 @@ fun CardPreview() {
         ),
         SleepingJournalRecord(
             id = 1,
-            date = "16 Septembre 2028",
+            date = "11 Septembre 2028",
             firstQuestion = "Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil\"Une promenade au soleil",
             secondQuestion = "Courses fatigantes",
             thirdQuestion = "Être patient demain",
@@ -297,7 +299,7 @@ fun CardPreview() {
         ),
         SleepingJournalRecord(
             id = 2,
-            date = "16 Septembre 2028",
+            date = "12 Septembre 2028",
             firstQuestion = "Une promenade au soleil",
             secondQuestion = "Courses fatigantes",
             thirdQuestion = "Être patient demain",
@@ -305,7 +307,7 @@ fun CardPreview() {
         ),
         SleepingJournalRecord(
             id = 3,
-            date = "16 Septembre 2028",
+            date = "13 Septembre 2028",
             firstQuestion = "Une promenade au soleil",
             secondQuestion = "Courses fatigantes",
             thirdQuestion = "Être patient demain",
@@ -313,7 +315,7 @@ fun CardPreview() {
         ),
         SleepingJournalRecord(
             id = 4,
-            date = "16 Septembre 2028",
+            date = "14 Septembre 2028",
             firstQuestion = "Une promenade au soleil",
             secondQuestion = "Courses fatigantes",
             thirdQuestion = "Être patient demain",
@@ -321,7 +323,7 @@ fun CardPreview() {
         ),
         SleepingJournalRecord(
             id = 5,
-            date = "16 Septembre 2028",
+            date = "15 Septembre 2028",
             firstQuestion = "Une promenade au soleil",
             secondQuestion = "Courses fatigantes",
             thirdQuestion = "Être patient demain",
@@ -337,20 +339,25 @@ fun CardPreview() {
         ),
         SleepingJournalRecord(
             id = 7,
-            date = "16 Septembre 2028",
+            date = "17 Septembre 2028",
             firstQuestion = "Une promenade au soleil",
             secondQuestion = "Courses fatigantes",
             thirdQuestion = "Être patient demain",
             epoch = 1
         )
     )
-    PreviewBackground {
-        SleepingJournalsScreen(
-            onTabSelected = {
-            },
-            currentTab = Tab.Dashboard,
-            recordList = fakeRecords,
-            modifier = Modifier
-        )
+    val fakeBottomBar = remember { BottomBarState() }
+
+    CompositionLocalProvider(LocalBottomBarState provides fakeBottomBar) {
+
+        PreviewBackground {
+            SleepingJournalsScreen(
+                onTabSelected = {
+                },
+                currentTab = Tab.Dashboard,
+                recordList = fakeRecords,
+                modifier = Modifier
+            )
+        }
     }
 }
