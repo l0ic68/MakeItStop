@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.nesta.makeitstop.MakeItStopApplication
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordEntryViewModel
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionViewModel
+import com.nesta.makeitstop.features.feature_breathing.data.viewmodel.BreathingViewModel
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.viewmodel.SleepingJournalRecordViewModel
 import com.nesta.makeitstop.features.feature_urgency.data.viewmodel.WrittenReleaseViewModel
 
@@ -21,6 +22,11 @@ object AppViewModelProvider {
         initializer {
             AddictionViewModel(
                 makeItStopApplication().container.addictionRepository
+            )
+        }
+        initializer {
+            BreathingViewModel(
+                makeItStopApplication().container.breathingRepository
             )
         }
         initializer {

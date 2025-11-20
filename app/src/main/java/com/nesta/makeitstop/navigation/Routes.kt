@@ -21,6 +21,7 @@ object Routes {
     object Breathing {
         const val Graph = "breathing_graph"
         const val DashBoard = "breathing_dashboard"
+        const val Add = "breathing_add"
         const val Sleeping = "breathing"
     }
     object Urgency {

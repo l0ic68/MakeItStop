@@ -44,6 +44,7 @@ data class ComponentBreathing(
 @Composable
 fun BreathingDashboardScreen(
     onModuleClick:(ComponentBreathing) -> Unit = {},
+    onNavigationClick:() -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -118,7 +119,7 @@ fun BreathingDashboardScreen(
             )
         }
         Button(
-            onClick = {},
+            onClick = onNavigationClick,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0XFF252a86)
             ),

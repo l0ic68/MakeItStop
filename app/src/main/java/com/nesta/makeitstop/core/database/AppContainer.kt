@@ -5,12 +5,16 @@ import com.nesta.makeitstop.features.feature_addiction.data.repository.Addiction
 import com.nesta.makeitstop.features.feature_addiction.data.repository.DailyRecordRepository
 import com.nesta.makeitstop.features.feature_addiction.data.repository.OfflineAddictionRepository
 import com.nesta.makeitstop.features.feature_addiction.data.repository.OfflineDailyRecordsRepository
+import com.nesta.makeitstop.features.feature_breathing.data.repository.BreathingRepository
+import com.nesta.makeitstop.features.feature_breathing.data.repository.OfflineBreathingRepository
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.repository.OfflineSleepingJournalRecordRepository
 import com.nesta.makeitstop.features.feature_sleeping_journal.data.repository.SleepingJournalRecordRepository
 
 interface AppContainer {
     val dailyRecordRepository : DailyRecordRepository
     val addictionRepository : AddictionRepository
+
+    val breathingRepository : BreathingRepository
     val sleepingJournalRecordRepository : SleepingJournalRecordRepository
 
 }
@@ -29,6 +33,10 @@ class AppDataContainer(private val context: Context) : AppContainer {
 
     override val sleepingJournalRecordRepository: SleepingJournalRecordRepository by lazy {
         OfflineSleepingJournalRecordRepository(AddictionDatabase.getDatabase(context).sleepingJournalRecordDao())
+    }
+
+    override val breathingRepository: BreathingRepository by lazy {
+        OfflineBreathingRepository(AddictionDatabase.getDatabase(context).breathingDao())
     }
 
 }
