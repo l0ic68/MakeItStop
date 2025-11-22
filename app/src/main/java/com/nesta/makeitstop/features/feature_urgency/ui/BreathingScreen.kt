@@ -210,13 +210,15 @@ fun BreathingScreen(
                 )
 
                 Text(
-                    text = progress,
+                    text = if (phase == Phase.Done || !running) "${inhaleSeconds}s"
+                    else "${maxOf(0,secondLeft)}s",
                     fontSize = 64.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFFE6ECFF)
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
+                    //TODO LOU Expirer x Secodnes / Hold x secondes / Etc...
                     text = stringResource(
                         id = R.string.urgency_breathing_exhale_mouth,
                         exhaleSeconds,

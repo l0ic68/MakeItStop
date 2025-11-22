@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -25,8 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nesta.makeitstop.core.ui.PreviewBackground
 import com.nesta.makeitstop.core.ui.TitleLarge
-import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionUiState
-import com.nesta.makeitstop.features.feature_breathing.data.model.Breathing
 import com.nesta.makeitstop.features.feature_breathing.data.viewmodel.BreathingDetails
 import com.nesta.makeitstop.features.feature_breathing.data.viewmodel.BreathingUiState
 import com.nesta.makeitstop.ui.theme.poppinFont
@@ -41,7 +41,8 @@ enum class BreathingRow {
 @Composable
 fun BreathingTimerCreationScreen(
     breathingUiState: State<BreathingUiState>,
-    onAddBreathing: (BreathingDetails) -> Unit
+    onAddBreathing: (BreathingDetails) -> Unit,
+    addBreathingClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -106,6 +107,22 @@ fun BreathingTimerCreationScreen(
             breathingUiState
         )
 
+        Button(
+            onClick = addBreathingClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0XFF252a86)
+            ),
+            shape = RoundedCornerShape(12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp)
+        ) {
+            Text("Créér mon timer",
+                fontSize = 18.sp,
+                color = Color.White,
+
+                )
+        }
     }
 }
 
@@ -189,7 +206,8 @@ fun PreviewBreathingTimerCreationScreen() {
     PreviewBackground {
         BreathingTimerCreationScreen(
             breathingUiState = fakeState,
-            onAddBreathing = {}
+            onAddBreathing = {},
+            addBreathingClick = {}
         )
     }
 }

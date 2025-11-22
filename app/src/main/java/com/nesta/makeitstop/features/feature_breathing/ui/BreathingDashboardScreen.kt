@@ -39,6 +39,7 @@ data class ComponentBreathing(
     val inhaleSeconds: Int,
     val exhaleSeconds: Int,
     val holdSeconds: Int,
+    val totalCycle: Int = 5
 )
 
 @Composable
@@ -126,8 +127,9 @@ fun BreathingDashboardScreen(
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(vertical = 20.dp)
         ) {
-            Text("Créer mon timer",
+            Text("Créér mon timer",
                 fontSize = 18.sp,
                 color = Color.White,
 

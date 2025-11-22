@@ -19,7 +19,7 @@ import com.nesta.makeitstop.features.feature_sleeping_journal.data.model.Sleepin
         Addiction::class,
         SleepingJournalRecord::class,
         Breathing::class
-    ], version = 1, exportSchema = true
+    ], version = 2, exportSchema = true
 )
 abstract class AddictionDatabase : RoomDatabase() {
     abstract fun addictionDailyRecordDao(): DailyRecordDao

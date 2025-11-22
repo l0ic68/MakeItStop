@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.nesta.makeitstop.features.feature_addiction.data.viewmodel.AddictionDailyRecordUiState
 import com.nesta.makeitstop.features.feature_breathing.data.model.Breathing
 import com.nesta.makeitstop.features.feature_breathing.data.repository.BreathingRepository
+import com.nesta.makeitstop.features.feature_breathing.ui.ComponentBreathing
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -49,6 +50,18 @@ class BreathingViewModel (
 
     suspend fun saveBreathingTimer() {
         breathingRepository.insertBreathing(uiState.value.breathingDetails.toBreathing())
+    }
+
+    suspend fun saveBreathingTimerWithReturn() : ComponentBreathing {
+        breathingRepository.insertBreathing(uiState.value.breathingDetails.toBreathing())
+        return ComponentBreathing(
+            title = uiState.value.breathingDetails.name,
+            inhaleSeconds = uiState.value.breathingDetails.inhale,
+            holdSeconds = uiState.value.breathingDetails.hold,
+            exhaleSeconds = uiState.value.breathingDetails.exhale,
+            totalCycle = uiState.value.breathingDetails.totalCycles
+
+        )
     }
 
     suspend fun updateBreathingTimer() {
