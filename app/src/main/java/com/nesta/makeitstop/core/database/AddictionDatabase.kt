@@ -34,7 +34,6 @@ abstract class AddictionDatabase : RoomDatabase() {
         fun getDatabase(context: Context): AddictionDatabase {
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, AddictionDatabase::class.java, "addiction_database")
-                    .fallbackToDestructiveMigration(true) // ⚡ supprime l'ancienne DB et recrée la nouvelle
                     .build()
                     .also { Instance = it }
             }
